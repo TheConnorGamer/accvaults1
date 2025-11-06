@@ -233,7 +233,8 @@ async function handleRegister(email, password, username, db) {
         console.error('Registration error:', error);
         return new Response(JSON.stringify({
             success: false,
-            error: 'Registration failed. Please try again.'
+            error: 'Registration failed. Please try again.',
+            debug: error.message || String(error)
         }), {
             status: 500,
             headers: {
