@@ -1162,8 +1162,34 @@ async function handleLogin(e) {
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
     submitBtn.disabled = true;
     
+    // Staff/Admin emails (add your admin emails here)
+    const staffEmails = ['conazukin@gmail.com', 'admin@accvaults.com', 'staff@accvaults.com'];
+    const isStaff = staffEmails.includes(email.toLowerCase());
+    
     try {
-        // Check if customer exists in Paylix by checking their orders
+        // For staff, allow login without checking orders
+        if (isStaff) {
+            localStorage.setItem('accvaults_user', JSON.stringify({
+                email: email,
+                loggedIn: true,
+                isStaff: true,
+                role: 'admin',
+                loginTime: new Date().toISOString()
+            }));
+            localStorage.setItem('userEmail', email);
+            
+            showNotification('✅ Welcome back, Admin!');
+            closeAuthModal();
+            updateLoginButton();
+            
+            // Redirect to dashboard after 1 second
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
+            return;
+        }
+        
+        // For regular users, check if they have orders
         const orders = await window.paylixClient.getCustomerOrders(email);
         
         if (orders && orders.length > 0) {
@@ -1171,9 +1197,10 @@ async function handleLogin(e) {
             localStorage.setItem('accvaults_user', JSON.stringify({
                 email: email,
                 loggedIn: true,
+                isStaff: false,
+                role: 'customer',
                 loginTime: new Date().toISOString()
             }));
-            // Also store email for orders page
             localStorage.setItem('userEmail', email);
             
             showNotification('✅ Welcome back! You have been logged in.');
@@ -1266,31 +1293,53 @@ function updateLoginButton() {
 // User menu for logged in users
 function openUserMenu() {
     const user = JSON.parse(localStorage.getItem('accvaults_user'));
+    const isStaff = user && user.isStaff;
+    
     const modal = document.createElement('div');
     modal.className = 'auth-modal';
+    
+    // Different menu for staff vs customers
+    const menuButtons = isStaff ? `
+        <a href="dashboard.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none;">
+            <i class="fas fa-chart-line"></i> Dashboard
+        </a>
+        
+        <a href="orders.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none; background: linear-gradient(135deg, #5c3d99, #8359cf);">
+            <i class="fas fa-box"></i> All Orders
+        </a>
+        
+        <a href="products.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none; background: linear-gradient(135deg, #f59e0b, #d97706);">
+            <i class="fas fa-shopping-bag"></i> Manage Products
+        </a>
+    ` : `
+        <a href="orders.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none;">
+            <i class="fas fa-box"></i> My Orders
+        </a>
+        
+        <a href="downloads.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none; background: linear-gradient(135deg, #5c3d99, #8359cf);">
+            <i class="fas fa-download"></i> My Downloads
+        </a>
+    `;
+    
     modal.innerHTML = `
         <div class="auth-modal-content" style="max-width: 400px;">
             <button class="auth-close" onclick="closeAuthModal()">
                 <i class="fas fa-times"></i>
             </button>
             <div style="text-align: center; padding: 20px;">
-                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #8359cf, #5c3d99); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 36px; color: white;">
-                    <i class="fas fa-user"></i>
+                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, ${isStaff ? '#f59e0b, #d97706' : '#8359cf, #5c3d99'}); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 36px; color: white;">
+                    <i class="fas fa-${isStaff ? 'crown' : 'user'}"></i>
                 </div>
-                <h2 style="margin-bottom: 8px;">${user.username || 'User'}</h2>
-                <p style="color: rgba(255,255,255,0.6); margin-bottom: 24px;">${user.email}</p>
-                
-                <a href="orders.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none;">
-                    <i class="fas fa-box"></i> My Orders
-                </a>
-                
-                <a href="downloads.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none; background: linear-gradient(135deg, #5c3d99, #8359cf);">
-                    <i class="fas fa-download"></i> My Downloads
-                </a>
-                
-                <button onclick="handleLogout()" class="auth-submit-btn" style="background: linear-gradient(135deg, #dc2626, #991b1b); width: 100%;">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
+                <h2 style="margin-bottom: 8px;">${user.username || (isStaff ? 'Admin' : 'User')}</h2>
+                <p style="color: rgba(255,255,255,0.6); margin-bottom: 8px;">${user.email}</p>
+                ${isStaff ? '<span style="display: inline-block; background: linear-gradient(135deg, #f59e0b, #d97706); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 20px;">STAFF</span>' : ''}
+                <div style="margin-top: 20px;">
+                    ${menuButtons}
+                    
+                    <button onclick="handleLogout()" class="auth-submit-btn" style="background: linear-gradient(135deg, #dc2626, #991b1b); width: 100%;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
             </div>
         </div>
     `;
