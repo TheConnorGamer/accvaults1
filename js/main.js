@@ -1333,11 +1333,15 @@ function openUserMenu() {
             <i class="fas fa-shopping-bag"></i> Manage Products
         </a>
     ` : `
-        <a href="orders.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none;">
+        <a href="customer-dashboard.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none;">
+            <i class="fas fa-chart-line"></i> Dashboard
+        </a>
+        
+        <a href="orders.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none; background: linear-gradient(135deg, #5c3d99, #8359cf);">
             <i class="fas fa-box"></i> My Orders
         </a>
         
-        <a href="downloads.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none; background: linear-gradient(135deg, #5c3d99, #8359cf);">
+        <a href="downloads.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none; background: linear-gradient(135deg, #3b82f6, #2563eb);">
             <i class="fas fa-download"></i> My Downloads
         </a>
     `;
