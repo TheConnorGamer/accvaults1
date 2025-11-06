@@ -1434,58 +1434,26 @@ function openProductSelector(groupId) {
                             </defs>
                         </svg>`;
                     
-                    // Check if mobile
-                    const isMobile = window.innerWidth <= 768;
-                    
-                    if (isMobile) {
-                        // MOBILE: Horizontal layout (image left, text middle, arrow right)
-                        return `
-                            <div class="modal-product-card" style="display: flex !important; flex-direction: row !important; align-items: center; padding: 16px; gap: 16px; min-height: 100px;">
-                                <div class="modal-product-logo" style="width: 80px; height: 80px; flex-shrink: 0; display: flex !important; align-items: center; justify-content: center;">
-                                    ${logoContent}
-                                </div>
-                                <div style="flex: 1; display: flex !important; flex-direction: column; gap: 8px;">
-                                    <span class="modal-product-price" style="font-size: 18px !important; font-weight: 700 !important; color: #a78bfa !important; display: block !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">£${product.price.toFixed(2)}</span>
-                                    <h4 class="modal-product-title" style="font-size: 14px !important; font-weight: 600 !important; color: #ffffff !important; margin: 0 !important; line-height: 1.4 !important; display: block !important; visibility: visible !important; opacity: 1 !important;">${product.name}</h4>
-                                    <span class="modal-product-stock" style="font-size: 10px !important; color: #10b981 !important; font-weight: 700 !important; text-transform: uppercase; display: inline-block !important;">✓ In Stock</span>
-                                </div>
-                                <button 
-                                    class="modal-buy-btn" 
-                                    data-paylixecommerce-product="${product.paylixId}"
-                                    type="submit"
-                                    style="width: 50px; height: 50px; flex-shrink: 0; padding: 0; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); border: none; border-radius: 12px; color: white; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px;">
-                                    <i class="fas fa-arrow-right"></i>
-                                </button>
+                    // HORIZONTAL LAYOUT for ALL devices (same as mobile)
+                    return `
+                        <div class="modal-product-card" style="display: flex !important; flex-direction: row !important; align-items: center; padding: 20px; gap: 20px; min-height: 110px;">
+                            <div class="modal-product-logo" style="width: 90px; height: 90px; flex-shrink: 0; display: flex !important; align-items: center; justify-content: center;">
+                                ${logoContent}
                             </div>
-                        `;
-                    } else {
-                        // DESKTOP: Vertical layout (original)
-                        return `
-                            <div class="modal-product-card" style="display: flex !important; flex-direction: column !important; padding: 12px;">
-                                <div class="modal-product-header" style="display: flex !important; min-height: 100px; padding: 16px;">
-                                    <div class="modal-product-logo" style="width: 70px; height: 70px; display: flex !important;">
-                                        ${logoContent}
-                                    </div>
-                                </div>
-                                <div class="modal-product-body" style="display: block !important; padding: 16px; visibility: visible !important; background: rgba(0,0,0,0.3);">
-                                    <div style="display: flex !important; align-items: center; gap: 15px; margin-bottom: 12px;">
-                                        <span class="modal-product-price" style="font-size: 18px !important; font-weight: 700 !important; color: #a78bfa !important; display: inline-block !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">£${product.price.toFixed(2)}</span>
-                                        <span class="modal-product-stock" style="font-size: 11px !important; color: #10b981 !important; font-weight: 700 !important; text-transform: uppercase; display: inline-block !important; white-space: nowrap;">✓ IN STOCK</span>
-                                    </div>
-                                    <h4 class="modal-product-title" style="font-size: 15px !important; font-weight: 600 !important; color: #ffffff !important; margin: 0 !important; line-height: 1.5 !important; display: block !important; visibility: visible !important; opacity: 1 !important; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">${product.name}</h4>
-                                </div>
-                                <div class="modal-product-footer" style="padding: 0 12px 12px;">
-                                    <button 
-                                        class="modal-buy-btn" 
-                                        data-paylixecommerce-product="${product.paylixId}"
-                                        type="submit"
-                                        style="width: 100%; padding: 12px; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); border: none; border-radius: 12px; color: white; font-weight: 700; cursor: pointer;">
-                                        <i class="fas fa-arrow-right"></i>
-                                    </button>
-                                </div>
+                            <div style="flex: 1; display: flex !important; flex-direction: column; gap: 8px;">
+                                <span class="modal-product-price" style="font-size: 20px !important; font-weight: 700 !important; color: #a78bfa !important; display: block !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">£${product.price.toFixed(2)}</span>
+                                <h4 class="modal-product-title" style="font-size: 15px !important; font-weight: 600 !important; color: #ffffff !important; margin: 0 !important; line-height: 1.5 !important; display: block !important; visibility: visible !important; opacity: 1 !important;">${product.name}</h4>
+                                <span class="modal-product-stock" style="font-size: 11px !important; color: #10b981 !important; font-weight: 700 !important; text-transform: uppercase; display: inline-block !important;">✓ IN STOCK</span>
                             </div>
-                        `;
-                    }
+                            <button 
+                                class="modal-buy-btn" 
+                                data-paylixecommerce-product="${product.paylixId}"
+                                type="submit"
+                                style="width: 60px; height: 60px; flex-shrink: 0; padding: 0; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); border: none; border-radius: 14px; color: white; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    `;
                 }).join('')}
             </div>
         </div>
