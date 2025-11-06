@@ -93,7 +93,19 @@ async function loadOrders() {
             return;
         }
 
-        const orders = result.data?.data?.orders || result.data?.orders || result.data || [];
+        // Paylix returns orders in different formats, try all possibilities
+        let orders = [];
+        if (Array.isArray(result.data)) {
+            orders = result.data;
+        } else if (result.data?.data?.orders) {
+            orders = result.data.data.orders;
+        } else if (result.data?.orders) {
+            orders = result.data.orders;
+        } else if (result.data?.data && Array.isArray(result.data.data)) {
+            orders = result.data.data;
+        }
+
+        console.log('Orders found:', orders.length, orders);
 
         if (loadingEl) loadingEl.style.display = 'none';
 
