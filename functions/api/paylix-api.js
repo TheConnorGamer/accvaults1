@@ -45,6 +45,7 @@ async function callPaylixAPI(endpoint, method = 'GET', body = null, apiKey) {
 
 export async function onRequest(context) {
     const { request, env } = context;
+    const PAYLIX_API_KEY = env.PAYLIX_API_KEY;
 
     // Handle CORS preflight
     if (request.method === 'OPTIONS') {
@@ -57,9 +58,23 @@ export async function onRequest(context) {
         });
     }
 
+    // Check if API key is available
+    if (!PAYLIX_API_KEY) {
+        console.error('PAYLIX_API_KEY environment variable is not set');
+        return new Response(JSON.stringify({
+            success: false,
+            error: 'API key not configured'
+        }), {
+            status: 500,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+        });
+    }
+
     try {
         const { action, ...params } = await request.json();
-        const PAYLIX_API_KEY = env.PAYLIX_API_KEY;
 
         console.log('Paylix API initialized with key:', PAYLIX_API_KEY ? 'Present' : 'MISSING');
 

@@ -29,6 +29,27 @@ export async function onRequest(context) {
         });
     }
 
+    // Check if API key is available
+    if (!PAYLIX_API_KEY) {
+        console.error('PAYLIX_API_KEY environment variable is not set');
+        return new Response(JSON.stringify({
+            error: 'API key not configured',
+            stats: {
+                feedbackRating: 0,
+                productsSold: 0,
+                totalCustomers: 0,
+                totalReviews: 0
+            },
+            reviews: []
+        }), {
+            status: 200,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+        });
+    }
+
     try {
         // Fetch orders from Paylix API
         const ordersResponse = await fetch(`https://dev.paylix.gg/v1/orders`, {
