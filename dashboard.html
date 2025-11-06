@@ -112,6 +112,13 @@
     
     <!-- Admin-only access check -->
     <script>
+        // Update login button in header
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof updateLoginButton === 'function') {
+                updateLoginButton();
+            }
+        });
+        
         // Check if user is admin
         const user = JSON.parse(localStorage.getItem('accvaults_user') || 'null');
         if (!user || !user.isStaff || user.role !== 'admin') {

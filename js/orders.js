@@ -1,8 +1,14 @@
 // Orders Page Functionality
-let currentUserEmail = localStorage.getItem('userEmail') || '';
+const user = JSON.parse(localStorage.getItem('accvaults_user') || 'null');
+let currentUserEmail = user?.email || '';
 
 // Check if user is logged in on page load
 document.addEventListener('DOMContentLoaded', () => {
+    // Update login button in header
+    if (typeof updateLoginButton === 'function') {
+        updateLoginButton();
+    }
+    
     const lookupSection = document.querySelector('.order-lookup');
     
     if (currentUserEmail) {
@@ -227,7 +233,7 @@ function formatDate(dateString) {
 }
 
 function logout() {
-    localStorage.removeItem('userEmail');
+    localStorage.removeItem('accvaults_user');
     currentUserEmail = '';
     window.location.reload();
 }
