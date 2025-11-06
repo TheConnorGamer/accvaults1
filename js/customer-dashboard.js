@@ -67,8 +67,9 @@ async function loadDashboardData() {
         // Calculate stats
         const completedOrders = orders.filter(o => o.status === 'completed').length;
         const totalSpent = orders.reduce((sum, o) => {
-            const orderValue = parseFloat(o.value || 0);
-            console.log('Adding order', o.uniqid, 'value:', o.value, 'to total. Current sum:', sum);
+            // Use value if available (converted GBP), otherwise use total (original currency)
+            const orderValue = parseFloat(o.value || o.total || 0);
+            console.log('Adding order', o.uniqid, 'value:', o.value, 'total:', o.total, 'using:', orderValue, 'Current sum:', sum);
             return sum + orderValue;
         }, 0);
         
