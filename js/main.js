@@ -1307,6 +1307,13 @@ function updateLoginButton() {
 // User menu for logged in users
 function openUserMenu() {
     const user = JSON.parse(localStorage.getItem('accvaults_user'));
+    
+    // If not logged in, show login modal instead
+    if (!user || !user.loggedIn) {
+        openLoginModal();
+        return;
+    }
+    
     const isStaff = user && user.isStaff;
     
     const modal = document.createElement('div');
