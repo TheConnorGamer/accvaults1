@@ -781,16 +781,20 @@ body:not(.modal-open) {
     
     .modal-product-card {
         padding: 12px;
+        display: flex !important;
+        flex-direction: column !important;
     }
     
     .modal-product-header {
         min-height: 100px;
         padding: 16px;
+        display: flex !important;
     }
     
     .modal-product-logo {
         width: 70px;
         height: 70px;
+        display: flex !important;
     }
     
     .modal-product-title {
@@ -800,18 +804,30 @@ body:not(.modal-open) {
         word-wrap: break-word;
         overflow-wrap: break-word;
         hyphens: auto;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: #fff !important;
     }
     
     .modal-product-body {
         padding: 12px !important;
+        display: block !important;
+        visibility: visible !important;
     }
     
     .modal-product-price {
         font-size: 15px !important;
+        display: inline-block !important;
+        visibility: visible !important;
+        color: #a78bfa !important;
     }
     
     .modal-product-stock {
         font-size: 9px !important;
+        display: inline-block !important;
+        visibility: visible !important;
+        color: #10b981 !important;
     }
     
     .modal-buy-btn {
