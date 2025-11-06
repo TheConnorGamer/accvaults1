@@ -616,19 +616,38 @@ body:not(.modal-open) {
     
     .mobile-menu-btn {
         display: flex !important;
+        padding: 10px 12px !important;
+        margin-right: 8px;
     }
     
     .nav-actions {
-        gap: 6px;
+        gap: 8px;
+        margin-left: auto;
     }
     
     .nav-action {
-        padding: 8px 10px;
-        font-size: 12px;
+        padding: 10px !important;
+        font-size: 14px !important;
+        min-width: 40px;
+        justify-content: center;
     }
     
     .nav-action span {
         display: none;
+    }
+    
+    .nav-action i {
+        font-size: 16px;
+    }
+    
+    .logo-text {
+        font-size: 18px !important;
+    }
+    
+    .logo-image,
+    .logo-icon {
+        width: 35px !important;
+        height: 35px !important;
     }
     
     /* Hero Section */
