@@ -610,15 +610,24 @@ body:not(.modal-open) {
         padding: 20px;
         gap: 12px;
         z-index: 1000;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    .mobile-menu-btn {
+        display: flex !important;
     }
     
     .nav-actions {
-        gap: 8px;
+        gap: 6px;
     }
     
     .nav-action {
-        padding: 8px 12px;
-        font-size: 13px;
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+    
+    .nav-action span {
+        display: none;
     }
     
     /* Hero Section */
