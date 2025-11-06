@@ -70,16 +70,30 @@ async function loadOrders() {
     if (emptyEl) emptyEl.style.display = 'none';
 
     try {
-        // Check if Paylix client is available
-        if (!window.paylixClient || !window.paylixClient.getCustomerOrders) {
-            // No Paylix - show empty state
+        // Get customer orders from Paylix API
+        const response = await fetch('/api/paylix-api', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                action: 'getCustomerOrders',
+                email: email 
+            })
+        });
+
+        if (!response.ok) {
             if (loadingEl) loadingEl.style.display = 'none';
             if (emptyEl) emptyEl.style.display = 'flex';
             return;
         }
-        
-        const result = await window.paylixClient.getCustomerOrders(email);
-        const orders = result.data || [];
+
+        const result = await response.json();
+        if (!result.success) {
+            if (loadingEl) loadingEl.style.display = 'none';
+            if (emptyEl) emptyEl.style.display = 'flex';
+            return;
+        }
+
+        const orders = result.data?.data?.orders || result.data?.orders || result.data || [];
 
         if (loadingEl) loadingEl.style.display = 'none';
 
@@ -144,7 +158,27 @@ async function loadOrders() {
 
 async function viewOrderDetails(orderId) {
     try {
-        const order = await window.paylixClient.getOrder(orderId);
+        const response = await fetch('/api/paylix-api', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                action: 'getOrder',
+                orderId: orderId 
+            })
+        });
+
+        if (!response.ok) {
+            showNotification('❌ Failed to load order details');
+            return;
+        }
+
+        const result = await response.json();
+        if (!result.success) {
+            showNotification('❌ Failed to load order details');
+            return;
+        }
+
+        const orderData = result.data?.data || result.data;
         
         const modal = document.createElement('div');
         modal.className = 'order-modal';
@@ -158,37 +192,37 @@ async function viewOrderDetails(orderId) {
                 <div class="order-details">
                     <div class="detail-row">
                         <span class="detail-label">Order ID:</span>
-                        <span class="detail-value">${order.data.uniqid || order.data.id}</span>
+                        <span class="detail-value">${orderData.uniqid || orderData.id}</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Status:</span>
-                        <span class="detail-value ${getStatusClass(order.data.status)}">
-                            ${order.data.status}
+                        <span class="detail-value ${getStatusClass(orderData.status)}">
+                            ${orderData.status}
                         </span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Date:</span>
-                        <span class="detail-value">${formatDate(order.data.created_at)}</span>
+                        <span class="detail-value">${formatDate(orderData.created_at)}</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Total:</span>
-                        <span class="detail-value">£${(order.data.total || 0).toFixed(2)}</span>
+                        <span class="detail-value">£${(orderData.total || 0).toFixed(2)}</span>
                     </div>
-                    ${order.data.product_name ? `
+                    ${orderData.product_name ? `
                         <div class="detail-row">
                             <span class="detail-label">Product:</span>
-                            <span class="detail-value">${order.data.product_name}</span>
+                            <span class="detail-value">${orderData.product_name}</span>
                         </div>
                     ` : ''}
-                    ${order.data.gateway ? `
+                    ${orderData.gateway ? `
                         <div class="detail-row">
                             <span class="detail-label">Payment Method:</span>
-                            <span class="detail-value">${order.data.gateway}</span>
+                            <span class="detail-value">${orderData.gateway}</span>
                         </div>
                     ` : ''}
                 </div>
 
-                ${order.data.status === 'completed' ? `
+                ${orderData.status === 'completed' ? `
                     <div class="order-success">
                         <i class="fas fa-check-circle"></i>
                         <p>Your order has been completed successfully!</p>
