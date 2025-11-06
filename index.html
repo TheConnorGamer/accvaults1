@@ -285,8 +285,8 @@
                         clearInterval(checkInterval);
                     } else if (attempts >= maxAttempts) {
                         clearInterval(checkInterval);
-                        console.error('❌ Paylix failed to load after 5 seconds');
-                        console.error('Check if https://cdn.paylix.gg/static/js/embed.js is accessible');
+                        console.warn('⚠️ Paylix embed script not loaded - checkout buttons may not work');
+                        console.warn('This is normal if running locally without Paylix integration');
                     }
                 }, 100);
             }

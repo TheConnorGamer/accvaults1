@@ -595,7 +595,21 @@ body:not(.modal-open) {
 @media (max-width: 768px) {
     /* Navigation */
     .nav-links {
-        display: none;
+        display: none !important;
+    }
+    
+    .nav-links.active {
+        display: flex !important;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--secondary-bg);
+        border-top: 1px solid var(--border-color);
+        padding: 20px;
+        gap: 12px;
+        z-index: 1000;
     }
     
     .nav-actions {
@@ -734,22 +748,70 @@ body:not(.modal-open) {
     .checkout-content {
         width: 95%;
         max-width: 100%;
-        margin: 20px;
-        padding: 20px;
+        margin: 10px;
+        padding: 16px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .selector-header {
+        margin: -16px -16px 20px -16px;
+        border-radius: 12px 12px 0 0;
     }
     
     .selector-header h2 {
-        font-size: 22px;
+        font-size: 20px !important;
+        margin: 0 !important;
+    }
+    
+    .selector-products-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        padding: 0 !important;
+    }
+    
+    .modal-product-card {
+        padding: 12px;
     }
     
     .modal-product-header {
-        min-height: 120px;
-        padding: 20px;
+        min-height: 100px;
+        padding: 16px;
     }
     
     .modal-product-logo {
-        width: 80px;
-        height: 80px;
+        width: 70px;
+        height: 70px;
+    }
+    
+    .modal-product-title {
+        font-size: 13px !important;
+        line-height: 1.4 !important;
+        margin: 0 !important;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+    
+    .modal-product-body {
+        padding: 12px !important;
+    }
+    
+    .modal-product-price {
+        font-size: 15px !important;
+    }
+    
+    .modal-product-stock {
+        font-size: 9px !important;
+    }
+    
+    .modal-buy-btn {
+        padding: 12px !important;
+        font-size: 13px !important;
+    }
+    
+    .modal-product-footer {
+        padding: 0 12px 12px !important;
     }
 }
 

@@ -105,17 +105,13 @@ async function loadOrders() {
             orders = result.data.data;
         }
 
-        console.log('Orders found:', orders.length, orders);
-        console.log('Looking for email:', email);
+        console.log(`📦 Found ${orders.length} orders for ${email}`);
 
         // Filter orders by email (in case API doesn't filter properly)
         orders = orders.filter(order => {
             const orderEmail = order.customer_email || order.email || '';
-            console.log('Checking order:', order.uniqid, 'Email:', orderEmail, 'Match:', orderEmail.toLowerCase() === email.toLowerCase());
             return orderEmail.toLowerCase() === email.toLowerCase();
         });
-
-        console.log('Orders after filtering by email:', orders.length, orders);
 
         if (loadingEl) loadingEl.style.display = 'none';
 
@@ -138,7 +134,6 @@ async function loadOrders() {
                 // Get the correct total - use value if available, otherwise total
                 // value = converted GBP amount, total = original amount in order currency
                 const total = parseFloat(order.value || order.total || 0);
-                console.log('Order', order.uniqid, 'value:', order.value, 'total:', order.total, 'using:', total);
 
                 return `
             <div class="order-card">

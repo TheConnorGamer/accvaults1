@@ -81,6 +81,12 @@ async function loadPaylixCategories() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'getCategories' })
         });
+        
+        if (!response.ok) {
+            console.warn('⚠️ Failed to load categories from Paylix API');
+            return;
+        }
+        
         const result = await response.json();
         
         if (result.success && result.data?.data?.categories) {
@@ -348,30 +354,30 @@ function renderReviews() {
 // ===== LOAD REAL REVIEWS FROM PAYLIX =====
 async function loadRealReviews() {
     try {
-        console.log('Fetching feedback through Vercel function...');
+        console.log('📝 Fetching reviews from Paylix API...');
         
-        // Call through Vercel function (which has the API key)
+        // Call through Cloudflare function (which has the API key)
         const response = await fetch('/api/paylix-api', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'getReviews' })
         });
-        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+            console.warn('⚠️ Failed to fetch reviews:', response.status);
+            throw new Error('Failed to fetch reviews');
+        }
         
         const result = await response.json();
-        console.log('Vercel function result:', result);
+        console.log('✅ Reviews API response:', result);
         
         const data = result.data || result;
-        console.log('Paylix feedback data:', data);
         
         const reviewsGrid = document.getElementById('reviewsGrid');
         if (!reviewsGrid) return;
         
         // Extract feedback array from response
         let feedback = [];
-        
-        // Log the full data structure to debug
-        console.log('Full data structure:', JSON.stringify(data, null, 2));
         
         if (data && data.data && data.data.feedback) {
             feedback = data.data.feedback;
@@ -383,12 +389,8 @@ async function loadRealReviews() {
             feedback = [data.feedback];
         }
         
-        console.log('Extracted feedback:', feedback);
-        console.log('Feedback length:', feedback.length);
-        
-        // Don't filter for now - show ALL feedback to debug
         const validFeedback = feedback || [];
-        console.log('Valid feedback (unfiltered):', validFeedback);
+        console.log(`📊 Found ${validFeedback.length} reviews`);
         
         if (validFeedback.length > 0) {
             // Fetch customer info for each review
