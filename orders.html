@@ -14,10 +14,11 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-content">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon">A</div>
+                <div class="logo">
+                    <img src="images/logo.png" alt="AccVaults Logo" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="logo-icon" style="display: none;">A</div>
                     <span class="logo-text">AccVaults</span>
-                </a>
+                </div>
 
                 <div class="nav-links" id="navLinks">
                     <a href="index.html" class="nav-link">Home</a>
@@ -37,6 +38,10 @@
                         <i class="fas fa-sign-in-alt"></i>
                     </button>
                 </div>
+
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </nav>
