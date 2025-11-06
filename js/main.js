@@ -1468,9 +1468,9 @@ function openProductSelector(groupId) {
                                     </div>
                                 </div>
                                 <div class="modal-product-body" style="display: block !important; padding: 16px; visibility: visible !important; background: rgba(0,0,0,0.3);">
-                                    <div style="display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: center; margin-bottom: 12px;">
-                                        <span class="modal-product-price" style="font-size: 18px !important; font-weight: 700 !important; color: #a78bfa !important; display: block !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">£${product.price.toFixed(2)}</span>
-                                        <span class="modal-product-stock" style="font-size: 11px !important; color: #10b981 !important; font-weight: 700 !important; text-transform: uppercase; display: block !important; white-space: nowrap; text-align: right;">✓ IN STOCK</span>
+                                    <div style="display: flex !important; align-items: center; gap: 15px; margin-bottom: 12px;">
+                                        <span class="modal-product-price" style="font-size: 18px !important; font-weight: 700 !important; color: #a78bfa !important; display: inline-block !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">£${product.price.toFixed(2)}</span>
+                                        <span class="modal-product-stock" style="font-size: 11px !important; color: #10b981 !important; font-weight: 700 !important; text-transform: uppercase; display: inline-block !important; white-space: nowrap;">✓ IN STOCK</span>
                                     </div>
                                     <h4 class="modal-product-title" style="font-size: 15px !important; font-weight: 600 !important; color: #ffffff !important; margin: 0 !important; line-height: 1.5 !important; display: block !important; visibility: visible !important; opacity: 1 !important; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">${product.name}</h4>
                                 </div>
