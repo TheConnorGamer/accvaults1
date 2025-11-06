@@ -19,15 +19,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadDashboardData() {
     try {
-        // Check if Paylix client is available
-        if (!window.paylixClient || !window.paylixClient.getCustomerOrders) {
+        // Get customer orders from Paylix API
+        const response = await fetch('/api/paylix-api', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                action: 'getCustomerOrders',
+                email: user.email 
+            })
+        });
+
+        if (!response.ok) {
             showPlaceholderData();
             return;
         }
 
-        // Get customer orders from Paylix
-        const result = await window.paylixClient.getCustomerOrders(user.email);
-        const orders = result.data || [];
+        const result = await response.json();
+        if (!result.success) {
+            showPlaceholderData();
+            return;
+        }
+
+        const orders = result.data?.orders || result.data || [];
 
         // Calculate stats
         const completedOrders = orders.filter(o => o.status === 'completed').length;
