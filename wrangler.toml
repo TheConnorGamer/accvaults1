@@ -6,7 +6,7 @@ pages_build_output_dir = "."
 [[d1_databases]]
 binding = "DB"
 database_name = "accvaults_users"
-database_id = "REPLACE_WITH_YOUR_DATABASE_ID"
+database_id = "9fac62b6-7c24-439b-9ef4-406a96267e5f"
 
 # This file is for Wrangler CLI deployment
 # To deploy: wrangler pages deploy . --project-name=accvaults
