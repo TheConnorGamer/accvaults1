@@ -265,8 +265,9 @@ body::after {
 
 .mobile-menu-btn {
     display: none;
-    background: var(--secondary-bg);
-    border: 1px solid var(--border-color);
+    background: var(--gradient-1);
+    border: 1px solid rgba(131, 89, 207, 0.5);
+    order: -1;
     color: var(--text-primary);
     padding: 10px;
     border-radius: 8px;

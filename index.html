@@ -45,6 +45,10 @@
                     <a href="downloads.html" class="nav-link downloads-btn">Downloads</a>
                 </div>
 
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+
                 <div class="nav-actions">
                     <a href="https://discord.gg/accvaults" target="_blank" class="nav-action discord-btn">
                         <i class="fab fa-discord"></i> Discord
@@ -56,10 +60,6 @@
                         <i class="fas fa-sign-in-alt"></i>
                     </button>
                 </div>
-
-                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars"></i>
-                </button>
             </div>
         </div>
     </nav>
@@ -233,8 +233,8 @@
         </div>
     </footer>
 
-    <script src="js/paylix-client.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/paylix-client.js?v=2"></script>
+    <script src="js/main.js?v=2"></script>
     <script>
         // Initialize after everything loads
         document.addEventListener('DOMContentLoaded', () => {
