@@ -1162,52 +1162,49 @@ async function handleLogin(e) {
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
     submitBtn.disabled = true;
     
-    // Staff/Admin emails (add your admin emails here)
-    const staffEmails = ['conazukin@gmail.com', 'admin@accvaults.com', 'staff@accvaults.com'];
-    const isStaff = staffEmails.includes(email.toLowerCase());
-    
     try {
-        // For staff, allow login without checking orders
-        if (isStaff) {
-            localStorage.setItem('accvaults_user', JSON.stringify({
+        // Call auth API
+        const response = await fetch('/api/auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                action: 'login',
                 email: email,
+                password: password
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success && result.user) {
+            // Store user session
+            localStorage.setItem('accvaults_user', JSON.stringify({
+                email: result.user.email,
+                username: result.user.username,
                 loggedIn: true,
-                isStaff: true,
-                role: 'admin',
+                isStaff: result.user.isStaff,
+                role: result.user.role,
+                customerId: result.user.customerId,
                 loginTime: new Date().toISOString()
             }));
-            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userEmail', result.user.email);
             
-            showNotification('✅ Welcome back, Admin!');
-            closeAuthModal();
-            updateLoginButton();
-            
-            // Redirect to dashboard after 1 second
-            setTimeout(() => {
-                window.location.href = 'dashboard.html';
-            }, 1000);
-            return;
-        }
-        
-        // For regular users, check if they have orders
-        const orders = await window.paylixClient.getCustomerOrders(email);
-        
-        if (orders && orders.length > 0) {
-            // Customer exists - store session
-            localStorage.setItem('accvaults_user', JSON.stringify({
-                email: email,
-                loggedIn: true,
-                isStaff: false,
-                role: 'customer',
-                loginTime: new Date().toISOString()
-            }));
-            localStorage.setItem('userEmail', email);
-            
-            showNotification('✅ Welcome back! You have been logged in.');
-            closeAuthModal();
-            updateLoginButton();
+            if (result.user.isStaff) {
+                showNotification('✅ Welcome back, Admin!');
+                closeAuthModal();
+                updateLoginButton();
+                
+                // Redirect to dashboard
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+            } else {
+                showNotification('✅ Welcome back!');
+                closeAuthModal();
+                updateLoginButton();
+            }
         } else {
-            showNotification('❌ No account found with this email. Please register or make a purchase first.');
+            showNotification(`❌ ${result.error || 'Login failed'}`);
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
         }
@@ -1233,6 +1230,12 @@ async function handleRegister(e) {
         return;
     }
     
+    // Validate password strength
+    if (password.length < 6) {
+        showNotification('❌ Password must be at least 6 characters long');
+        return;
+    }
+    
     // Show loading
     const submitBtn = form.querySelector('.auth-submit-btn');
     const originalText = submitBtn.innerHTML;
@@ -1240,30 +1243,41 @@ async function handleRegister(e) {
     submitBtn.disabled = true;
     
     try {
-        // Check if customer already exists
-        const orders = await window.paylixClient.getCustomerOrders(email);
-        
-        if (orders && orders.length > 0) {
-            showNotification('❌ An account with this email already exists. Please login instead.');
+        // Call auth API
+        const response = await fetch('/api/auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                action: 'register',
+                email: email,
+                password: password,
+                username: username
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success && result.user) {
+            // Store user session
+            localStorage.setItem('accvaults_user', JSON.stringify({
+                email: result.user.email,
+                username: result.user.username,
+                loggedIn: true,
+                isStaff: false,
+                role: 'customer',
+                customerId: result.user.customerId,
+                loginTime: new Date().toISOString()
+            }));
+            localStorage.setItem('userEmail', result.user.email);
+            
+            showNotification('✅ Account created successfully!');
+            closeAuthModal();
+            updateLoginButton();
+        } else {
+            showNotification(`❌ ${result.error || 'Registration failed'}`);
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
-            return;
         }
-        
-        // Store registration info (they'll be fully registered when they make their first purchase)
-        localStorage.setItem('accvaults_user', JSON.stringify({
-            email: email,
-            username: username,
-            loggedIn: true,
-            registered: true,
-            loginTime: new Date().toISOString()
-        }));
-        // Also store email for orders page
-        localStorage.setItem('userEmail', email);
-        
-        showNotification('✅ Account created! Make your first purchase to complete registration.');
-        closeAuthModal();
-        updateLoginButton();
     } catch (error) {
         console.error('Registration error:', error);
         showNotification('❌ Registration failed. Please try again.');
