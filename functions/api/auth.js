@@ -107,10 +107,10 @@ async function handleLogin(email, password, apiKey) {
         });
     }
 
-    // Check customer in Paylix
+    // Check customer in Paylix using proper API endpoint
     try {
-        // Get customer by email from Paylix
-        const response = await fetch(`https://dev.paylix.gg/v1/customers?email=${encodeURIComponent(email)}`, {
+        // List customers and filter by email (Paylix API structure)
+        const response = await fetch('https://dev.paylix.gg/v1/customers', {
             headers: {
                 'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json'
@@ -118,6 +118,7 @@ async function handleLogin(email, password, apiKey) {
         });
 
         if (!response.ok) {
+            console.error('Paylix API error:', response.status);
             return new Response(JSON.stringify({
                 success: false,
                 error: 'Invalid email or password'
@@ -130,10 +131,17 @@ async function handleLogin(email, password, apiKey) {
             });
         }
 
-        const data = await response.json();
-        const customers = data.data?.customers || [];
+        const text = await response.text();
+        const cleanText = text.trim().replace(/^\uFEFF/, '');
+        const data = JSON.parse(cleanText);
         
-        if (customers.length === 0) {
+        // Get customers array from response
+        const allCustomers = data.data?.customers || data.customers || [];
+        
+        // Find customer by email
+        const customer = allCustomers.find(c => c.email?.toLowerCase() === email.toLowerCase());
+        
+        if (!customer) {
             return new Response(JSON.stringify({
                 success: false,
                 error: 'No account found. Please register first.'
@@ -146,8 +154,6 @@ async function handleLogin(email, password, apiKey) {
             });
         }
 
-        const customer = customers[0];
-        
         // Verify password (stored in customer metadata)
         if (customer.metadata && customer.metadata.password_hash) {
             if (!verifyPassword(password, customer.metadata.password_hash)) {
@@ -168,10 +174,10 @@ async function handleLogin(email, password, apiKey) {
             success: true,
             user: {
                 email: customer.email,
-                username: customer.metadata?.username || customer.email.split('@')[0],
+                username: customer.name || customer.metadata?.username || customer.email.split('@')[0],
                 role: 'customer',
                 isStaff: false,
-                customerId: customer.id
+                customerId: customer.uniqid || customer.id
             }
         }), {
             headers: {
@@ -198,7 +204,7 @@ async function handleLogin(email, password, apiKey) {
 async function handleRegister(email, password, username, apiKey) {
     try {
         // Check if customer already exists
-        const checkResponse = await fetch(`https://dev.paylix.gg/v1/customers?email=${encodeURIComponent(email)}`, {
+        const checkResponse = await fetch('https://dev.paylix.gg/v1/customers', {
             headers: {
                 'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json'
@@ -206,10 +212,14 @@ async function handleRegister(email, password, username, apiKey) {
         });
 
         if (checkResponse.ok) {
-            const data = await checkResponse.json();
-            const customers = data.data?.customers || [];
+            const text = await checkResponse.text();
+            const cleanText = text.trim().replace(/^\uFEFF/, '');
+            const data = JSON.parse(cleanText);
+            const allCustomers = data.data?.customers || data.customers || [];
             
-            if (customers.length > 0) {
+            const existingCustomer = allCustomers.find(c => c.email?.toLowerCase() === email.toLowerCase());
+            
+            if (existingCustomer) {
                 return new Response(JSON.stringify({
                     success: false,
                     error: 'An account with this email already exists'
@@ -223,28 +233,38 @@ async function handleRegister(email, password, username, apiKey) {
             }
         }
 
-        // Create new customer in Paylix
+        // Parse name from username or email
+        const nameParts = (username || email.split('@')[0]).split(/[\s._-]/);
+        const firstName = nameParts[0] || 'User';
+        const lastName = nameParts[1] || '';
+
+        // Create new customer in Paylix with REQUIRED fields
+        const customerPayload = {
+            email: email,
+            name: firstName,
+            surname: lastName || 'Customer',
+            metadata: {
+                username: username || email.split('@')[0],
+                password_hash: hashPassword(password),
+                registered_at: new Date().toISOString()
+            }
+        };
+
         const createResponse = await fetch('https://dev.paylix.gg/v1/customers', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                email: email,
-                metadata: {
-                    username: username || email.split('@')[0],
-                    password_hash: hashPassword(password),
-                    registered_at: new Date().toISOString()
-                }
-            })
+            body: JSON.stringify(customerPayload)
         });
 
         if (!createResponse.ok) {
-            const errorData = await createResponse.json();
+            const errorText = await createResponse.text();
+            console.error('Paylix create customer error:', errorText);
             return new Response(JSON.stringify({
                 success: false,
-                error: errorData.message || 'Registration failed'
+                error: 'Registration failed. Please try again.'
             }), {
                 status: 500,
                 headers: {
@@ -254,8 +274,10 @@ async function handleRegister(email, password, username, apiKey) {
             });
         }
 
-        const customerData = await createResponse.json();
-        const customer = customerData.data?.customer;
+        const responseText = await createResponse.text();
+        const cleanResponseText = responseText.trim().replace(/^\uFEFF/, '');
+        const customerData = JSON.parse(cleanResponseText);
+        const customer = customerData.data?.customer || customerData.customer;
 
         return new Response(JSON.stringify({
             success: true,
@@ -264,7 +286,7 @@ async function handleRegister(email, password, username, apiKey) {
                 username: customer.metadata?.username || username,
                 role: 'customer',
                 isStaff: false,
-                customerId: customer.id
+                customerId: customer.uniqid || customer.id
             }
         }), {
             headers: {
