@@ -53,14 +53,16 @@ async function loadDashboardData() {
         }
 
         console.log('Orders found:', orders.length, orders);
+        console.log('User email:', user.email);
 
         // Filter orders by email (in case API doesn't filter properly)
         orders = orders.filter(order => {
             const orderEmail = order.customer_email || order.email || '';
+            console.log('Checking order:', order.uniqid, 'Email:', orderEmail, 'Match:', orderEmail.toLowerCase() === user.email.toLowerCase());
             return orderEmail.toLowerCase() === user.email.toLowerCase();
         });
 
-        console.log('Orders after filtering by email:', orders.length);
+        console.log('Orders after filtering by email:', orders.length, orders);
 
         // Calculate stats
         const completedOrders = orders.filter(o => o.status === 'completed').length;
@@ -72,20 +74,14 @@ async function loadDashboardData() {
         
         // Customer since (from user registration or first order)
         if (user.created_at) {
-            const date = new Date(user.created_at);
-            document.getElementById('customerSince').textContent = date.toLocaleDateString('en-GB', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric'
-            });
+            document.getElementById('customerSince').textContent = formatDate(user.created_at);
         } else if (orders.length > 0) {
-            const oldestOrder = orders.sort((a, b) => new Date(a.created_at) - new Date(b.created_at))[0];
-            const date = new Date(oldestOrder.created_at);
-            document.getElementById('customerSince').textContent = date.toLocaleDateString('en-GB', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric'
-            });
+            const oldestOrder = orders.sort((a, b) => {
+                const aTime = typeof a.created_at === 'number' ? a.created_at : new Date(a.created_at).getTime() / 1000;
+                const bTime = typeof b.created_at === 'number' ? b.created_at : new Date(b.created_at).getTime() / 1000;
+                return aTime - bTime;
+            })[0];
+            document.getElementById('customerSince').textContent = formatDate(oldestOrder.created_at);
         }
 
         // Display latest order

@@ -106,14 +106,16 @@ async function loadOrders() {
         }
 
         console.log('Orders found:', orders.length, orders);
+        console.log('Looking for email:', email);
 
         // Filter orders by email (in case API doesn't filter properly)
         orders = orders.filter(order => {
             const orderEmail = order.customer_email || order.email || '';
+            console.log('Checking order:', order.uniqid, 'Email:', orderEmail, 'Match:', orderEmail.toLowerCase() === email.toLowerCase());
             return orderEmail.toLowerCase() === email.toLowerCase();
         });
 
-        console.log('Orders after filtering by email:', orders.length);
+        console.log('Orders after filtering by email:', orders.length, orders);
 
         if (loadingEl) loadingEl.style.display = 'none';
 
