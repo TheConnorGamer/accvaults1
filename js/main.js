@@ -13,6 +13,15 @@ function toggleMobileMenu() {
     navLinks.classList.toggle('active');
 }
 
+// Force hide nav on mobile on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.getElementById('navLinks');
+    if (window.innerWidth <= 768 && navLinks) {
+        navLinks.style.display = 'none';
+        navLinks.classList.remove('active');
+    }
+});
+
 // ===== COUNTDOWN TIMER =====
 function updateCountdown() {
     // Check if countdown elements exist before updating
@@ -1426,24 +1435,25 @@ function openProductSelector(groupId) {
                         </svg>`;
                     
                     return `
-                        <div class="modal-product-card">
-                            <div class="modal-product-header">
-                                <div class="modal-product-logo">
+                        <div class="modal-product-card" style="display: flex !important; flex-direction: column !important; padding: 12px;">
+                            <div class="modal-product-header" style="display: flex !important; min-height: 100px; padding: 16px;">
+                                <div class="modal-product-logo" style="width: 70px; height: 70px; display: flex !important;">
                                     ${logoContent}
                                 </div>
                             </div>
-                            <div class="modal-product-body">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                    <span class="modal-product-price">£${product.price.toFixed(2)}</span>
-                                    <span class="modal-product-stock">In Stock</span>
+                            <div class="modal-product-body" style="display: block !important; padding: 12px; visibility: visible !important;">
+                                <div style="display: flex !important; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <span class="modal-product-price" style="font-size: 16px; font-weight: 700; color: #a78bfa !important; display: inline-block !important;">£${product.price.toFixed(2)}</span>
+                                    <span class="modal-product-stock" style="font-size: 10px; color: #10b981 !important; font-weight: 700; display: inline-block !important;">In Stock</span>
                                 </div>
-                                <h4 class="modal-product-title">${product.name}</h4>
+                                <h4 class="modal-product-title" style="font-size: 14px !important; font-weight: 600; color: #fff !important; margin: 0; line-height: 1.4; display: block !important; visibility: visible !important;">${product.name}</h4>
                             </div>
-                            <div class="modal-product-footer">
+                            <div class="modal-product-footer" style="padding: 0 12px 12px;">
                                 <button 
                                     class="modal-buy-btn" 
                                     data-paylixecommerce-product="${product.paylixId}"
-                                    type="submit">
+                                    type="submit"
+                                    style="width: 100%; padding: 12px; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); border: none; border-radius: 12px; color: white; font-weight: 700; cursor: pointer;">
                                     <i class="fas fa-arrow-right"></i>
                                 </button>
                             </div>
