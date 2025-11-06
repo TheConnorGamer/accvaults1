@@ -193,6 +193,11 @@ body::after {
     position: relative;
 }
 
+/* Hide mobile-only links on desktop */
+.mobile-only-link {
+    display: none !important;
+}
+
 .nav-link:hover {
     color: var(--text-primary);
     background: var(--hover-bg);
@@ -616,20 +621,26 @@ body:not(.modal-open) {
     
     .mobile-menu-btn {
         display: flex !important;
-        padding: 10px 12px !important;
-        margin-right: 8px;
+        padding: 12px !important;
+        margin-right: auto;
     }
     
     .nav-actions {
-        gap: 8px;
+        gap: 10px;
         margin-left: auto;
     }
     
-    .nav-action {
-        padding: 10px !important;
+    /* Hide currency and login buttons on mobile - they'll be in hamburger menu */
+    .currency-btn,
+    .login-btn {
+        display: none !important;
+    }
+    
+    /* Keep Discord button visible */
+    .discord-btn {
+        display: flex !important;
+        padding: 10px 14px !important;
         font-size: 14px !important;
-        min-width: 40px;
-        justify-content: center;
     }
     
     .nav-action span {
@@ -641,13 +652,27 @@ body:not(.modal-open) {
     }
     
     .logo-text {
-        font-size: 18px !important;
+        font-size: 20px !important;
     }
     
     .logo-image,
     .logo-icon {
-        width: 35px !important;
-        height: 35px !important;
+        width: 38px !important;
+        height: 38px !important;
+    }
+    
+    /* Make announcement banner always visible */
+    .announcement-banner {
+        display: block !important;
+        font-size: 13px !important;
+        padding: 10px 16px !important;
+    }
+    
+    /* Show mobile-only links in hamburger menu */
+    .nav-links.active .mobile-only-link {
+        display: flex !important;
+        align-items: center;
+        gap: 10px;
     }
     
     /* Hero Section */
