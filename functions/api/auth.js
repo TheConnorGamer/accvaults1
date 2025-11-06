@@ -236,19 +236,26 @@ async function handleRegister(email, password, username, apiKey) {
         // Parse name from username or email
         const nameParts = (username || email.split('@')[0]).split(/[\s._-]/);
         const firstName = nameParts[0] || 'User';
-        const lastName = nameParts[1] || '';
+        const lastName = nameParts[1] || 'Customer';
 
         // Create new customer in Paylix with REQUIRED fields
         const customerPayload = {
-            email: email,
-            name: firstName,
-            surname: lastName || 'Customer',
+            email: email.trim(),
+            name: firstName.trim(),
+            surname: lastName.trim(),
             metadata: {
-                username: username || email.split('@')[0],
+                username: (username || email.split('@')[0]).trim(),
                 password_hash: hashPassword(password),
-                registered_at: new Date().toISOString()
+                registered_at: new Date().toISOString(),
+                registration_source: 'website'
             }
         };
+
+        console.log('Creating customer with payload:', {
+            email: customerPayload.email,
+            name: customerPayload.name,
+            surname: customerPayload.surname
+        });
 
         const createResponse = await fetch('https://dev.paylix.gg/v1/customers', {
             method: 'POST',
@@ -261,10 +268,25 @@ async function handleRegister(email, password, username, apiKey) {
 
         if (!createResponse.ok) {
             const errorText = await createResponse.text();
-            console.error('Paylix create customer error:', errorText);
+            console.error('Paylix create customer error:', {
+                status: createResponse.status,
+                statusText: createResponse.statusText,
+                body: errorText
+            });
+            
+            // Try to parse error message
+            let errorMessage = 'Registration failed. Please try again.';
+            try {
+                const errorData = JSON.parse(errorText);
+                errorMessage = errorData.message || errorData.error || errorMessage;
+            } catch (e) {
+                // Use default message
+            }
+            
             return new Response(JSON.stringify({
                 success: false,
-                error: 'Registration failed. Please try again.'
+                error: errorMessage,
+                details: createResponse.status === 400 ? 'Invalid data provided' : 'Server error'
             }), {
                 status: 500,
                 headers: {

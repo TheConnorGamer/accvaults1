@@ -98,6 +98,18 @@
 
     <script src="js/paylix-client.js"></script>
     <script src="js/main.js"></script>
+    
+    <!-- Admin-only access check -->
+    <script>
+        // Check if user is admin
+        const user = JSON.parse(localStorage.getItem('accvaults_user') || 'null');
+        if (!user || !user.isStaff || user.role !== 'admin') {
+            // Not admin - redirect to home
+            alert('⛔ Access Denied: Admin privileges required');
+            window.location.href = 'index.html';
+        }
+    </script>
+    
     <script src="js/dashboard.js"></script>
 </body>
 </html>

@@ -1,0 +1,6 @@
+{
+  "customers": [],
+  "last_updated": "2025-01-06T20:08:00.000Z",
+  "note": "This file tracks customer registrations. All customer data is also stored in Paylix Customers API.",
+  "instructions": "To view all customers, check Paylix dashboard or use the Customers API endpoint."
+}
