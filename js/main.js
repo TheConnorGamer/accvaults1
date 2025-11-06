@@ -1377,8 +1377,8 @@ function openUserMenu() {
 function handleLogout() {
     localStorage.removeItem('accvaults_user');
     showNotification('👋 You have been logged out.');
-    closeAuthModal();
-    updateLoginButton();
+    // Redirect to home page
+    window.location.href = '/index.html';
 }
 
 // ===== CURRENCY (GBP ONLY) =====

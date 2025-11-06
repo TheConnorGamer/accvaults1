@@ -211,5 +211,5 @@ function formatDate(dateString) {
 function handleCustomerLogout() {
     localStorage.removeItem('accvaults_user');
     showNotification('👋 You have been logged out.');
-    window.location.href = 'index.html';
+    window.location.href = '/index.html';
 }

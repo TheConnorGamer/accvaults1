@@ -317,5 +317,6 @@ function formatDate(dateString) {
 function logout() {
     localStorage.removeItem('accvaults_user');
     currentUserEmail = '';
-    window.location.reload();
+    showNotification('👋 You have been logged out.');
+    window.location.href = '/index.html';
 }
