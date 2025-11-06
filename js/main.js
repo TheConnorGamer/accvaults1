@@ -1441,12 +1441,12 @@ function openProductSelector(groupId) {
                                     ${logoContent}
                                 </div>
                             </div>
-                            <div class="modal-product-body" style="display: block !important; padding: 12px; visibility: visible !important;">
-                                <div style="display: flex !important; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                                    <span class="modal-product-price" style="font-size: 16px; font-weight: 700; color: #a78bfa !important; display: inline-block !important;">£${product.price.toFixed(2)}</span>
-                                    <span class="modal-product-stock" style="font-size: 10px; color: #10b981 !important; font-weight: 700; display: inline-block !important;">In Stock</span>
+                            <div class="modal-product-body" style="display: block !important; padding: 16px; visibility: visible !important; background: rgba(0,0,0,0.3);">
+                                <div style="display: flex !important; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <span class="modal-product-price" style="font-size: 18px !important; font-weight: 700 !important; color: #a78bfa !important; display: inline-block !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">£${product.price.toFixed(2)}</span>
+                                    <span class="modal-product-stock" style="font-size: 11px !important; color: #10b981 !important; font-weight: 700 !important; text-transform: uppercase; display: inline-block !important;">✓ In Stock</span>
                                 </div>
-                                <h4 class="modal-product-title" style="font-size: 14px !important; font-weight: 600; color: #fff !important; margin: 0; line-height: 1.4; display: block !important; visibility: visible !important;">${product.name}</h4>
+                                <h4 class="modal-product-title" style="font-size: 15px !important; font-weight: 600 !important; color: #ffffff !important; margin: 0 !important; line-height: 1.5 !important; display: block !important; visibility: visible !important; opacity: 1 !important; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">${product.name}</h4>
                             </div>
                             <div class="modal-product-footer" style="padding: 0 12px 12px;">
                                 <button 
