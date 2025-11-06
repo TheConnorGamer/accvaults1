@@ -124,7 +124,19 @@ async function loadOrders() {
 
         // Display orders
         if (listEl) {
-            listEl.innerHTML = orders.map(order => `
+            listEl.innerHTML = orders.map(order => {
+                // Get the correct product name from cart items
+                let productName = 'Order';
+                if (order.cart && order.cart.length > 0) {
+                    productName = order.cart.map(item => `${item.quantity}x ${item.title}`).join(', ');
+                } else if (order.product_name) {
+                    productName = order.product_name;
+                }
+
+                // Get the correct total
+                const total = parseFloat(order.value || order.total || 0);
+
+                return `
             <div class="order-card">
                 <div class="order-header">
                     <div class="order-id">
@@ -144,28 +156,22 @@ async function loadOrders() {
                         </div>
                         <div class="order-detail">
                             <i class="fas fa-pound-sign"></i>
-                            <span>£${(order.total || 0).toFixed(2)}</span>
+                            <span>£${total.toFixed(2)}</span>
                         </div>
-                        ${order.product_name ? `
-                            <div class="order-detail">
-                                <i class="fas fa-box"></i>
-                                <span>${order.product_name}</span>
-                            </div>
-                        ` : ''}
+                        <div class="order-detail">
+                            <i class="fas fa-box"></i>
+                            <span>${productName}</span>
+                        </div>
                     </div>
                     <div class="order-actions">
                         <button onclick="viewOrderDetails('${order.uniqid || order.id}')" class="order-btn">
                             <i class="fas fa-eye"></i> View Details
                         </button>
-                        ${order.status === 'completed' && order.download_url ? `
-                            <a href="${order.download_url}" class="order-btn order-btn-primary" target="_blank">
-                                <i class="fas fa-download"></i> Download
-                            </a>
-                        ` : ''}
                     </div>
                 </div>
             </div>
-        `).join('');
+        `;
+            }).join('');
         }
 
     } catch (error) {
@@ -284,7 +290,18 @@ function getStatusIcon(status) {
 
 function formatDate(dateString) {
     if (!dateString) return 'N/A';
-    const date = new Date(dateString);
+    
+    // Handle Unix timestamp (if it's a number or numeric string)
+    let date;
+    if (typeof dateString === 'number' || !isNaN(dateString)) {
+        date = new Date(parseInt(dateString) * 1000); // Convert Unix timestamp to milliseconds
+    } else {
+        date = new Date(dateString);
+    }
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) return 'N/A';
+    
     return date.toLocaleDateString('en-GB', {
         day: '2-digit',
         month: 'short',

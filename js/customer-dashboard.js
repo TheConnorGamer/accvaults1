@@ -64,7 +64,7 @@ async function loadDashboardData() {
 
         // Calculate stats
         const completedOrders = orders.filter(o => o.status === 'completed').length;
-        const totalSpent = orders.reduce((sum, o) => sum + (parseFloat(o.total) || 0), 0);
+        const totalSpent = orders.reduce((sum, o) => sum + (parseFloat(o.value || o.total) || 0), 0);
         
         // Update stats
         document.getElementById('completedOrders').textContent = completedOrders;
@@ -91,11 +91,20 @@ async function loadDashboardData() {
         // Display latest order
         if (orders.length > 0) {
             const latestOrder = orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))[0];
+            
+            // Get product name from cart
+            let productName = 'Order';
+            if (latestOrder.cart && latestOrder.cart.length > 0) {
+                productName = latestOrder.cart.map(item => `${item.quantity}x ${item.title}`).join(', ');
+            } else if (latestOrder.product_name) {
+                productName = latestOrder.product_name;
+            }
+            
             document.getElementById('latestOrder').innerHTML = `
                 <div class="order-card">
                     <div class="order-header">
                         <div>
-                            <div class="order-title">${latestOrder.product_name || 'Order'}</div>
+                            <div class="order-title">${productName}</div>
                             <div class="order-invoice">Invoice #${latestOrder.uniqid || latestOrder.id} - ${formatDate(latestOrder.created_at)}</div>
                         </div>
                         <span class="order-status status-${latestOrder.status}">${latestOrder.status}</span>
@@ -108,17 +117,27 @@ async function loadDashboardData() {
         const recentOrders = orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5);
         
         if (recentOrders.length > 0) {
-            document.getElementById('recentOrders').innerHTML = recentOrders.map(order => `
+            document.getElementById('recentOrders').innerHTML = recentOrders.map(order => {
+                // Get product name from cart
+                let productName = 'Order';
+                if (order.cart && order.cart.length > 0) {
+                    productName = order.cart.map(item => `${item.quantity}x ${item.title}`).join(', ');
+                } else if (order.product_name) {
+                    productName = order.product_name;
+                }
+                
+                return `
                 <div class="order-card">
                     <div class="order-header">
                         <div>
-                            <div class="order-title">${order.product_name || 'Order'}</div>
+                            <div class="order-title">${productName}</div>
                             <div class="order-invoice">Invoice #${order.uniqid || order.id} - ${formatDate(order.created_at)}</div>
                         </div>
                         <span class="order-status status-${order.status}">${order.status}</span>
                     </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
         } else {
             document.getElementById('recentOrders').innerHTML = `
                 <div class="empty-state">
@@ -168,7 +187,18 @@ function showPlaceholderData() {
 
 function formatDate(dateString) {
     if (!dateString) return 'N/A';
-    const date = new Date(dateString);
+    
+    // Handle Unix timestamp (if it's a number or numeric string)
+    let date;
+    if (typeof dateString === 'number' || !isNaN(dateString)) {
+        date = new Date(parseInt(dateString) * 1000); // Convert Unix timestamp to milliseconds
+    } else {
+        date = new Date(dateString);
+    }
+    
+    // Check if date is valid
+    if (isNaN(date.getTime())) return 'N/A';
+    
     return date.toLocaleDateString('en-GB', {
         month: 'short',
         day: 'numeric',
