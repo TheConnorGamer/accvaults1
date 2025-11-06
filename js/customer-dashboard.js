@@ -66,7 +66,13 @@ async function loadDashboardData() {
 
         // Calculate stats
         const completedOrders = orders.filter(o => o.status === 'completed').length;
-        const totalSpent = orders.reduce((sum, o) => sum + (parseFloat(o.value || o.total) || 0), 0);
+        const totalSpent = orders.reduce((sum, o) => {
+            const orderValue = parseFloat(o.value || 0);
+            console.log('Adding order', o.uniqid, 'value:', o.value, 'to total. Current sum:', sum);
+            return sum + orderValue;
+        }, 0);
+        
+        console.log('Final total spent:', totalSpent);
         
         // Update stats
         document.getElementById('completedOrders').textContent = completedOrders;

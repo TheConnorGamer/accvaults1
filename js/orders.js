@@ -135,8 +135,9 @@ async function loadOrders() {
                     productName = order.product_name;
                 }
 
-                // Get the correct total
-                const total = parseFloat(order.value || order.total || 0);
+                // Get the correct total - ALWAYS use value field for GBP amount
+                const total = parseFloat(order.value || 0);
+                console.log('Order', order.uniqid, 'value:', order.value, 'total:', order.total, 'using:', total);
 
                 return `
             <div class="order-card">
