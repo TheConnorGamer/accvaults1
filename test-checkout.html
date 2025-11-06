@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Checkout - AccVaults</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: #1a1a2e;
+            color: white;
+        }
+        .test-section {
+            background: #16213e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        button {
+            background: #8359cf;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #5c3d99;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Checkout System Test</h1>
+    
+    <div class="test-section">
+        <h2>1. Test Paylix Embed</h2>
+        <p>This should open Paylix modal directly</p>
+        <button data-paylixecommerce-product="690909b56733b" type="submit">
+            Test Direct Paylix Button
+        </button>
+        <div class="result" id="result1"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Test Paylix API</h2>
+        <p>Check if Paylix object is loaded</p>
+        <button onclick="testPaylixAPI()">Test Paylix API</button>
+        <div class="result" id="result2"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Test Backend Functions</h2>
+        <p>Check if Vercel functions are working</p>
+        <button onclick="testBackend()">Test Backend</button>
+        <div class="result" id="result3"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. Test Custom Checkout</h2>
+        <p>Test the custom checkout flow</p>
+        <button onclick="testCustomCheckout()">Test Custom Checkout</button>
+        <div class="result" id="result4"></div>
+    </div>
+
+    <!-- Paylix Embed -->
+    <link rel="stylesheet" href="https://cdn.paylix.gg/static/css/embed.css">
+    <script src="https://cdn.paylix.gg/static/js/embed.js"></script>
+    
+    <script src="js/paylix-client.js"></script>
+    
+    <script>
+        function testPaylixAPI() {
+            const result = document.getElementById('result2');
+            result.innerHTML = `
+                <strong>Paylix Object:</strong> ${window.Paylix ? '✅ Loaded' : '❌ Not Found'}<br>
+                <strong>Paylix.open:</strong> ${window.Paylix?.open ? '✅ Available' : '❌ Not Available'}<br>
+                <strong>Paylix.openGroup:</strong> ${window.Paylix?.openGroup ? '✅ Available' : '❌ Not Available'}
+            `;
+        }
+        
+        async function testBackend() {
+            const result = document.getElementById('result3');
+            result.innerHTML = '⏳ Testing...';
+            
+            try {
+                const response = await fetch('/api/paylix-api', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'getProducts' })
+                });
+                
+                const data = await response.json();
+                result.innerHTML = `
+                    <strong>Status:</strong> ${response.ok ? '✅ Working' : '❌ Failed'}<br>
+                    <strong>Response:</strong> ${JSON.stringify(data).substring(0, 100)}...
+                `;
+            } catch (error) {
+                result.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+        
+        function testCustomCheckout() {
+            const result = document.getElementById('result4');
+            
+            // Test if we can create a payment
+            if (window.Paylix && window.Paylix.open) {
+                result.innerHTML = '✅ Opening Paylix checkout...';
+                window.Paylix.open({ product: '690909b56733b' });
+            } else {
+                result.innerHTML = '❌ Paylix not available';
+            }
+        }
+        
+        // Auto-run tests on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                testPaylixAPI();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

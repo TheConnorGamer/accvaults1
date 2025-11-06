@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews - AccVaults</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/reviews.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <div class="logo-icon">A</div>
+                    <span class="logo-text">AccVaults</span>
+                </div>
+                
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="products.html" class="nav-link">Products</a>
+                    <a href="reviews.html" class="nav-link active">Reviews</a>
+                    <a href="status.html" class="nav-link">Status</a>
+                    <a href="downloads.html" class="nav-link downloads-btn">Downloads</a>
+                </div>
+
+                <div class="nav-actions">
+                    <a href="https://discord.gg/accvaults" target="_blank" class="nav-action discord-btn">
+                        <i class="fab fa-discord"></i> Discord
+                    </a>
+                    <button class="nav-action currency-btn" onclick="openCurrencyModal()" title="Change Currency">
+                        <i class="fas fa-pound-sign"></i>
+                    </button>
+                    <button class="nav-action login-btn" onclick="openLoginModal()" title="Login / Register">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </button>
+                </div>
+
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="hero" style="padding: 60px 0 40px;">
+        <div class="container">
+            <h1 class="hero-title" style="font-size: 48px;">Customer <span class="gradient-text">Reviews</span></h1>
+            <p class="hero-subtitle">See what our customers are saying about us</p>
+            
+            <div class="stats-card" style="margin-top: 40px;">
+                <div class="stat-item">
+                    <i class="fas fa-star"></i>
+                    <div class="stat-number" id="reviews-avg-rating">5.0</div>
+                    <div class="stat-label">AVERAGE RATING</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <i class="fas fa-comments"></i>
+                    <div class="stat-number" id="reviews-total-count">0</div>
+                    <div class="stat-label">TOTAL REVIEWS</div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <i class="fas fa-thumbs-up"></i>
+                    <div class="stat-number" id="reviews-satisfaction">0%</div>
+                    <div class="stat-label">SATISFACTION</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="reviews-grid" id="reviewsGrid">
+                <!-- Reviews will be dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <div class="logo-icon">A</div>
+                        <span class="logo-text">AccVaults</span>
+                    </div>
+                    <p class="footer-description">Premium digital services at affordable prices.</p>
+                    <div class="social-links">
+                        <a href="https://discord.gg/accvaults" target="_blank" class="social-link"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="reviews.html">Reviews</a></li>
+                        <li><a href="status.html">Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AccVaults. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget" onclick="openChat()">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <script src="js/paylix-client.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Load reviews when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load stats from Paylix
+            if (typeof fetchPaylixStats === 'function') {
+                fetchPaylixStats();
+            }
+            
+            // Wait a bit for paylixClient to initialize
+            setTimeout(() => {
+                if (typeof loadRealReviews === 'function') {
+                    loadRealReviews();
+                }
+            }, 1000);
+            
+            // Refresh stats every 30 seconds
+            setInterval(() => {
+                if (typeof fetchPaylixStats === 'function') {
+                    fetchPaylixStats();
+                }
+            }, 30000);
+        });
+    </script>
+</body>
+</html>

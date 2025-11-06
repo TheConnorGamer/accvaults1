@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - AccVaults</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">A</div>
+                    <span class="logo-text">AccVaults</span>
+                </a>
+
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="products.html" class="nav-link">Products</a>
+                    <a href="reviews.html" class="nav-link">Reviews</a>
+                    <a href="orders.html" class="nav-link active">My Orders</a>
+                </div>
+
+                <div class="nav-actions">
+                    <a href="https://discord.gg/accvaults" target="_blank" class="nav-action discord-btn">
+                        <i class="fab fa-discord"></i> Discord
+                    </a>
+                    <button class="nav-action currency-btn" onclick="openCurrencyModal()" title="Change Currency">
+                        <i class="fas fa-pound-sign"></i>
+                    </button>
+                    <button class="nav-action login-btn" onclick="openLoginModal()" title="Login / Register">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Orders Section -->
+    <section class="orders-section">
+        <div class="container">
+            <h1><i class="fas fa-box"></i> My Orders</h1>
+            <p class="section-subtitle">Track and manage your orders</p>
+
+            <!-- Email Input -->
+            <div class="order-lookup">
+                <input type="email" id="orderEmail" placeholder="Enter your email to view orders" required>
+                <button onclick="loadOrders()" class="lookup-btn">
+                    <i class="fas fa-search"></i> Find Orders
+                </button>
+            </div>
+
+            <!-- Loading State -->
+            <div id="ordersLoading" class="loading-state" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading your orders...</p>
+            </div>
+
+            <!-- Orders List -->
+            <div id="ordersList" class="orders-list"></div>
+
+            <!-- Empty State -->
+            <div id="ordersEmpty" class="empty-state" style="display: none;">
+                <i class="fas fa-inbox"></i>
+                <h3>No orders found</h3>
+                <p>We couldn't find any orders for this email address.</p>
+                <a href="index.html" class="browse-btn">
+                    <i class="fas fa-shopping-bag"></i> Start Shopping
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/paylix-client.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/orders.js"></script>
+</body>
+</html>

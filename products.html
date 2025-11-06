@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - AccVaults</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Paylix Embed CSS and Script -->
+    <link href="https://cdn.paylix.gg/static/css/embed.css" rel="stylesheet"/>
+    <script src="https://cdn.paylix.gg/static/js/embed.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <div class="logo-icon">A</div>
+                    <span class="logo-text">AccVaults</span>
+                </div>
+                
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="products.html" class="nav-link active">Products</a>
+                    <a href="reviews.html" class="nav-link">Reviews</a>
+                    <a href="status.html" class="nav-link">Status</a>
+                    <a href="downloads.html" class="nav-link downloads-btn">Downloads</a>
+                </div>
+
+                <div class="nav-actions">
+                    <a href="https://discord.gg/accvaults" target="_blank" class="nav-action discord-btn">
+                        <i class="fab fa-discord"></i> Discord
+                    </a>
+                    <button class="nav-action currency-btn" onclick="openCurrencyModal()" title="Change Currency">
+                        <i class="fas fa-pound-sign"></i>
+                    </button>
+                    <button class="nav-action login-btn" onclick="openLoginModal()" title="Login / Register">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </button>
+                </div>
+
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="hero" style="padding: 60px 0 40px;">
+        <div class="container">
+            <h1 class="hero-title" style="font-size: 48px; animation: fadeInUp 0.8s ease, textGlow 3s ease-in-out infinite;">Our <span class="gradient-text">Products</span></h1>
+            <p class="hero-subtitle" style="animation: fadeInUp 0.8s ease 0.2s both;">Browse our collection of premium digital services</p>
+            
+            <div class="search-box" style="animation: fadeInUp 0.8s ease 0.4s both;">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search for products..." id="searchInput">
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">All Products</h2>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="streaming">Streaming</button>
+                    <button class="filter-btn" data-filter="gaming">Gaming</button>
+                    <button class="filter-btn" data-filter="software">Software</button>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <div class="logo-icon">A</div>
+                        <span class="logo-text">AccVaults</span>
+                    </div>
+                    <p class="footer-description">Premium digital services at affordable prices.</p>
+                    <div class="social-links">
+                        <a href="https://discord.gg/accvaults" target="_blank" class="social-link"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="reviews.html">Reviews</a></li>
+                        <li><a href="status.html">Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AccVaults. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget" onclick="openChat()">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <script src="js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paylix Advanced Integration - AccVaults</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Paylix Embed Integration -->
+    <script src="https://cdn.paylix.gg/static/js/embed.js"></script>
+    <link href="https://cdn.paylix.gg/static/css/embed.css" rel="stylesheet">
+    <link href="https://cdn.paylix.gg/static/css/custom-embed-styles.css" rel="stylesheet" id="paylixecommerce-css">
+    
+    <style>
+        .demo-container {
+            max-width: 1400px;
+            margin: 100px auto 50px;
+            padding: 40px;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .demo-header h1 {
+            font-size: 42px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #8359cf 0%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .demo-header p {
+            color: #b4b4b4;
+            font-size: 18px;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .demo-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+        }
+        
+        .demo-card h2 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #8359cf;
+        }
+        
+        .demo-card p {
+            color: #b4b4b4;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        
+        .code-block code {
+            color: #e0e0e0;
+        }
+        
+        .attribute {
+            color: #8359cf;
+        }
+        
+        .value {
+            color: #4ade80;
+        }
+        
+        .paylix-button {
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #8359cf 0%, #5c3d99 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        
+        .paylix-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(131, 89, 207, 0.6);
+        }
+        
+        .gateway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .gateway-badge {
+            background: rgba(131, 89, 207, 0.1);
+            border: 1px solid rgba(131, 89, 207, 0.3);
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: #8359cf;
+        }
+        
+        .blockchain-badge {
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            color: #4ade80;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        
+        .feature-list li {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #b4b4b4;
+            font-size: 14px;
+        }
+        
+        .feature-list li i {
+            color: #4ade80;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #8359cf;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            gap: 12px;
+            color: #667eea;
+        }
+        
+        .info-banner {
+            background: rgba(131, 89, 207, 0.1);
+            border: 1px solid rgba(131, 89, 207, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .info-banner i {
+            font-size: 32px;
+            color: #8359cf;
+        }
+        
+        .info-banner-content h3 {
+            color: #8359cf;
+            margin-bottom: 8px;
+        }
+        
+        .info-banner-content p {
+            color: #b4b4b4;
+            margin: 0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+        
+        <div class="demo-header">
+            <h1>Advanced Paylix Integration</h1>
+            <p>Explore all custom fields and configuration options</p>
+        </div>
+        
+        <div class="info-banner">
+            <i class="fas fa-rocket"></i>
+            <div class="info-banner-content">
+                <h3>Enhanced Features</h3>
+                <p>This page demonstrates all available Paylix custom fields including gateway selection, blockchain options, email prefill, coupon codes, quantity control, variants, and custom styling.</p>
+            </div>
+        </div>
+        
+        <div class="demo-grid">
+            <!-- Gateway Selection -->
+            <div class="demo-card">
+                <h2><i class="fas fa-wallet"></i> Gateway Selection</h2>
+                <p>Pre-select the payment gateway for your customers. Available options:</p>
+                
+                <div class="gateway-grid">
+                    <div class="gateway-badge">BITCOIN</div>
+                    <div class="gateway-badge">ETHEREUM</div>
+                    <div class="gateway-badge">LITECOIN</div>
+                    <div class="gateway-badge">USDT</div>
+                    <div class="gateway-badge">USDC</div>
+                    <div class="gateway-badge">USDC_NATIVE</div>
+                    <div class="gateway-badge">TRON</div>
+                    <div class="gateway-badge">BINANCE_COIN</div>
+                    <div class="gateway-badge">SOLANA</div>
+                    <div class="gateway-badge">POLYGON</div>
+                    <div class="gateway-badge">MONERO</div>
+                    <div class="gateway-badge">BITCOIN_CASH</div>
+                    <div class="gateway-badge">STRIPE</div>
+                    <div class="gateway-badge">PAYPAL</div>
+                    <div class="gateway-badge">SKRILL</div>
+                    <div class="gateway-badge">PERFECT_MONEY</div>
+                    <div class="gateway-badge">SUMUP</div>
+                    <div class="gateway-badge">PADDLE</div>
+                </div>
+                
+                <div class="code-block">
+                    <code><span class="attribute">data-paylixecommerce-gateway</span>=<span class="value">"USDT"</span></code>
+                </div>
+                
+                <button 
+                    class="paylix-button"
+                    data-paylixecommerce-product="6908cfd78d4f3"
+                    data-paylixecommerce-gateway="USDT"
+                    type="submit">
+                    <i class="fas fa-coins"></i> Pay with USDT
+                </button>
+            </div>
+            
+            <!-- Blockchain Selection -->
+            <div class="demo-card">
+                <h2><i class="fas fa-link"></i> Blockchain Selection</h2>
+                <p>For cryptocurrencies with multiple blockchains, specify the preferred network:</p>
+                
+                <div class="gateway-grid">
+                    <div class="gateway-badge blockchain-badge">BEP20</div>
+                    <div class="gateway-badge blockchain-badge">ERC20</div>
+                    <div class="gateway-badge blockchain-badge">MATIC</div>
+                    <div class="gateway-badge blockchain-badge">TRC20</div>
+                </div>
+                
+                <div class="code-block">
+                    <code><span class="attribute">data-paylixecommerce-blockchain</span>=<span class="value">"ERC20"</span></code>
+                </div>
+                
+                <button 
+                    class="paylix-button"
+                    data-paylixecommerce-product="6908cfd78d4f3"
+                    data-paylixecommerce-gateway="USDT"
+                    data-paylixecommerce-blockchain="ERC20"
+                    type="submit">
+                    <i class="fas fa-cubes"></i> Pay with USDT (ERC20)
+                </button>
+            </div>
+            
+            <!-- Step Control -->
+            <div class="demo-card">
+                <h2><i class="fas fa-shoe-prints"></i> Checkout Step</h2>
+                <p>Control which step customers see when opening the embed. Options: <strong>GATEWAY</strong> or <strong>CHECKOUT</strong></p>
+                
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> <strong>GATEWAY</strong> - Shows product details with addons and coupon options</li>
+                    <li><i class="fas fa-check-circle"></i> <strong>CHECKOUT</strong> - Skips directly to payment</li>
+                </ul>
+                
+                <div class="code-block">
+                    <code><span class="attribute">data-paylixecommerce-step</span>=<span class="value">"CHECKOUT"</span></code>
+                </div>
+                
+                <button 
+                    class="paylix-button"
+                    data-paylixecommerce-product="6908cfd78d4f3"
+                    data-paylixecommerce-step="CHECKOUT"
+                    type="submit">
+                    <i class="fas fa-bolt"></i> Quick Checkout
+                </button>
+            </div>
+            
+            <!-- Email Prefill -->
+            <div class="demo-card">
+                <h2><i class="fas fa-envelope"></i> Email Prefill</h2>
+                <p>Pre-fill the customer's email address for faster checkout:</p>
+                
+                <div class="code-block">
+                    <code><span class="attribute">data-paylixecommerce-email</span>=<span class="value">"customer@example.com"</span></code>
+                </div>
+                
+                <button 
+                    class="paylix-button"
+                    data-paylixecommerce-product="6908cfd78d4f3"
+                    data-paylixecommerce-email="example@email.com"
+                    type="submit">
+                    <i class="fas fa-at"></i> Checkout with Email
+                </button>
+            </div>
+            
+            <!-- Coupon Code -->
+            <div class="demo-card">
+                <h2><i class="fas fa-tag"></i> Coupon Code</h2>
+                <p>Apply a coupon code automatically. If invalid, no error will appear:</p>
+                
+                <div class="code-block">
+                    <code><span class="attribute">data-paylixecommerce-coupon</span>=<span class="value">"10_PERCENT_OFF"</span></code>
+                </div>
+                
+                <button 
+                    class="paylix-button"
+                    data-paylixecommerce-product="6908cfd78d4f3"
+                    data-paylixecommerce-coupon="VAULTS5"
+                    type="submit">
+                    <i class="fas fa-percent"></i> Apply Coupon VAULTS5
+                </button>
+            </div>
+            
+            <!-- Quantity -->
+            <div class="demo-card">
+                <h2><i class="fas fa-sort-numeric-up"></i> Default Quantity</h2>
+                <p>Set the default quantity for the product:</p>
+                
+                <div class="code-block">
+                    <code><span class="attribute">data-paylixecommerce-quantity</span>=<span class="value">"3"</span></code>
+                </div>
+                
+                <button 
+                    class="paylix-button"
+                    data-paylixecommerce-product="6908cfd78d4f3"
+                    data-paylixecommerce-quantity="3"
+                    type="submit">
+                    <i class="fas fa-shopping-basket"></i> Buy 3 Units
+                </button>
+            </div>
+            
+            <!-- Variant -->
+            <div class="demo-card">
+                <h2><i class="fas fa-layer-group"></i> Product Variant</h2>
+                <p>Pre-select a specific product variant:</p>
+                
+                <div class="code-block">
+                    <code><span class="attribute">data-paylixecommerce-variant</span>=<span class="value">"Premium Edition"</span></code>
+                </div>
+                
+                <button 
+                    class="paylix-button"
+                    data-paylixecommerce-product="6908cfd78d4f3"
+                    data-paylixecommerce-variant="Premium"
+                    type="submit">
+                    <i class="fas fa-star"></i> Buy Premium Variant
+                </button>
+            </div>
+            
+            <!-- Custom CSS -->
+            <div class="demo-card">
+                <h2><i class="fas fa-palette"></i> Custom Styling</h2>
+                <p>Apply custom CSS to match your brand. Two methods available:</p>
+                
+                <ul class="feature-list">
+                    <li><i class="fas fa-check-circle"></i> <strong>HTML Head</strong> - Add CSS link with id="paylixecommerce-css"</li>
+                    <li><i class="fas fa-check-circle"></i> <strong>Button Attribute</strong> - Use data-paylixecommerce-css</li>
+                </ul>
+                
+                <div class="code-block">
+                    <code><span class="attribute">data-paylixecommerce-css</span>=<span class="value">"https://cdn.paylix.gg/static/css/custom-embed-styles.css"</span></code>
+                </div>
+                
+                <button 
+                    class="paylix-button"
+                    data-paylixecommerce-product="6908cfd78d4f3"
+                    data-paylixecommerce-css="https://cdn.paylix.gg/static/css/custom-embed-styles.css"
+                    type="submit">
+                    <i class="fas fa-paint-brush"></i> Styled Checkout
+                </button>
+            </div>
+            
+            <!-- Custom Fields -->
+            <div class="demo-card">
+                <h2><i class="fas fa-sliders-h"></i> Custom Fields</h2>
+                <p>Hide or prefill custom fields from your Paylix product:</p>
+                
+                <div class="code-block">
+                    <code><span class="attribute">data-paylixecommerce-custom-discord</span>=<span class="value">"@username#1234"</span></code>
+                </div>
+                
+                <button 
+                    class="paylix-button"
+                    data-paylixecommerce-product="6908cfd78d4f3"
+                    data-paylixecommerce-custom-discord="@user#0000"
+                    type="submit">
+                    <i class="fas fa-user-tag"></i> Checkout with Discord
+                </button>
+            </div>
+        </div>
+        
+        <!-- Full Example -->
+        <div class="demo-card" style="grid-column: 1 / -1;">
+            <h2><i class="fas fa-code"></i> Complete Example with All Fields</h2>
+            <p>Here's a button with all custom fields configured:</p>
+            
+            <div class="code-block">
+                <code>&lt;button<br>
+    <span class="attribute">data-paylixecommerce-product</span>=<span class="value">"6908cfd78d4f3"</span><br>
+    <span class="attribute">data-paylixecommerce-gateway</span>=<span class="value">"USDT"</span><br>
+    <span class="attribute">data-paylixecommerce-blockchain</span>=<span class="value">"ERC20"</span><br>
+    <span class="attribute">data-paylixecommerce-step</span>=<span class="value">"CHECKOUT"</span><br>
+    <span class="attribute">data-paylixecommerce-email</span>=<span class="value">"customer@example.com"</span><br>
+    <span class="attribute">data-paylixecommerce-coupon</span>=<span class="value">"VAULTS5"</span><br>
+    <span class="attribute">data-paylixecommerce-quantity</span>=<span class="value">"1"</span><br>
+    <span class="attribute">data-paylixecommerce-variant</span>=<span class="value">"Premium"</span><br>
+    <span class="attribute">data-paylixecommerce-custom-discord</span>=<span class="value">"@user#0000"</span><br>
+    <span class="attribute">data-paylixecommerce-css</span>=<span class="value">"https://cdn.paylix.gg/static/css/custom-embed-styles.css"</span><br>
+    <span class="attribute">type</span>=<span class="value">"submit"</span>&gt;<br>
+    Purchase<br>
+&lt;/button&gt;</code>
+            </div>
+            
+            <button 
+                class="paylix-button"
+                data-paylixecommerce-product="6908cfd78d4f3"
+                data-paylixecommerce-gateway="USDT"
+                data-paylixecommerce-blockchain="ERC20"
+                data-paylixecommerce-step="CHECKOUT"
+                data-paylixecommerce-email="example@email.com"
+                data-paylixecommerce-coupon="VAULTS5"
+                data-paylixecommerce-quantity="1"
+                data-paylixecommerce-variant="Premium"
+                data-paylixecommerce-custom-discord="@user#0000"
+                data-paylixecommerce-css="https://cdn.paylix.gg/static/css/custom-embed-styles.css"
+                type="submit">
+                <i class="fas fa-rocket"></i> Complete Checkout Experience
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        console.log('✅ Advanced Paylix Demo Loaded');
+        console.log('🎨 Custom CSS:', document.getElementById('paylixecommerce-css') ? 'Loaded' : 'Not Found');
+        console.log('📦 Paylix SDK:', typeof window.Paylix !== 'undefined' ? 'Ready' : 'Loading...');
+    </script>
+</body>
+</html>

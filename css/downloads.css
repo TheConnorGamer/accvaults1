@@ -1,0 +1,69 @@
+/* Download Mega Button Styles */
+.download-mega-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    white-space: nowrap;
+}
+
+.download-mega-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+    background: linear-gradient(135deg, #9d6fff, #b76dff);
+}
+
+.download-mega-btn:active {
+    transform: translateY(0);
+}
+
+.download-mega-btn i {
+    font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .downloads-grid-layout {
+        grid-template-columns: 1fr !important;
+        gap: 40px !important;
+    }
+    
+    .download-logo-container {
+        order: -1;
+    }
+    
+    .download-logo-box {
+        width: 300px !important;
+        height: 300px !important;
+    }
+    
+    .download-logo-box span {
+        font-size: 150px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .download-mega-btn {
+        padding: 12px 16px;
+        font-size: 12px;
+    }
+    
+    .download-mega-btn i {
+        font-size: 14px;
+    }
+    
+    .download-buttons-grid {
+        grid-template-columns: 1fr !important;
+    }
+}

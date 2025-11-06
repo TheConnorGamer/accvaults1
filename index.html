@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.paylix.gg https://paylix.gg https://dev.paylix.gg https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.paylix.gg https://paylix.gg https://dev.paylix.gg https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; connect-src 'self' https://cdn.paylix.gg https://api.paylix.gg https://paylix.gg https://dev.paylix.gg; img-src 'self' data: https:; frame-src https://paylix.gg https://cdn.paylix.gg https://*.paylix.gg; child-src https://paylix.gg https://cdn.paylix.gg https://*.paylix.gg;">
+    <title>AccVaults - Premium Digital Services</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/reviews.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Paylix Embed CSS and Script -->
+    <link href="https://cdn.paylix.gg/static/css/embed.css" rel="stylesheet">
+    <script src="https://cdn.paylix.gg/static/js/embed.js"></script>
+</head>
+<body>
+    <!-- Announcement Banner -->
+    <div class="announcement-banner">
+        <p>🎉 Discounted Products Use VAULTS at checkout for 5% off</p>
+        <button class="close-banner" onclick="closeBanner()">×</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <div class="logo-icon">A</div>
+                    <span class="logo-text">AccVaults</span>
+                </div>
+                
+                <div class="nav-links" id="navLinks">
+                    <a href="index.html" class="nav-link active">Home</a>
+                    <a href="products.html" class="nav-link">Products</a>
+                    <a href="reviews.html" class="nav-link">Reviews</a>
+                    <a href="status.html" class="nav-link">Status</a>
+                    <a href="downloads.html" class="nav-link downloads-btn">Downloads</a>
+                </div>
+
+                <div class="nav-actions">
+                    <a href="https://discord.gg/accvaults" target="_blank" class="nav-action discord-btn">
+                        <i class="fab fa-discord"></i> Discord
+                    </a>
+                    <button class="nav-action currency-btn" onclick="openCurrencyModal()" title="Change Currency">
+                        <i class="fas fa-pound-sign"></i>
+                    </button>
+                    <button class="nav-action login-btn" onclick="openLoginModal()" title="Login / Register">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </button>
+                </div>
+
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Welcome to <span class="gradient-text">AccVaults</span>!
+                </h1>
+                <p class="hero-subtitle">
+                    🎉 Welcome to AccVaults ✨ Get Netflix, Spotify, Disney+,
+                </p>
+                
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search for products..." id="searchInput">
+                </div>
+
+                <div class="stats-card">
+                    <div class="stat-item">
+                        <i class="fas fa-star"></i>
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">FEEDBACK RATING</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <i class="fas fa-shopping-cart"></i>
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">PRODUCTS SOLD</div>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <i class="fas fa-users"></i>
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">TOTAL CUSTOMERS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo Section -->
+    <section class="promo-section">
+        <div class="container">
+            <div class="promo-card">
+                <h2 class="promo-title">5% OFF!</h2>
+                <p class="promo-text">Use "VAULTS5" When you complete your order in...</p>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">00</span>
+                        <span class="countdown-label">Days</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label">Hours</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label">Minutes</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label">Seconds</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Products</h2>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="streaming">Streaming</button>
+                    <button class="filter-btn" data-filter="gaming">Gaming</button>
+                    <button class="filter-btn" data-filter="software">Software</button>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose AccVaults?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure Payments</h3>
+                    <p>All transactions are encrypted and secure</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Instant Delivery</h3>
+                    <p>Get your products immediately after purchase</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Our team is always here to help you</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <h3>Auto Replacement</h3>
+                    <p>Automatic replacement for any issues</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="reviews-grid" id="reviewsGrid">
+                <!-- Reviews will be dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <div class="logo-icon">A</div>
+                        <span class="logo-text">AccVaults</span>
+                    </div>
+                    <p class="footer-description">Premium digital services at affordable prices.</p>
+                    <div class="social-links">
+                        <a href="https://discord.gg/accvaults" target="_blank" class="social-link"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="reviews.html">Reviews</a></li>
+                        <li><a href="status.html">Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AccVaults. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget" onclick="openChat()">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <script src="js/paylix-client.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Initialize after everything loads
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🔍 DOM loaded, checking Paylix...');
+            
+            // Debug: Log all Paylix-related objects
+            console.log('Window.Paylix:', window.Paylix);
+            console.log('Window.paylixecommerce:', window.paylixecommerce);
+            console.log('All window properties with "paylix":', Object.keys(window).filter(k => k.toLowerCase().includes('paylix')));
+            
+            // Load reviews after a delay to allow paylixClient to initialize
+            setTimeout(() => {
+                if (typeof loadRealReviews === 'function') {
+                    loadRealReviews();
+                }
+            }, 1000);
+            
+            // Check Paylix immediately
+            function checkPaylix() {
+                const hasPaylix = window.Paylix || window.paylixecommerce;
+                if (hasPaylix) {
+                    console.log('✅ Paylix loaded successfully');
+                    console.log('Paylix object:', window.Paylix);
+                    console.log('paylixecommerce object:', window.paylixecommerce);
+                    
+                    // Log available methods
+                    if (window.Paylix) {
+                        console.log('Paylix methods:', Object.keys(window.Paylix));
+                    }
+                    if (window.paylixecommerce) {
+                        console.log('paylixecommerce methods:', Object.keys(window.paylixecommerce));
+                    }
+                    return true;
+                }
+                return false;
+            }
+            
+            // Try immediately
+            if (!checkPaylix()) {
+                console.log('⏳ Waiting for Paylix to load...');
+                
+                // Check every 100ms for up to 5 seconds
+                let attempts = 0;
+                const maxAttempts = 50;
+                const checkInterval = setInterval(() => {
+                    attempts++;
+                    if (checkPaylix()) {
+                        clearInterval(checkInterval);
+                    } else if (attempts >= maxAttempts) {
+                        clearInterval(checkInterval);
+                        console.error('❌ Paylix failed to load after 5 seconds');
+                        console.error('Check if https://cdn.paylix.gg/static/js/embed.js is accessible');
+                    }
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>

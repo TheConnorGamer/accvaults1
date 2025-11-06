@@ -1,0 +1,78 @@
+═══════════════════════════════════════════════════════════
+  🚀 ACCVAULTS - QUICK DEPLOYMENT GUIDE
+═══════════════════════════════════════════════════════════
+
+📦 STEP 1: DEPLOY
+─────────────────
+1. Go to Netlify.com
+2. Drag ENTIRE "websitepaylix" folder
+3. Wait for green checkmark ✅
+
+🔑 STEP 2: ADD API KEY
+─────────────────────
+1. Netlify → Your Site → Site Settings
+2. Environment Variables → Add Variable
+3. Key: PAYLIX_API_KEY
+4. Value: EzxWYoBzSAECBsJojXHrAOJQbBD4SEHdPJNS7b6mu418C96uVb2RQiP8ALzj5CzA
+5. Save
+
+🔗 STEP 3: WEBHOOK
+──────────────────
+1. Paylix Dashboard → Settings → Webhooks
+2. Add Webhook Endpoint
+3. URL: https://YOUR-SITE.netlify.app/.netlify/functions/paylix-webhook
+4. Select: order:created, order:paid, order:cancelled
+5. Save
+
+🧪 STEP 4: TEST
+───────────────
+1. Visit your site
+2. Click "Buy Now"
+3. Select quantities
+4. Click "Proceed to Checkout"
+5. Enter email
+6. Should redirect to Paylix ✅
+
+═══════════════════════════════════════════════════════════
+
+✅ YOUR IDS (Already Configured):
+─────────────────────────────────
+API Key: EzxWYoBzSAECBsJojXHrAOJQbBD4SEHdPJNS7b6mu418C96uVb2RQiP8ALzj5CzA
+Group ID: 69090def71dea
+8x Boost: 690909b56733b
+14x Boost: 690909bb07601
+20x Boost: 69090d76c21b6
+
+═══════════════════════════════════════════════════════════
+
+🎯 WHAT WORKS:
+──────────────
+✅ Custom product selector
+✅ Quantity selection
+✅ Custom checkout page
+✅ Email validation
+✅ Coupon validation
+✅ Cart system
+✅ Order tracking (/orders.html)
+✅ Analytics dashboard (/dashboard.html)
+✅ Webhook automation
+✅ Fraud prevention
+
+═══════════════════════════════════════════════════════════
+
+❌ IF BROKEN:
+─────────────
+1. Press F12 → Check Console for errors
+2. Verify API key is set in Netlify
+3. Re-deploy
+4. Visit /test-checkout.html for diagnostics
+
+═══════════════════════════════════════════════════════════
+
+📚 FULL GUIDES:
+───────────────
+→ DEPLOY_NOW.md - Complete deployment guide
+→ FIXES_NEEDED.md - Troubleshooting guide
+→ PAYLIX_FEATURES.md - Feature documentation
+
+═══════════════════════════════════════════════════════════

@@ -1,0 +1,22 @@
+# Environment variables
+.env
+.env.local
+.env.production
+
+# API Keys and secrets
+**/PAYLIX_API_KEY*
+**/*api*key*
+
+# Vercel
+.vercel
+
+# Node modules
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
