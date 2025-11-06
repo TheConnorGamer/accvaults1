@@ -549,14 +549,16 @@ async function fetchPaylixStats() {
         
         const data = await response.json();
         
-        // Update stats on homepage
-        const feedbackRating = document.querySelector('.stat-item:nth-child(1) .stat-number');
-        const productsSold = document.querySelector('.stat-item:nth-child(3) .stat-number');
-        const totalCustomers = document.querySelector('.stat-item:nth-child(5) .stat-number');
+        console.log('📊 Paylix stats received:', data);
         
-        if (feedbackRating) feedbackRating.textContent = data.stats.feedbackRating.toFixed(1);
-        if (productsSold) productsSold.textContent = data.stats.productsSold;
-        if (totalCustomers) totalCustomers.textContent = data.stats.totalCustomers;
+        // Update stats on homepage - using correct selectors
+        const statNumbers = document.querySelectorAll('.stat-number');
+        
+        if (statNumbers.length >= 3) {
+            statNumbers[0].textContent = data.stats.feedbackRating.toFixed(1);
+            statNumbers[1].textContent = data.stats.productsSold;
+            statNumbers[2].textContent = data.stats.totalCustomers;
+        }
         
         // Update reviews page stats
         const reviewsAvgRating = document.getElementById('reviews-avg-rating');
