@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - AccVaults</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .faq-header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .faq-header p {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--theme-color);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .faq-question {
+            padding: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--text-primary);
+            user-select: none;
+        }
+
+        .faq-question i {
+            color: var(--theme-color);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 24px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 24px 24px;
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .faq-category {
+            margin-bottom: 48px;
+        }
+
+        .faq-category-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <img src="images/logo.png" alt="AccVaults Logo" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="logo-icon" style="display: none;">A</div>
+                    <span class="logo-text">AccVaults</span>
+                </div>
+                
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="products.html" class="nav-link">Products</a>
+                    <a href="reviews.html" class="nav-link">Reviews</a>
+                    <a href="status.html" class="nav-link">Status</a>
+                    <a href="downloads.html" class="nav-link downloads-btn">Downloads</a>
+                </div>
+
+                <div class="nav-actions">
+                    <a href="https://discord.gg/accvaults" target="_blank" class="nav-action discord-btn">
+                        <i class="fab fa-discord"></i> Discord
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- FAQ Content -->
+    <div class="faq-container">
+        <div class="faq-header">
+            <h1>Frequently Asked Questions</h1>
+            <p>Find answers to common questions about AccVaults</p>
+        </div>
+
+        <div class="faq-category">
+            <h2 class="faq-category-title">General Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What is AccVaults?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>AccVaults is a premium digital services marketplace offering affordable access to streaming services, gaming accounts, software licenses, and more. We provide instant delivery and 24/7 customer support.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>How do I make a purchase?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Simply browse our products, add items to your cart, and proceed to checkout. We accept various payment methods through our secure payment processor, Paylix. After payment, you'll receive your product details instantly via email.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Is it safe to buy from AccVaults?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! All transactions are processed through secure payment gateways with encryption. We never store your payment information. Our products are legitimate and sourced responsibly.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-category">
+            <h2 class="faq-category-title">Orders & Delivery</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>How long does delivery take?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Most products are delivered instantly after payment confirmation. You'll receive an email with your product details within minutes. If you don't receive it, check your spam folder or contact our support team.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Can I track my order?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! Visit our Downloads page and enter your order email to view all your purchases and their status. You can also check your order confirmation email for direct links.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What if my product doesn't work?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We offer automatic replacement for any non-working products. Contact our support team via Discord or email with your order details, and we'll provide a replacement within 24 hours.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-category">
+            <h2 class="faq-category-title">Payment & Refunds</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>What payment methods do you accept?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We accept credit/debit cards, PayPal, cryptocurrency, and various other payment methods through our secure payment processor. All major payment options are available at checkout.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Do you offer refunds?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Due to the digital nature of our products, we generally don't offer refunds. However, if a product is defective or not as described, we'll provide a replacement or issue a refund on a case-by-case basis. Please review our Terms of Service for full details.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Are there any hidden fees?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>No! The price you see is the price you pay. There are no hidden fees or charges. Payment processing fees (if any) are clearly displayed at checkout.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-category">
+            <h2 class="faq-category-title">Account & Support</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Do I need an account to make a purchase?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>No, you can checkout as a guest using just your email address. However, creating an account allows you to track orders, view purchase history, and receive exclusive deals.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>How can I contact support?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Join our Discord server for the fastest support response, or use our Contact Us page to send us a message. We typically respond within 1-2 hours during business hours.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Do you have a warranty or guarantee?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! All products come with our quality guarantee. If any product stops working within the warranty period (varies by product), we'll provide a free replacement. Check individual product descriptions for specific warranty details.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <img src="images/logo.png" alt="AccVaults Logo" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="logo-icon" style="display: none;">A</div>
+                        <span class="logo-text">AccVaults</span>
+                    </div>
+                    <p class="footer-description">Premium digital services at affordable prices.</p>
+                    <div class="social-links">
+                        <a href="https://discord.gg/accvaults" target="_blank" class="social-link"><i class="fab fa-discord"></i></a>
+                        <a href="https://www.youtube.com/@AccVaults" target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/accvaults" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="reviews.html">Reviews</a></li>
+                        <li><a href="status.html">Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AccVaults. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Toggle current item
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
