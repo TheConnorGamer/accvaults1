@@ -107,6 +107,14 @@ async function loadOrders() {
 
         console.log('Orders found:', orders.length, orders);
 
+        // Filter orders by email (in case API doesn't filter properly)
+        orders = orders.filter(order => {
+            const orderEmail = order.customer_email || order.email || '';
+            return orderEmail.toLowerCase() === email.toLowerCase();
+        });
+
+        console.log('Orders after filtering by email:', orders.length);
+
         if (loadingEl) loadingEl.style.display = 'none';
 
         if (orders.length === 0) {

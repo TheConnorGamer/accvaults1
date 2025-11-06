@@ -54,6 +54,14 @@ async function loadDashboardData() {
 
         console.log('Orders found:', orders.length, orders);
 
+        // Filter orders by email (in case API doesn't filter properly)
+        orders = orders.filter(order => {
+            const orderEmail = order.customer_email || order.email || '';
+            return orderEmail.toLowerCase() === user.email.toLowerCase();
+        });
+
+        console.log('Orders after filtering by email:', orders.length);
+
         // Calculate stats
         const completedOrders = orders.filter(o => o.status === 'completed').length;
         const totalSpent = orders.reduce((sum, o) => sum + (parseFloat(o.total) || 0), 0);
