@@ -58,8 +58,6 @@ async function loadOrders() {
         return;
     }
 
-    // Store email for future use
-    localStorage.setItem('userEmail', email);
     currentUserEmail = email;
 
     const loadingEl = document.getElementById('ordersLoading');
@@ -67,23 +65,32 @@ async function loadOrders() {
     const emptyEl = document.getElementById('ordersEmpty');
 
     // Show loading
-    loadingEl.style.display = 'flex';
-    listEl.innerHTML = '';
-    emptyEl.style.display = 'none';
+    if (loadingEl) loadingEl.style.display = 'flex';
+    if (listEl) listEl.innerHTML = '';
+    if (emptyEl) emptyEl.style.display = 'none';
 
     try {
+        // Check if Paylix client is available
+        if (!window.paylixClient || !window.paylixClient.getCustomerOrders) {
+            // No Paylix - show empty state
+            if (loadingEl) loadingEl.style.display = 'none';
+            if (emptyEl) emptyEl.style.display = 'flex';
+            return;
+        }
+        
         const result = await window.paylixClient.getCustomerOrders(email);
         const orders = result.data || [];
 
-        loadingEl.style.display = 'none';
+        if (loadingEl) loadingEl.style.display = 'none';
 
         if (orders.length === 0) {
-            emptyEl.style.display = 'flex';
+            if (emptyEl) emptyEl.style.display = 'flex';
             return;
         }
 
         // Display orders
-        listEl.innerHTML = orders.map(order => `
+        if (listEl) {
+            listEl.innerHTML = orders.map(order => `
             <div class="order-card">
                 <div class="order-header">
                     <div class="order-id">
@@ -125,10 +132,11 @@ async function loadOrders() {
                 </div>
             </div>
         `).join('');
+        }
 
     } catch (error) {
-        loadingEl.style.display = 'none';
-        emptyEl.style.display = 'flex';
+        if (loadingEl) loadingEl.style.display = 'none';
+        if (emptyEl) emptyEl.style.display = 'flex';
         showNotification('❌ Failed to load orders. Please try again.');
         console.error('Load orders error:', error);
     }
