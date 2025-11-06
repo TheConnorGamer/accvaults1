@@ -194,14 +194,17 @@ async function handleRegister(email, password, username, db) {
         // Create new user in D1
         const passwordHash = hashPassword(password);
         const displayUsername = username || email.split('@')[0];
+        const now = new Date().toISOString();
         
         const result = await db.prepare(
-            'INSERT INTO users (email, username, password_hash, role) VALUES (?, ?, ?, ?)'
+            'INSERT INTO users (email, username, password_hash, role, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)'
         ).bind(
             email.toLowerCase(),
             displayUsername,
             passwordHash,
-            'customer'
+            'customer',
+            now,
+            now
         ).run();
 
         if (!result.success) {
