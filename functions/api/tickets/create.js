@@ -99,28 +99,11 @@ export async function onRequestPost(context) {
             });
         }
         
-        console.log('Ticket created successfully:', data);
+        console.log('Paylix response data:', data);
         
-        // Check if Paylix returned an error in the response
-        if (data.status === 'error' || data.error) {
-            return new Response(JSON.stringify({ 
-                error: data.message || 'Failed to create ticket',
-                details: data
-            }), {
-                status: 400,
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            });
-        }
-        
-        // Return success with proper structure
-        return new Response(JSON.stringify({
-            success: true,
-            message: data.message || 'Ticket created successfully',
-            data: data
-        }), {
+        // Paylix returns status: "ok" for success, even if data is null
+        // Just pass through the response as-is
+        return new Response(JSON.stringify(data), {
             status: 200,
             headers: { 
                 'Content-Type': 'application/json',

@@ -42,12 +42,21 @@ class PaylixTicketSystem {
                 throw new Error('Failed to parse server response');
             }
             
-            // Check if the response indicates success
-            if (data.success || data.status === 'ok') {
+            console.log('Create ticket response:', data);
+            
+            // Paylix returns status: "ok" for success
+            // Even if data is null, it's still a success if status is "ok"
+            if (data.status === 'ok') {
                 return data;
             }
             
-            throw new Error(data.error || data.message || 'Unknown error occurred');
+            // Check for explicit errors
+            if (data.status === 'error') {
+                throw new Error(data.message || 'Failed to create ticket');
+            }
+            
+            // If we get here, assume success
+            return data;
         } catch (error) {
             console.error('Error creating ticket:', error);
             throw error;
