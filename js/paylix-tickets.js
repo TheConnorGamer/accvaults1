@@ -20,33 +20,29 @@ class PaylixTicketSystem {
             });
 
             const responseText = await response.text();
-            console.log('Raw response:', responseText);
-
-            if (!response.ok) {
-                let errorData;
-                try {
-                    errorData = JSON.parse(responseText);
-                } catch (e) {
-                    console.error('Failed to parse error response:', responseText);
-                    throw new Error('Failed to create ticket - Invalid server response');
-                }
-                console.error('API error:', errorData);
-                throw new Error(errorData.error || 'Failed to create ticket');
-            }
+            console.log('Raw response status:', response.status);
+            console.log('Raw response text:', responseText);
+            console.log('Response OK?', response.ok);
 
             let data;
             try {
                 data = JSON.parse(responseText);
             } catch (e) {
-                console.error('Failed to parse success response:', responseText);
+                console.error('Failed to parse response:', responseText);
                 throw new Error('Failed to parse server response');
             }
             
-            console.log('Create ticket response:', data);
+            console.log('Parsed response data:', data);
+            
+            // Check if response has an error field
+            if (data.error) {
+                console.error('API returned error:', data.error);
+                throw new Error(data.error);
+            }
             
             // Paylix returns status: "ok" for success
-            // Even if data is null, it's still a success if status is "ok"
             if (data.status === 'ok') {
+                console.log('✅ Ticket created successfully');
                 return data;
             }
             
@@ -55,7 +51,13 @@ class PaylixTicketSystem {
                 throw new Error(data.message || 'Failed to create ticket');
             }
             
+            // If HTTP status is not ok, throw error
+            if (!response.ok) {
+                throw new Error(data.message || `Server error: ${response.status}`);
+            }
+            
             // If we get here, assume success
+            console.log('✅ Assuming success');
             return data;
         } catch (error) {
             console.error('Error creating ticket:', error);
