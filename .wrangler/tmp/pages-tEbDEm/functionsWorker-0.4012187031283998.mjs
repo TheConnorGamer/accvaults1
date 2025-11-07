@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// ../.wrangler/tmp/bundle-GSvf3e/checked-fetch.js
+// ../.wrangler/tmp/bundle-Mdfxwe/checked-fetch.js
 var urls = /* @__PURE__ */ new Set();
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -68,7 +68,7 @@ async function onRequestPost(context) {
       });
     }
     console.log("Calling Paylix API...");
-    const paylixResponse = await fetch("https://dev.paylix.gg/v1/queries", {
+    const paylixResponse = await fetch("https://api.paylix.gg/v1/queries", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -171,7 +171,7 @@ async function onRequestGet(context) {
         }
       });
     }
-    const paylixResponse = await fetch(`https://dev.paylix.gg/v1/queries?customer_email=${encodeURIComponent(email)}`, {
+    const paylixResponse = await fetch(`https://api.paylix.gg/v1/queries?customer_email=${encodeURIComponent(email)}`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${apiKey}`
@@ -246,7 +246,7 @@ async function onRequestPost2(context) {
         }
       });
     }
-    const paylixResponse = await fetch(`https://dev.paylix.gg/v1/queries/reply/${ticketId}`, {
+    const paylixResponse = await fetch(`https://api.paylix.gg/v1/queries/reply/${ticketId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -322,7 +322,7 @@ async function onRequestGet2(context) {
         }
       });
     }
-    const paylixResponse = await fetch(`https://dev.paylix.gg/v1/queries/${ticketId}`, {
+    const paylixResponse = await fetch(`https://api.paylix.gg/v1/queries/${ticketId}`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${apiKey}`
@@ -1745,7 +1745,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// ../.wrangler/tmp/bundle-GSvf3e/middleware-insertion-facade.js
+// ../.wrangler/tmp/bundle-Mdfxwe/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -1777,7 +1777,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// ../.wrangler/tmp/bundle-GSvf3e/middleware-loader.entry.ts
+// ../.wrangler/tmp/bundle-Mdfxwe/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

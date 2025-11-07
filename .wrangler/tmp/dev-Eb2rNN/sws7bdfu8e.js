@@ -96,7 +96,7 @@ async function onRequestPost(context) {
       });
     }
     console.log("Calling Paylix API...");
-    const paylixResponse = await fetch("https://dev.paylix.gg/v1/queries", {
+    const paylixResponse = await fetch("https://api.paylix.gg/v1/queries", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -199,7 +199,7 @@ async function onRequestGet(context) {
         }
       });
     }
-    const paylixResponse = await fetch(`https://dev.paylix.gg/v1/queries?customer_email=${encodeURIComponent(email)}`, {
+    const paylixResponse = await fetch(`https://api.paylix.gg/v1/queries?customer_email=${encodeURIComponent(email)}`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${apiKey}`
@@ -274,7 +274,7 @@ async function onRequestPost2(context) {
         }
       });
     }
-    const paylixResponse = await fetch(`https://dev.paylix.gg/v1/queries/reply/${ticketId}`, {
+    const paylixResponse = await fetch(`https://api.paylix.gg/v1/queries/reply/${ticketId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -350,7 +350,7 @@ async function onRequestGet2(context) {
         }
       });
     }
-    const paylixResponse = await fetch(`https://dev.paylix.gg/v1/queries/${ticketId}`, {
+    const paylixResponse = await fetch(`https://api.paylix.gg/v1/queries/${ticketId}`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${apiKey}`
