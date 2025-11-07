@@ -15,7 +15,7 @@ export async function onRequestPost(context) {
         }
         
         // Call Paylix API
-        const paylixResponse = await fetch('https://paylixecommerce.com/api/queries', {
+        const paylixResponse = await fetch('https://api.paylix.gg/queries', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
