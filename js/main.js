@@ -684,8 +684,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Search functionality
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase().trim();
+        const performSearch = () => {
+            const searchTerm = searchInput.value.toLowerCase().trim();
             
             // Search through compact cards (product groups)
             const compactCards = document.querySelectorAll('.compact-card');
@@ -718,6 +718,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Show/hide category based on if it has visible cards
                 container.style.display = hasVisibleCards ? 'block' : 'none';
             });
+            
+            // Scroll to products section if on home page
+            const productsSection = document.querySelector('.products-section');
+            if (productsSection && searchTerm !== '') {
+                productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        };
+        
+        // Search as you type
+        searchInput.addEventListener('input', performSearch);
+        
+        // Search on Enter key
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performSearch();
+                searchInput.blur(); // Remove focus from input
+            }
         });
     }
 });
