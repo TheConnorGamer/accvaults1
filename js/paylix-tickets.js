@@ -179,17 +179,6 @@ class PaylixTicketSystem {
     }
 }
 
-// Initialize ticket system (will be configured with actual API key)
-let ticketSystem = null;
-
-function initTicketSystem() {
-    // Get API key from environment or config
-    const apiKey = 'YOUR_API_KEY'; // Replace with actual API key
-    const merchantName = 'AccVaults';
-    
-    ticketSystem = new PaylixTicketSystem(apiKey, merchantName);
-}
-
 // Export for use in contact page
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = PaylixTicketSystem;
