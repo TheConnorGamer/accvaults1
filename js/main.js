@@ -685,8 +685,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
         const filterProducts = (searchTerm) => {
-            // Search through compact cards (product groups)
-            const compactCards = document.querySelectorAll('.compact-card');
+            // Search through compact group cards (product groups)
+            const compactCards = document.querySelectorAll('.compact-group-card');
             const categorySections = document.querySelectorAll('.category-section');
             let totalVisibleCards = 0;
             
@@ -704,7 +704,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Filter through each category section
             categorySections.forEach(section => {
                 let hasVisibleCards = false;
-                const cardsInSection = section.querySelectorAll('.compact-card');
+                const cardsInSection = section.querySelectorAll('.compact-group-card');
                 
                 cardsInSection.forEach(card => {
                     const title = card.querySelector('.compact-card-title')?.textContent.toLowerCase() || '';
