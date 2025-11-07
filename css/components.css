@@ -64,7 +64,7 @@
 
 .search-box input {
     width: 100%;
-    padding: 18px 20px 18px 55px;
+    padding: 18px 60px 18px 55px;
     background: var(--secondary-bg);
     border: 2px solid var(--border-color);
     border-radius: 12px;
@@ -81,6 +81,36 @@
 
 .search-box input::placeholder {
     color: var(--text-secondary);
+}
+
+.search-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    border: none;
+    border-radius: 8px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.search-btn:hover {
+    background: linear-gradient(135deg, #9d6fff 0%, #8b5cf6 100%);
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+}
+
+.search-btn:active {
+    transform: translateY(-50%) scale(0.95);
 }
 
 /* ===== STATS CARD ===== */

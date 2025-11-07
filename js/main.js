@@ -741,20 +741,33 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         // REMOVED: Search as you type - now ONLY searches on Enter
         
-        // Search ONLY on Enter key
+        const performSearch = () => {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const visibleCount = filterProducts(searchTerm);
+            
+            // Only scroll if there are results
+            if (searchTerm !== '' && visibleCount > 0) {
+                scrollToResults();
+            }
+            searchInput.blur(); // Remove focus from input
+        };
+        
+        // Search on Enter key
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                const searchTerm = searchInput.value.toLowerCase().trim();
-                const visibleCount = filterProducts(searchTerm);
-                
-                // Only scroll if there are results
-                if (searchTerm !== '' && visibleCount > 0) {
-                    scrollToResults();
-                }
-                searchInput.blur(); // Remove focus from input
+                performSearch();
             }
         });
+        
+        // Search on button click
+        const searchBtn = document.getElementById('searchBtn');
+        if (searchBtn) {
+            searchBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                performSearch();
+            });
+        }
     }
 });
 
