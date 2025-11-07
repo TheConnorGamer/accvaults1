@@ -687,22 +687,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         const filterProducts = (searchTerm) => {
             // Search through compact cards (product groups)
             const compactCards = document.querySelectorAll('.compact-card');
-            const categoryContainers = document.querySelectorAll('.category-container');
+            const categorySections = document.querySelectorAll('.category-section');
             let totalVisibleCards = 0;
             
             if (searchTerm === '') {
                 // Show all if search is empty
                 compactCards.forEach(card => card.style.display = 'block');
-                categoryContainers.forEach(container => container.style.display = 'block');
+                categorySections.forEach(section => section.style.display = 'block');
                 return compactCards.length;
             }
             
-            // Hide all categories first
-            categoryContainers.forEach(container => {
+            // Filter through each category section
+            categorySections.forEach(section => {
                 let hasVisibleCards = false;
-                const cardsInCategory = container.querySelectorAll('.compact-card');
+                const cardsInSection = section.querySelectorAll('.compact-card');
                 
-                cardsInCategory.forEach(card => {
+                cardsInSection.forEach(card => {
                     const title = card.querySelector('.compact-card-title')?.textContent.toLowerCase() || '';
                     const description = card.querySelector('.compact-card-description')?.textContent.toLowerCase() || '';
                     
@@ -715,8 +715,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                 });
                 
-                // Show/hide category based on if it has visible cards
-                container.style.display = hasVisibleCards ? 'block' : 'none';
+                // Show/hide category section based on if it has visible cards
+                section.style.display = hasVisibleCards ? 'block' : 'none';
             });
             
             return totalVisibleCards;
