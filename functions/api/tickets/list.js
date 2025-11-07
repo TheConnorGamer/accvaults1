@@ -1,4 +1,16 @@
 // Cloudflare Pages Function to list Paylix tickets
+
+// Handle CORS preflight
+export async function onRequestOptions() {
+    return new Response(null, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type'
+        }
+    });
+}
+
 export async function onRequestGet(context) {
     const { request } = context;
     
@@ -9,7 +21,10 @@ export async function onRequestGet(context) {
         if (!email) {
             return new Response(JSON.stringify({ error: 'Email parameter required' }), {
                 status: 400,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
             });
         }
         
@@ -26,7 +41,10 @@ export async function onRequestGet(context) {
             console.error('Paylix API error:', errorText);
             return new Response(JSON.stringify({ error: 'Failed to fetch tickets' }), {
                 status: paylixResponse.status,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
             });
         }
         
@@ -47,7 +65,10 @@ export async function onRequestGet(context) {
         console.error('Error fetching tickets:', error);
         return new Response(JSON.stringify({ error: error.message }), {
             status: 500,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
         });
     }
 }

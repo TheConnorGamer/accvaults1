@@ -1,4 +1,16 @@
 // Cloudflare Pages Function to create Paylix tickets
+
+// Handle CORS preflight
+export async function onRequestOptions() {
+    return new Response(null, {
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type'
+        }
+    });
+}
+
 export async function onRequestPost(context) {
     const { request, env } = context;
     
@@ -10,7 +22,10 @@ export async function onRequestPost(context) {
         if (!email || !title || !message) {
             return new Response(JSON.stringify({ error: 'Missing required fields' }), {
                 status: 400,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
             });
         }
         
@@ -33,7 +48,10 @@ export async function onRequestPost(context) {
             console.error('Paylix API error:', errorText);
             return new Response(JSON.stringify({ error: 'Failed to create ticket' }), {
                 status: paylixResponse.status,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
             });
         }
         
@@ -41,13 +59,19 @@ export async function onRequestPost(context) {
         
         return new Response(JSON.stringify(data), {
             status: 200,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
         });
     } catch (error) {
         console.error('Error creating ticket:', error);
         return new Response(JSON.stringify({ error: error.message }), {
             status: 500,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
         });
     }
 }
