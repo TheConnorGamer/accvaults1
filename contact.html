@@ -192,24 +192,51 @@
     </style>
 </head>
 <body>
+    <!-- Announcement Banner -->
+    <div class="announcement-banner">
+        <p>🎉 Discounted Products Use VAULTS at checkout for 5% off</p>
+        <button class="close-banner" onclick="closeBanner()">×</button>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
-            <a href="index.html" class="logo">
-                <span class="logo-icon">🔐</span>
-                <span class="logo-text">AccVaults</span>
-            </a>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="products.html">Products</a>
-                <a href="reviews.html">Reviews</a>
-                <a href="contact.html" class="active">Contact</a>
-            </div>
-            <div class="nav-actions">
-                <button class="btn-secondary" onclick="window.location.href='orders.html'">
-                    <i class="fas fa-box"></i>
-                    <span>Orders</span>
+            <div class="nav-content">
+                <div class="logo">
+                    <img src="images/logo.png" alt="AccVaults Logo" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="logo-icon" style="display: none;">A</div>
+                    <span class="logo-text">AccVaults</span>
+                </div>
+                
+                <div class="nav-links" id="navLinks" style="display: flex;">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="products.html" class="nav-link">Products</a>
+                    <a href="reviews.html" class="nav-link">Reviews</a>
+                    <a href="status.html" class="nav-link">Status</a>
+                    <a href="downloads.html" class="nav-link downloads-btn">Downloads</a>
+                    <button class="nav-link mobile-only-link" onclick="openCurrencyModal()" style="border: none; background: none; cursor: pointer; text-align: left; width: 100%;">
+                        <i class="fas fa-pound-sign"></i> Change Currency
+                    </button>
+                    <button class="nav-link mobile-only-link" onclick="openLoginModal()" style="border: none; background: none; cursor: pointer; text-align: left; width: 100%;">
+                        <i class="fas fa-sign-in-alt"></i> Login / Register
+                    </button>
+                </div>
+
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
                 </button>
+
+                <div class="nav-actions">
+                    <a href="https://discord.gg/accvaults" target="_blank" class="nav-action discord-btn">
+                        <i class="fab fa-discord"></i> Discord
+                    </a>
+                    <button class="nav-action currency-btn" onclick="openCurrencyModal()" title="Change Currency">
+                        <i class="fas fa-pound-sign"></i>
+                    </button>
+                    <button class="nav-action login-btn" onclick="openLoginModal()" title="Login / Register">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
@@ -257,31 +284,39 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>AccVaults</h3>
-                    <p>Premium digital services and accounts</p>
+                    <div class="logo">
+                        <img src="images/logo.png" alt="AccVaults Logo" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="logo-icon" style="display: none;">A</div>
+                        <span class="logo-text">AccVaults</span>
+                    </div>
+                    <p class="footer-description">Premium digital services at affordable prices.</p>
+                    <div class="social-links">
+                        <a href="https://discord.gg/accvaults" target="_blank" class="social-link"><i class="fab fa-discord"></i></a>
+                        <a href="https://www.youtube.com/@AccVaults" target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/accvaults" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
-                    <a href="index.html">Home</a>
-                    <a href="products.html">Products</a>
-                    <a href="reviews.html">Reviews</a>
-                    <a href="contact.html">Contact</a>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="reviews.html">Reviews</a></li>
+                        <li><a href="status.html">Status</a></li>
+                    </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>Legal</h4>
-                    <a href="terms.html">Terms of Service</a>
-                    <a href="privacy.html">Privacy Policy</a>
-                    <a href="refund.html">Refund Policy</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect</h4>
-                    <a href="https://discord.gg/accvaults" target="_blank">
-                        <i class="fab fa-discord"></i> Discord
-                    </a>
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="refund.html">Refund Policy</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 AccVaults. All rights reserved.</p>
+                <p>&copy; 2025 AccVaults. All rights reserved.</p>
             </div>
         </div>
     </footer>
