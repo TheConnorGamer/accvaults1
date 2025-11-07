@@ -1,3 +1,5 @@
+import { onRequestGet as __api_tickets_v2_admin_all_js_onRequestGet } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets-v2\\admin\\all.js"
+import { onRequestOptions as __api_tickets_v2_admin_all_js_onRequestOptions } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets-v2\\admin\\all.js"
 import { onRequestOptions as __api_tickets_v2_create_js_onRequestOptions } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets-v2\\create.js"
 import { onRequestPost as __api_tickets_v2_create_js_onRequestPost } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets-v2\\create.js"
 import { onRequestGet as __api_tickets_v2_list_js_onRequestGet } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets-v2\\list.js"
@@ -23,6 +25,20 @@ import { onRequest as __api_save_customer_js_onRequest } from "C:\\Users\\conna\
 
 export const routes = [
     {
+      routePath: "/api/tickets-v2/admin/all",
+      mountPath: "/api/tickets-v2/admin",
+      method: "GET",
+      middlewares: [],
+      modules: [__api_tickets_v2_admin_all_js_onRequestGet],
+    },
+  {
+      routePath: "/api/tickets-v2/admin/all",
+      mountPath: "/api/tickets-v2/admin",
+      method: "OPTIONS",
+      middlewares: [],
+      modules: [__api_tickets_v2_admin_all_js_onRequestOptions],
+    },
+  {
       routePath: "/api/tickets-v2/create",
       mountPath: "/api/tickets-v2",
       method: "OPTIONS",
