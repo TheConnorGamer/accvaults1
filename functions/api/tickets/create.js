@@ -15,11 +15,15 @@ export async function onRequestPost(context) {
     const { request, env } = context;
     
     try {
+        console.log('Received ticket creation request');
         const body = await request.json();
         const { email, title, message } = body;
         
+        console.log('Request data:', { email, title, message: message?.substring(0, 50) });
+        
         // Validate input
         if (!email || !title || !message) {
+            console.error('Missing required fields');
             return new Response(JSON.stringify({ error: 'Missing required fields' }), {
                 status: 400,
                 headers: { 
@@ -29,12 +33,28 @@ export async function onRequestPost(context) {
             });
         }
         
+        // Get API key from environment
+        const apiKey = env.PAYLIX_API_KEY;
+        console.log('API key present:', !!apiKey);
+        
+        if (!apiKey) {
+            console.error('API key not configured');
+            return new Response(JSON.stringify({ error: 'API key not configured' }), {
+                status: 500,
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
+        }
+        
         // Call Paylix API
+        console.log('Calling Paylix API...');
         const paylixResponse = await fetch('https://dev.paylix.gg/v1/queries', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer EzxWYoBzSAECBsJojXHrAOJQbBD4SEHdPJNS7b6mu418C96uVb2RQiP8ALzj5CzA`
+                'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
                 customer_email: email,
@@ -43,10 +63,17 @@ export async function onRequestPost(context) {
             })
         });
         
+        console.log('Paylix response status:', paylixResponse.status);
+        
+        const responseText = await paylixResponse.text();
+        console.log('Paylix raw response:', responseText);
+        
         if (!paylixResponse.ok) {
-            const errorText = await paylixResponse.text();
-            console.error('Paylix API error:', errorText);
-            return new Response(JSON.stringify({ error: 'Failed to create ticket' }), {
+            console.error('Paylix API error:', responseText);
+            return new Response(JSON.stringify({ 
+                error: 'Failed to create ticket',
+                details: responseText.substring(0, 200)
+            }), {
                 status: paylixResponse.status,
                 headers: { 
                     'Content-Type': 'application/json',
@@ -55,8 +82,24 @@ export async function onRequestPost(context) {
             });
         }
         
-        const data = await paylixResponse.json();
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (e) {
+            console.error('Failed to parse Paylix response:', e);
+            return new Response(JSON.stringify({ 
+                error: 'Invalid response from ticket service',
+                details: responseText.substring(0, 200)
+            }), {
+                status: 500,
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
+        }
         
+        console.log('Ticket created successfully');
         return new Response(JSON.stringify(data), {
             status: 200,
             headers: { 
@@ -66,7 +109,10 @@ export async function onRequestPost(context) {
         });
     } catch (error) {
         console.error('Error creating ticket:', error);
-        return new Response(JSON.stringify({ error: error.message }), {
+        return new Response(JSON.stringify({ 
+            error: error.message || 'Internal server error',
+            stack: error.stack?.substring(0, 200)
+        }), {
             status: 500,
             headers: { 
                 'Content-Type': 'application/json',

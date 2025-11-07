@@ -759,16 +759,15 @@
     </div>
 
     <!-- Load ticket system class first -->
-    <script src="js/paylix-tickets.js?v=2"></script>
+    <script src="js/paylix-tickets.js?v=3"></script>
     
     <script>
         // Initialize ticket system
-        const PAYLIX_API_KEY = 'EzxWYoBzSAECBsJojXHrAOJQbBD4SEHdPJNS7b6mu418C96uVb2RQiP8ALzj5CzA';
         let ticketSystem;
         let currentTicketId = null;
 
-        // Initialize immediately
-        ticketSystem = new PaylixTicketSystem(PAYLIX_API_KEY, 'AccVaults');
+        // Initialize immediately (no API key needed - handled by backend)
+        ticketSystem = new PaylixTicketSystem();
 
         // Switch between tabs
         function switchTab(tab) {

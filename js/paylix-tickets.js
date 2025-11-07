@@ -1,34 +1,46 @@
-// Paylix Ticket System Integration (Direct API calls)
+// Paylix Ticket System Integration (via Backend API)
 class PaylixTicketSystem {
-    constructor(apiKey, merchantName) {
-        this.apiKey = apiKey;
-        this.merchantName = merchantName;
-        this.baseUrl = 'https://dev.paylix.gg/v1'; // Direct Paylix API
+    constructor() {
+        this.baseUrl = '/api/tickets'; // Use backend API endpoints
     }
 
     // Create a new ticket
     async createTicket(email, title, message) {
         try {
-            const response = await fetch(`${this.baseUrl}/queries`, {
+            const response = await fetch(`${this.baseUrl}/create`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.apiKey}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    customer_email: email,
+                    email: email,
                     title: title,
                     message: message
                 })
             });
 
+            const responseText = await response.text();
+            console.log('Raw response:', responseText);
+
             if (!response.ok) {
-                const errorText = await response.text();
-                console.error('Paylix API error:', errorText);
-                throw new Error('Failed to create ticket');
+                let errorData;
+                try {
+                    errorData = JSON.parse(responseText);
+                } catch (e) {
+                    console.error('Failed to parse error response:', responseText);
+                    throw new Error('Failed to create ticket - Invalid server response');
+                }
+                console.error('API error:', errorData);
+                throw new Error(errorData.error || 'Failed to create ticket');
             }
 
-            const data = await response.json();
+            let data;
+            try {
+                data = JSON.parse(responseText);
+            } catch (e) {
+                console.error('Failed to parse success response:', responseText);
+                throw new Error('Failed to parse server response');
+            }
             return data;
         } catch (error) {
             console.error('Error creating ticket:', error);
@@ -39,17 +51,14 @@ class PaylixTicketSystem {
     // Get all tickets for a user
     async getTickets(email) {
         try {
-            const response = await fetch(`${this.baseUrl}/queries?customer_email=${encodeURIComponent(email)}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${this.apiKey}`
-                }
+            const response = await fetch(`${this.baseUrl}/list?email=${encodeURIComponent(email)}`, {
+                method: 'GET'
             });
 
             if (!response.ok) {
-                const errorText = await response.text();
-                console.error('Paylix API error:', errorText);
-                throw new Error('Failed to fetch tickets');
+                const errorData = await response.json();
+                console.error('API error:', errorData);
+                throw new Error(errorData.error || 'Failed to fetch tickets');
             }
 
             const data = await response.json();
@@ -63,17 +72,14 @@ class PaylixTicketSystem {
     // Get a specific ticket by uniquid
     async getTicket(uniquid) {
         try {
-            const response = await fetch(`${this.baseUrl}/queries/${uniquid}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${this.apiKey}`
-                }
+            const response = await fetch(`${this.baseUrl}/${uniquid}`, {
+                method: 'GET'
             });
 
             if (!response.ok) {
-                const errorText = await response.text();
-                console.error('Paylix API error:', errorText);
-                throw new Error('Failed to fetch ticket');
+                const errorData = await response.json();
+                console.error('API error:', errorData);
+                throw new Error(errorData.error || 'Failed to fetch ticket');
             }
 
             const data = await response.json();
@@ -87,69 +93,27 @@ class PaylixTicketSystem {
     // Reply to a ticket
     async replyToTicket(uniquid, reply) {
         try {
-            const response = await fetch(`${this.baseUrl}/queries/reply/${uniquid}`, {
+            const response = await fetch(`${this.baseUrl}/reply`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.apiKey}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    ticketId: uniquid,
                     reply: reply
                 })
             });
 
             if (!response.ok) {
-                const errorText = await response.text();
-                console.error('Paylix API error:', errorText);
-                throw new Error('Failed to reply to ticket');
+                const errorData = await response.json();
+                console.error('API error:', errorData);
+                throw new Error(errorData.error || 'Failed to reply to ticket');
             }
 
             const data = await response.json();
             return data;
         } catch (error) {
             console.error('Error replying to ticket:', error);
-            throw error;
-        }
-    }
-
-    // Close a ticket
-    async closeTicket(uniquid) {
-        try {
-            const response = await fetch(`${this.baseUrl}/queries/close/${uniquid}`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${this.apiKey}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to close ticket');
-            }
-
-            return await response.json();
-        } catch (error) {
-            console.error('Error closing ticket:', error);
-            throw error;
-        }
-    }
-
-    // Reopen a ticket
-    async reopenTicket(uniquid) {
-        try {
-            const response = await fetch(`${this.baseUrl}/queries/reopen/${uniquid}`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${this.apiKey}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to reopen ticket');
-            }
-
-            return await response.json();
-        } catch (error) {
-            console.error('Error reopening ticket:', error);
             throw error;
         }
     }

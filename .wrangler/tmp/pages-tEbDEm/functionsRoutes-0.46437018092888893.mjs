@@ -1,0 +1,115 @@
+import { onRequestOptions as __api_tickets_create_js_onRequestOptions } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\create.js"
+import { onRequestPost as __api_tickets_create_js_onRequestPost } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\create.js"
+import { onRequestGet as __api_tickets_list_js_onRequestGet } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\list.js"
+import { onRequestOptions as __api_tickets_list_js_onRequestOptions } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\list.js"
+import { onRequestOptions as __api_tickets_reply_js_onRequestOptions } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\reply.js"
+import { onRequestPost as __api_tickets_reply_js_onRequestPost } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\reply.js"
+import { onRequestGet as __api_tickets__id__js_onRequestGet } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\[id].js"
+import { onRequestOptions as __api_tickets__id__js_onRequestOptions } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\[id].js"
+import { onRequest as __api_auth_js_onRequest } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\auth.js"
+import { onRequest as __api_create_checkout_js_onRequest } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\create-checkout.js"
+import { onRequest as __api_paylix_api_js_onRequest } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\paylix-api.js"
+import { onRequest as __api_paylix_stats_js_onRequest } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\paylix-stats.js"
+import { onRequest as __api_paylix_webhook_js_onRequest } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\paylix-webhook.js"
+import { onRequest as __api_save_customer_js_onRequest } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\save-customer.js"
+
+export const routes = [
+    {
+      routePath: "/api/tickets/create",
+      mountPath: "/api/tickets",
+      method: "OPTIONS",
+      middlewares: [],
+      modules: [__api_tickets_create_js_onRequestOptions],
+    },
+  {
+      routePath: "/api/tickets/create",
+      mountPath: "/api/tickets",
+      method: "POST",
+      middlewares: [],
+      modules: [__api_tickets_create_js_onRequestPost],
+    },
+  {
+      routePath: "/api/tickets/list",
+      mountPath: "/api/tickets",
+      method: "GET",
+      middlewares: [],
+      modules: [__api_tickets_list_js_onRequestGet],
+    },
+  {
+      routePath: "/api/tickets/list",
+      mountPath: "/api/tickets",
+      method: "OPTIONS",
+      middlewares: [],
+      modules: [__api_tickets_list_js_onRequestOptions],
+    },
+  {
+      routePath: "/api/tickets/reply",
+      mountPath: "/api/tickets",
+      method: "OPTIONS",
+      middlewares: [],
+      modules: [__api_tickets_reply_js_onRequestOptions],
+    },
+  {
+      routePath: "/api/tickets/reply",
+      mountPath: "/api/tickets",
+      method: "POST",
+      middlewares: [],
+      modules: [__api_tickets_reply_js_onRequestPost],
+    },
+  {
+      routePath: "/api/tickets/:id",
+      mountPath: "/api/tickets",
+      method: "GET",
+      middlewares: [],
+      modules: [__api_tickets__id__js_onRequestGet],
+    },
+  {
+      routePath: "/api/tickets/:id",
+      mountPath: "/api/tickets",
+      method: "OPTIONS",
+      middlewares: [],
+      modules: [__api_tickets__id__js_onRequestOptions],
+    },
+  {
+      routePath: "/api/auth",
+      mountPath: "/api",
+      method: "",
+      middlewares: [],
+      modules: [__api_auth_js_onRequest],
+    },
+  {
+      routePath: "/api/create-checkout",
+      mountPath: "/api",
+      method: "",
+      middlewares: [],
+      modules: [__api_create_checkout_js_onRequest],
+    },
+  {
+      routePath: "/api/paylix-api",
+      mountPath: "/api",
+      method: "",
+      middlewares: [],
+      modules: [__api_paylix_api_js_onRequest],
+    },
+  {
+      routePath: "/api/paylix-stats",
+      mountPath: "/api",
+      method: "",
+      middlewares: [],
+      modules: [__api_paylix_stats_js_onRequest],
+    },
+  {
+      routePath: "/api/paylix-webhook",
+      mountPath: "/api",
+      method: "",
+      middlewares: [],
+      modules: [__api_paylix_webhook_js_onRequest],
+    },
+  {
+      routePath: "/api/save-customer",
+      mountPath: "/api",
+      method: "",
+      middlewares: [],
+      modules: [__api_save_customer_js_onRequest],
+    },
+  ]

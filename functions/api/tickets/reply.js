@@ -28,12 +28,24 @@ export async function onRequestPost(context) {
             });
         }
         
+        // Get API key from environment
+        const apiKey = context.env.PAYLIX_API_KEY;
+        if (!apiKey) {
+            return new Response(JSON.stringify({ error: 'API key not configured' }), {
+                status: 500,
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
+        }
+        
         // Call Paylix API
         const paylixResponse = await fetch(`https://dev.paylix.gg/v1/queries/reply/${ticketId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer EzxWYoBzSAECBsJojXHrAOJQbBD4SEHdPJNS7b6mu418C96uVb2RQiP8ALzj5CzA`
+                'Authorization': `Bearer ${apiKey}`
             },
             body: JSON.stringify({
                 reply: reply
