@@ -554,8 +554,8 @@ body:not(.modal-open) {
 /* ===== MODAL PRODUCT GRID ===== */
 .selector-products-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    grid-template-columns: 1fr;
+    gap: 16px;
     padding: 32px;
     overflow-y: auto;
     flex: 1;
@@ -584,8 +584,8 @@ body:not(.modal-open) {
 /* ===== MOBILE RESPONSIVE STYLES ===== */
 @media (max-width: 1024px) {
     .selector-products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+        grid-template-columns: 1fr;
+        gap: 16px;
         padding: 24px;
     }
     
