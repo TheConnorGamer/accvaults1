@@ -683,21 +683,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Search functionality
     const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        const productCards = document.querySelectorAll('.product-card');
-        
-        productCards.forEach(card => {
-            const title = card.querySelector('.product-title').textContent.toLowerCase();
-            const description = card.querySelector('.product-description').textContent.toLowerCase();
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase().trim();
             
-            if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
+            // Search through compact cards (product groups)
+            const compactCards = document.querySelectorAll('.compact-card');
+            const categoryContainers = document.querySelectorAll('.category-container');
+            
+            if (searchTerm === '') {
+                // Show all if search is empty
+                compactCards.forEach(card => card.style.display = 'block');
+                categoryContainers.forEach(container => container.style.display = 'block');
+                return;
             }
+            
+            // Hide all categories first
+            categoryContainers.forEach(container => {
+                let hasVisibleCards = false;
+                const cardsInCategory = container.querySelectorAll('.compact-card');
+                
+                cardsInCategory.forEach(card => {
+                    const title = card.querySelector('.compact-card-title')?.textContent.toLowerCase() || '';
+                    const description = card.querySelector('.compact-card-description')?.textContent.toLowerCase() || '';
+                    
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        hasVisibleCards = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Show/hide category based on if it has visible cards
+                container.style.display = hasVisibleCards ? 'block' : 'none';
+            });
         });
-    });
+    }
 });
 
 
