@@ -32,9 +32,16 @@ export async function onRequestGet(context) {
         
         const data = await paylixResponse.json();
         
+        // Log the response for debugging
+        console.log('Paylix API Response:', JSON.stringify(data));
+        console.log('Response keys:', Object.keys(data));
+        
         return new Response(JSON.stringify(data), {
             status: 200,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
         });
     } catch (error) {
         console.error('Error fetching tickets:', error);
