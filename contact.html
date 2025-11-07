@@ -8,14 +8,14 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/logo.png">
     
-    <!-- Open Graph Meta Tags for Link Previews -->
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Contact Us - AccVaults">
-    <meta property="og:description" content="Get in touch with AccVaults support team. We're here to help!">
+    <meta property="og:description" content="Get in touch with AccVaults support team via Discord!">
     <meta property="og:image" content="https://shop.accvaults.com/images/logo.png">
     <meta property="og:url" content="https://shop.accvaults.com/contact.html">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="AccVaults">
-    <meta name="theme-color" content="#6366f1">
+    <meta name="theme-color" content="#5865F2">
     
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/components.css">
@@ -24,511 +24,170 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         .contact-container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        .contact-header {
+            padding: 100px 20px;
             text-align: center;
-            margin-bottom: 60px;
         }
 
         .contact-header h1 {
-            font-size: 48px;
+            font-size: 56px;
             font-weight: 800;
             background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.6s ease;
         }
 
         .contact-header p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .discord-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 60px 40px;
+            animation: fadeInUp 0.6s ease 0.2s both;
+            transition: all 0.3s ease;
+        }
+
+        .discord-card:hover {
+            transform: translateY(-5px);
+            border-color: #5865F2;
+            box-shadow: 0 20px 60px rgba(88, 101, 242, 0.2);
+        }
+
+        .discord-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #5865F2 0%, #7289DA 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 48px;
+            color: white;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .discord-card h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+
+        .discord-card p {
             font-size: 18px;
             color: var(--text-secondary);
+            margin-bottom: 35px;
+            line-height: 1.6;
         }
 
-        .contact-grid {
+        .discord-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #5865F2 0%, #7289DA 100%);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.3);
+        }
+
+        .discord-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(88, 101, 242, 0.4);
+        }
+
+        .discord-btn i {
+            font-size: 24px;
+        }
+
+        .features {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
         }
 
-        @media (max-width: 768px) {
-            .contact-grid {
-                grid-template-columns: 1fr;
+        .feature {
+            background: var(--secondary-bg);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .feature:nth-child(1) { animation-delay: 0.3s; }
+        .feature:nth-child(2) { animation-delay: 0.4s; }
+        .feature:nth-child(3) { animation-delay: 0.5s; }
+
+        .feature i {
+            font-size: 36px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        .contact-form {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 40px;
-        }
-
-        .contact-form h2 {
-            color: var(--text-primary);
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 24px;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-group label {
-            display: block;
-            color: var(--text-primary);
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px 16px;
-            color: var(--text-primary);
-            font-size: 14px;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--theme-color);
-            box-shadow: 0 0 0 3px rgba(131, 89, 207, 0.1);
-        }
-
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: var(--gradient-1);
-            border: none;
-            border-radius: 8px;
-            padding: 14px 24px;
-            color: white;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-glow);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .info-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 32px;
-            transition: all 0.3s ease;
-        }
-
-        .info-card:hover {
-            border-color: var(--theme-color);
-            box-shadow: var(--shadow-glow);
-            transform: translateY(-4px);
-        }
-
-        .info-card-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--gradient-1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .info-card h3 {
-            color: var(--text-primary);
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .info-card p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-
-        .info-card a {
-            color: var(--theme-color);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .info-card a:hover {
-            color: #9469df;
-        }
-
-        .success-message {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 8px;
-            padding: 16px;
-            color: #10b981;
-            margin-bottom: 24px;
-            display: none;
-        }
-
-        .success-message.show {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-
-        .error-message {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 8px;
-            padding: 16px;
-            color: #ef4444;
-            margin-bottom: 24px;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-
-        .social-contact {
-            display: flex;
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .social-contact-btn {
-            flex: 1;
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px;
-            color: var(--text-primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .social-contact-btn:hover {
-            background: var(--hover-bg);
-            border-color: var(--theme-color);
-            transform: translateY(-2px);
-        }
-
-        .social-contact-btn i {
-            font-size: 18px;
-        }
-
-        /* Ticket System Styles */
-        .ticket-tabs {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .ticket-tab {
-            padding: 12px 24px;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-        }
-
-        .ticket-tab.active {
-            color: var(--theme-color);
-            border-bottom-color: var(--theme-color);
-        }
-
-        .ticket-tab:hover {
-            color: var(--text-primary);
-        }
-
-        .ticket-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .ticket-item {
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .ticket-item:hover {
-            border-color: var(--theme-color);
-            transform: translateX(4px);
-        }
-
-        .ticket-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 12px;
-        }
-
-        .ticket-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-        }
-
-        .ticket-id {
-            font-size: 12px;
-            color: var(--text-secondary);
-            font-family: monospace;
-        }
-
-        .ticket-status-badge {
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .ticket-meta {
-            display: flex;
-            gap: 16px;
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .ticket-meta i {
-            margin-right: 4px;
-        }
-
-        .ticket-detail-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 10000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .ticket-detail-modal.show {
-            display: flex;
-        }
-
-        .ticket-detail-content {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .ticket-detail-header {
-            padding: 24px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .ticket-detail-close {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 24px;
-            cursor: pointer;
-            padding: 0;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .ticket-detail-close:hover {
-            background: var(--hover-bg);
-            color: var(--text-primary);
-        }
-
-        .ticket-messages {
-            padding: 24px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .ticket-message {
-            margin-bottom: 20px;
-            padding: 16px;
-            border-radius: 12px;
-            background: var(--secondary-bg);
-        }
-
-        .ticket-message.customer {
-            background: rgba(131, 89, 207, 0.1);
-            border-left: 3px solid var(--theme-color);
-        }
-
-        .ticket-message.shop {
-            background: rgba(59, 130, 246, 0.1);
-            border-left: 3px solid #3b82f6;
-        }
-
-        .message-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 13px;
-        }
-
-        .message-role {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .message-time {
-            color: var(--text-secondary);
-        }
-
-        .message-content {
-            color: var(--text-primary);
-            line-height: 1.6;
-        }
-
-        .ticket-reply-form {
-            padding: 24px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .ticket-reply-textarea {
-            width: 100%;
-            min-height: 100px;
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px;
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            resize: vertical;
-            margin-bottom: 12px;
-        }
-
-        .ticket-reply-actions {
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-        }
-
-        .ticket-action-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .ticket-action-btn.primary {
-            background: var(--gradient-1);
-            color: white;
-        }
-
-        .ticket-action-btn.secondary {
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-        }
-
-        .ticket-action-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
-        }
-
-        .empty-state i {
-            font-size: 48px;
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
-
-        .loading-spinner {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-secondary);
-        }
-
-        .loading-spinner i {
-            font-size: 32px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .contact-header h1 {
+                font-size: 40px;
+            }
+
+            .discord-card {
+                padding: 40px 30px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -536,26 +195,21 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
-            <div class="nav-content">
-                <div class="logo">
-                    <img src="images/logo.png" alt="AccVaults Logo" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="logo-icon" style="display: none;">A</div>
-                    <span class="logo-text">AccVaults</span>
-                </div>
-                
-                <div class="nav-links">
-                    <a href="index.html" class="nav-link">Home</a>
-                    <a href="products.html" class="nav-link">Products</a>
-                    <a href="reviews.html" class="nav-link">Reviews</a>
-                    <a href="status.html" class="nav-link">Status</a>
-                    <a href="downloads.html" class="nav-link downloads-btn">Downloads</a>
-                </div>
-
-                <div class="nav-actions">
-                    <a href="https://discord.gg/accvaults" target="_blank" class="nav-action discord-btn">
-                        <i class="fab fa-discord"></i> Discord
-                    </a>
-                </div>
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🔐</span>
+                <span class="logo-text">AccVaults</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="contact.html" class="active">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-secondary" onclick="window.location.href='orders.html'">
+                    <i class="fas fa-box"></i>
+                    <span>Orders</span>
+                </button>
             </div>
         </div>
     </nav>
@@ -564,123 +218,36 @@
     <div class="contact-container">
         <div class="contact-header">
             <h1>Get in Touch</h1>
-            <p>Have a question or need support? We're here to help!</p>
+            <p>Have questions? Need support? Join our Discord community!</p>
         </div>
 
-        <div class="contact-grid">
-            <!-- Contact Form / Ticket System -->
-            <div class="contact-form">
-                <!-- Ticket Tabs -->
-                <div class="ticket-tabs">
-                    <button class="ticket-tab active" onclick="switchTab('create')">
-                        <i class="fas fa-plus-circle"></i> Create Ticket
-                    </button>
-                    <button class="ticket-tab" onclick="switchTab('view')">
-                        <i class="fas fa-list"></i> My Tickets
-                    </button>
-                </div>
-
-                <!-- Create Ticket Tab -->
-                <div id="createTicketTab">
-                    <h2>Create Support Ticket</h2>
-                    
-                    <div class="success-message" id="successMessage">
-                        <i class="fas fa-check-circle"></i> Ticket created successfully! We'll respond soon.
-                    </div>
-                    
-                    <div class="error-message" id="errorMessage">
-                        <i class="fas fa-exclamation-circle"></i> <span id="errorText">Something went wrong. Please try again.</span>
-                    </div>
-
-                    <form id="contactForm" onsubmit="handleSubmit(event)">
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" required placeholder="your@email.com">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" required placeholder="Brief summary of your issue">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" required placeholder="Describe your issue in detail..."></textarea>
-                        </div>
-
-                        <button type="submit" class="submit-btn" id="submitBtn">
-                            <i class="fas fa-paper-plane"></i>
-                            <span>Create Ticket</span>
-                        </button>
-                    </form>
-                </div>
-
-                <!-- View Tickets Tab -->
-                <div id="viewTicketsTab" style="display: none;">
-                    <h2>My Support Tickets</h2>
-                    
-                    <div class="form-group" style="margin-bottom: 24px;">
-                        <label for="ticketEmail">Enter your email to view tickets</label>
-                        <div style="display: flex; gap: 12px;">
-                            <input type="email" id="ticketEmail" placeholder="your@email.com" style="flex: 1;">
-                            <button onclick="loadUserTickets()" class="submit-btn" style="width: auto; padding: 12px 24px;">
-                                <i class="fas fa-search"></i> Load Tickets
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="ticketsList">
-                        <div class="empty-state">
-                            <i class="fas fa-inbox"></i>
-                            <p>Enter your email to view your support tickets</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="discord-card">
+            <div class="discord-icon">
+                <i class="fab fa-discord"></i>
             </div>
+            <h2>Join Our Discord Server</h2>
+            <p>Get instant support, connect with our community, and stay updated with the latest news. Our team is active 24/7 to help you!</p>
+            <a href="https://discord.gg/accvaults" class="discord-btn" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-discord"></i>
+                <span>Join Discord</span>
+            </a>
+        </div>
 
-            <!-- Contact Info -->
-            <div class="contact-info">
-                <div class="info-card">
-                    <div class="info-card-icon">
-                        <i class="fab fa-discord"></i>
-                    </div>
-                    <h3>Discord Community</h3>
-                    <p>Join our Discord server for the fastest support response and to connect with our community.</p>
-                    <a href="https://discord.gg/accvaults" target="_blank">Join Discord Server →</a>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-card-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h3>Response Time</h3>
-                    <p>We typically respond to all inquiries within 1-2 hours during business hours and within 24 hours on weekends.</p>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-card-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>24/7 Support</h3>
-                    <p>Our support team is available around the clock to assist you with any questions or issues.</p>
-                    <div class="social-contact">
-                        <a href="https://discord.gg/accvaults" target="_blank" class="social-contact-btn">
-                            <i class="fab fa-discord"></i> Discord
-                        </a>
-                        <a href="https://www.youtube.com/@AccVaults" target="_blank" class="social-contact-btn">
-                            <i class="fab fa-youtube"></i> YouTube
-                        </a>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <div class="info-card-icon">
-                        <i class="fas fa-question-circle"></i>
-                    </div>
-                    <h3>FAQ</h3>
-                    <p>Need help with refunds? Check out our refund policy for clear guidelines.</p>
-                    <a href="refund.html">Visit Refund Policy →</a>
-                </div>
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-bolt"></i>
+                <h3>Instant Support</h3>
+                <p>Get help from our team and community members in real-time</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-users"></i>
+                <h3>Active Community</h3>
+                <p>Connect with thousands of satisfied customers and enthusiasts</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-bell"></i>
+                <h3>Latest Updates</h3>
+                <p>Be the first to know about new products, deals, and announcements</p>
             </div>
         </div>
     </div>
@@ -690,322 +257,35 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <div class="logo">
-                        <img src="images/logo.png" alt="AccVaults Logo" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="logo-icon" style="display: none;">A</div>
-                        <span class="logo-text">AccVaults</span>
-                    </div>
-                    <p class="footer-description">Premium digital services at affordable prices.</p>
-                    <div class="social-links">
-                        <a href="https://discord.gg/accvaults" target="_blank" class="social-link"><i class="fab fa-discord"></i></a>
-                        <a href="https://www.youtube.com/@AccVaults" target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.instagram.com/accvaults" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
-                    </div>
+                    <h3>AccVaults</h3>
+                    <p>Premium digital services and accounts</p>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Products</a></li>
-                        <li><a href="reviews.html">Reviews</a></li>
-                        <li><a href="status.html">Status</a></li>
-                    </ul>
+                    <a href="index.html">Home</a>
+                    <a href="products.html">Products</a>
+                    <a href="reviews.html">Reviews</a>
+                    <a href="contact.html">Contact</a>
                 </div>
                 <div class="footer-section">
-                    <h4>Support</h4>
-                    <ul class="footer-links">
-                        <li><a href="terms.html">Terms of Service</a></li>
-                        <li><a href="refund.html">Refund Policy</a></li>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                    </ul>
+                    <h4>Legal</h4>
+                    <a href="terms.html">Terms of Service</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="refund.html">Refund Policy</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <a href="https://discord.gg/accvaults" target="_blank">
+                        <i class="fab fa-discord"></i> Discord
+                    </a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 AccVaults. All rights reserved.</p>
+                <p>&copy; 2024 AccVaults. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Ticket Detail Modal -->
-    <div class="ticket-detail-modal" id="ticketModal">
-        <div class="ticket-detail-content">
-            <div class="ticket-detail-header">
-                <div>
-                    <h3 id="modalTicketTitle">Ticket Details</h3>
-                    <p id="modalTicketId" style="font-size: 12px; color: var(--text-secondary); font-family: monospace; margin-top: 4px;"></p>
-                </div>
-                <button class="ticket-detail-close" onclick="closeTicketModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="ticket-messages" id="ticketMessages">
-                <!-- Messages will be loaded here -->
-            </div>
-            
-            <div class="ticket-reply-form" id="ticketReplyForm">
-                <textarea class="ticket-reply-textarea" id="replyMessage" placeholder="Type your reply..."></textarea>
-                <div class="ticket-reply-actions">
-                    <button class="ticket-action-btn secondary" onclick="closeTicketModal()">
-                        <i class="fas fa-times"></i> Cancel
-                    </button>
-                    <button class="ticket-action-btn primary" onclick="sendReply()">
-                        <i class="fas fa-paper-plane"></i> Send Reply
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Load ticket system class first -->
-    <script src="js/paylix-tickets.js?v=3"></script>
-    
-    <script>
-        // Initialize ticket system
-        let ticketSystem;
-        let currentTicketId = null;
-
-        // Initialize immediately (no API key needed - handled by backend)
-        ticketSystem = new PaylixTicketSystem();
-
-        // Switch between tabs
-        function switchTab(tab) {
-            const tabs = document.querySelectorAll('.ticket-tab');
-            tabs.forEach(t => t.classList.remove('active'));
-            
-            if (tab === 'create') {
-                document.getElementById('createTicketTab').style.display = 'block';
-                document.getElementById('viewTicketsTab').style.display = 'none';
-                tabs[0].classList.add('active');
-            } else {
-                document.getElementById('createTicketTab').style.display = 'none';
-                document.getElementById('viewTicketsTab').style.display = 'block';
-                tabs[1].classList.add('active');
-            }
-        }
-
-        // Handle ticket creation
-        async function handleSubmit(event) {
-            event.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const successMessage = document.getElementById('successMessage');
-            const errorMessage = document.getElementById('errorMessage');
-            const errorText = document.getElementById('errorText');
-            const form = document.getElementById('contactForm');
-            
-            // Hide previous messages
-            successMessage.classList.remove('show');
-            errorMessage.classList.remove('show');
-            
-            // Disable submit button
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
-            
-            // Get form data
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            
-            try {
-                // Create ticket via Paylix API
-                const result = await ticketSystem.createTicket(email, subject, message);
-                
-                // Show success message
-                successMessage.classList.add('show');
-                
-                // Reset form
-                form.reset();
-                
-                // Scroll to success message
-                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-                // Auto-hide success message after 5 seconds
-                setTimeout(() => {
-                    successMessage.classList.remove('show');
-                }, 5000);
-            } catch (error) {
-                // Show error message
-                errorText.textContent = error.message || 'Failed to create ticket. Please try again or contact us via Discord.';
-                errorMessage.classList.add('show');
-                console.error('Error creating ticket:', error);
-            } finally {
-                // Re-enable submit button
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> <span>Create Ticket</span>';
-            }
-        }
-
-        // Load user tickets
-        async function loadUserTickets() {
-            const email = document.getElementById('ticketEmail').value;
-            if (!email) {
-                alert('Please enter your email address');
-                return;
-            }
-
-            const ticketsList = document.getElementById('ticketsList');
-            ticketsList.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i><p>Loading tickets...</p></div>';
-
-            try {
-                const tickets = await ticketSystem.getTickets(email);
-                
-                if (!tickets || tickets.length === 0) {
-                    ticketsList.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-inbox"></i>
-                            <p>No tickets found for this email address</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                // Display tickets
-                let ticketsHTML = '<div class="ticket-list">';
-                tickets.forEach(ticket => {
-                    const statusBadge = ticketSystem.getStatusBadge(ticket.status);
-                    const ticketId = ticket.ticket_id || ticket.uniquid;
-                    const ticketTitle = ticket.subject || ticket.title;
-                    const messageCount = ticket.message_count || (ticket.messages ? ticket.messages.length : 0);
-                    
-                    ticketsHTML += `
-                        <div class="ticket-item" onclick="openTicket('${ticketId}')">
-                            <div class="ticket-header">
-                                <div>
-                                    <div class="ticket-title">${ticketTitle}</div>
-                                    <div class="ticket-id">#${ticketId}</div>
-                                </div>
-                                <span class="ticket-status-badge" style="background: ${statusBadge.color}20; color: ${statusBadge.color};">
-                                    <i class="fas fa-${statusBadge.icon}"></i>
-                                    ${statusBadge.text}
-                                </span>
-                            </div>
-                            <div class="ticket-meta">
-                                <span><i class="fas fa-clock"></i> ${ticketSystem.formatDate(ticket.created_at)}</span>
-                                <span><i class="fas fa-comments"></i> ${messageCount} messages</span>
-                            </div>
-                        </div>
-                    `;
-                });
-                ticketsHTML += '</div>';
-                ticketsList.innerHTML = ticketsHTML;
-            } catch (error) {
-                ticketsList.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <p>Error loading tickets. Please try again.</p>
-                    </div>
-                `;
-                console.error('Error loading tickets:', error);
-            }
-        }
-
-        // Open ticket detail
-        async function openTicket(uniquid) {
-            currentTicketId = uniquid;
-            const modal = document.getElementById('ticketModal');
-            const messagesContainer = document.getElementById('ticketMessages');
-            
-            modal.classList.add('show');
-            messagesContainer.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>';
-
-            try {
-                const ticket = await ticketSystem.getTicket(uniquid);
-                
-                // Update modal header
-                const ticketTitle = ticket.subject || ticket.title;
-                const ticketId = ticket.ticket_id || ticket.uniquid;
-                document.getElementById('modalTicketTitle').textContent = ticketTitle;
-                document.getElementById('modalTicketId').textContent = `#${ticketId}`;
-                
-                // Display messages
-                let messagesHTML = '';
-                if (ticket.messages && ticket.messages.length > 0) {
-                    ticket.messages.forEach(msg => {
-                        // Handle both sender_type (custom) and role (Paylix) fields
-                        const senderType = msg.sender_type || msg.role;
-                        const isCustomer = senderType === 'customer' || senderType === 'CUSTOMER';
-                        const messageClass = isCustomer ? 'customer' : 'shop';
-                        
-                        messagesHTML += `
-                            <div class="ticket-message ${messageClass}">
-                                <div class="message-header">
-                                    <span class="message-role">${isCustomer ? 'You' : 'Support Team'}</span>
-                                    <span class="message-time">${ticketSystem.formatDate(msg.created_at)}</span>
-                                </div>
-                                <div class="message-content">${msg.message}</div>
-                            </div>
-                        `;
-                    });
-                } else {
-                    messagesHTML = '<div class="empty-state"><p>No messages yet</p></div>';
-                }
-                
-                messagesContainer.innerHTML = messagesHTML;
-                
-                // Scroll to bottom of messages
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                
-                // Hide reply form if ticket is closed
-                if (ticket.status === 'CLOSED') {
-                    document.getElementById('ticketReplyForm').style.display = 'none';
-                } else {
-                    document.getElementById('ticketReplyForm').style.display = 'block';
-                }
-            } catch (error) {
-                messagesContainer.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p>Error loading ticket details</p></div>';
-                console.error('Error loading ticket:', error);
-            }
-        }
-
-        // Close ticket modal
-        function closeTicketModal() {
-            document.getElementById('ticketModal').classList.remove('show');
-            document.getElementById('replyMessage').value = '';
-            currentTicketId = null;
-        }
-
-        // Send reply
-        async function sendReply() {
-            const replyMessage = document.getElementById('replyMessage').value;
-            if (!replyMessage.trim()) {
-                alert('Please enter a reply message');
-                return;
-            }
-
-            if (!currentTicketId) {
-                alert('No ticket selected');
-                return;
-            }
-
-            const replyBtn = event.target;
-            replyBtn.disabled = true;
-            replyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-
-            try {
-                await ticketSystem.replyToTicket(currentTicketId, replyMessage);
-                
-                // Reload ticket details
-                await openTicket(currentTicketId);
-                
-                // Clear reply textarea
-                document.getElementById('replyMessage').value = '';
-            } catch (error) {
-                alert('Failed to send reply. Please try again.');
-                console.error('Error sending reply:', error);
-            } finally {
-                replyBtn.disabled = false;
-                replyBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Reply';
-            }
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('ticketModal').addEventListener('click', (e) => {
-            if (e.target.id === 'ticketModal') {
-                closeTicketModal();
-            }
-        });
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
