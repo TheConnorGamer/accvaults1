@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Ticket API</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .test-section {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        button {
+            background: #8359cf;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #9469df;
+        }
+        pre {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        input {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background: #1a1a1a;
+            color: #fff;
+            width: 300px;
+            margin: 5px;
+        }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <h1>🎫 Ticket API Tester</h1>
+    
+    <div class="test-section">
+        <h2>1. Create Ticket</h2>
+        <input type="email" id="createEmail" placeholder="Email" value="test@example.com">
+        <input type="text" id="createTitle" placeholder="Title" value="Test Ticket">
+        <input type="text" id="createMessage" placeholder="Message" value="This is a test ticket">
+        <br>
+        <button onclick="testCreateTicket()">Create Ticket</button>
+        <pre id="createResult">Click button to test...</pre>
+    </div>
+
+    <div class="test-section">
+        <h2>2. List Tickets</h2>
+        <input type="email" id="listEmail" placeholder="Email" value="connazium@gmail.com">
+        <button onclick="testListTickets()">List Tickets</button>
+        <pre id="listResult">Click button to test...</pre>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Get Ticket Details</h2>
+        <input type="text" id="ticketId" placeholder="Ticket ID">
+        <button onclick="testGetTicket()">Get Ticket</button>
+        <pre id="getResult">Click button to test...</pre>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Direct API Test (Dev Paylix)</h2>
+        <button onclick="testDirectAPI()">Test Direct API</button>
+        <pre id="directResult">Click button to test...</pre>
+    </div>
+
+    <script>
+        const API_KEY = 'EzxWYoBzSAECBsJojXHrAOJQbBD4SEHdPJNS7b6mu418C96uVb2RQiP8ALzj5CzA';
+
+        async function testCreateTicket() {
+            const result = document.getElementById('createResult');
+            result.innerHTML = '⏳ Creating ticket...';
+            
+            try {
+                const response = await fetch('/api/tickets/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: document.getElementById('createEmail').value,
+                        title: document.getElementById('createTitle').value,
+                        message: document.getElementById('createMessage').value
+                    })
+                });
+
+                const data = await response.json();
+                result.innerHTML = `<span class="${response.ok ? 'success' : 'error'}">Status: ${response.status}</span>\n\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                result.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+
+        async function testListTickets() {
+            const result = document.getElementById('listResult');
+            result.innerHTML = '⏳ Loading tickets...';
+            
+            try {
+                const email = document.getElementById('listEmail').value;
+                const response = await fetch(`/api/tickets/list?email=${encodeURIComponent(email)}`);
+                const data = await response.json();
+                
+                result.innerHTML = `<span class="${response.ok ? 'success' : 'error'}">Status: ${response.status}</span>\n\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                result.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+
+        async function testGetTicket() {
+            const result = document.getElementById('getResult');
+            result.innerHTML = '⏳ Loading ticket...';
+            
+            try {
+                const ticketId = document.getElementById('ticketId').value;
+                const response = await fetch(`/api/tickets/${ticketId}`);
+                const data = await response.json();
+                
+                result.innerHTML = `<span class="${response.ok ? 'success' : 'error'}">Status: ${response.status}</span>\n\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                result.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+
+        async function testDirectAPI() {
+            const result = document.getElementById('directResult');
+            result.innerHTML = '⏳ Testing direct API...';
+            
+            try {
+                // Test 1: List queries
+                const response1 = await fetch('https://dev.paylix.gg/v1/queries?customer_email=connazium@gmail.com', {
+                    headers: { 'Authorization': `Bearer ${API_KEY}` }
+                });
+                const data1 = await response1.json();
+
+                result.innerHTML = `<span class="success">✅ Direct API Test</span>\n\n`;
+                result.innerHTML += `<strong>List Queries Response:</strong>\n${JSON.stringify(data1, null, 2)}`;
+            } catch (error) {
+                result.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+    </script>
+</body>
+</html>
