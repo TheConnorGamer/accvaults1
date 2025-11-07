@@ -684,9 +684,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Search functionality
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
-        const performSearch = () => {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            
+        const filterProducts = (searchTerm) => {
             // Search through compact cards (product groups)
             const compactCards = document.querySelectorAll('.compact-card');
             const categoryContainers = document.querySelectorAll('.category-container');
@@ -718,22 +716,30 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Show/hide category based on if it has visible cards
                 container.style.display = hasVisibleCards ? 'block' : 'none';
             });
-            
-            // Scroll to products section if on home page
+        };
+        
+        const scrollToResults = () => {
             const productsSection = document.querySelector('.products-section');
-            if (productsSection && searchTerm !== '') {
+            if (productsSection) {
                 productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         };
         
-        // Search as you type
-        searchInput.addEventListener('input', performSearch);
+        // Search as you type (filter only, no scroll)
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            filterProducts(searchTerm);
+        });
         
-        // Search on Enter key
+        // Search on Enter key (filter + scroll)
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                performSearch();
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                filterProducts(searchTerm);
+                if (searchTerm !== '') {
+                    scrollToResults();
+                }
                 searchInput.blur(); // Remove focus from input
             }
         });
