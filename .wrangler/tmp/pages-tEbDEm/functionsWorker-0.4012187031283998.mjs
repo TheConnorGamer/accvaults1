@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// ../.wrangler/tmp/bundle-OSjOKn/checked-fetch.js
+// ../.wrangler/tmp/bundle-kSkNBq/checked-fetch.js
 var urls = /* @__PURE__ */ new Set();
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -27,7 +27,11 @@ globalThis.fetch = new Proxy(globalThis.fetch, {
   }
 });
 
-// api/tickets/create.js
+// api/tickets-v2/create.js
+function generateTicketId() {
+  return "TKT-" + Date.now() + "-" + Math.random().toString(36).substr(2, 9).toUpperCase();
+}
+__name(generateTicketId, "generateTicketId");
 async function onRequestOptions() {
   return new Response(null, {
     headers: {
@@ -39,6 +43,235 @@ async function onRequestOptions() {
 }
 __name(onRequestOptions, "onRequestOptions");
 async function onRequestPost(context) {
+  const { request, env } = context;
+  try {
+    const body = await request.json();
+    const { email, subject, message } = body;
+    if (!email || !subject || !message) {
+      return new Response(JSON.stringify({
+        error: "Missing required fields",
+        required: ["email", "subject", "message"]
+      }), {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return new Response(JSON.stringify({
+        error: "Invalid email format"
+      }), {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+    const ticketId = generateTicketId();
+    const timestamp = Math.floor(Date.now() / 1e3);
+    await env.DB.prepare(
+      "INSERT INTO tickets (ticket_id, customer_email, subject, status, priority, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)"
+    ).bind(ticketId, email, subject, "open", "normal", timestamp, timestamp).run();
+    await env.DB.prepare(
+      "INSERT INTO ticket_messages (ticket_id, sender_type, sender_email, message, created_at) VALUES (?, ?, ?, ?, ?)"
+    ).bind(ticketId, "customer", email, message, timestamp).run();
+    console.log("\u2705 Ticket created:", ticketId);
+    return new Response(JSON.stringify({
+      success: true,
+      message: "Ticket created successfully",
+      data: {
+        ticket_id: ticketId,
+        customer_email: email,
+        subject,
+        status: "open",
+        created_at: timestamp
+      }
+    }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  } catch (error) {
+    console.error("Error creating ticket:", error);
+    return new Response(JSON.stringify({
+      error: "Failed to create ticket",
+      details: error.message
+    }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  }
+}
+__name(onRequestPost, "onRequestPost");
+
+// api/tickets-v2/list.js
+async function onRequestOptions2() {
+  return new Response(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    }
+  });
+}
+__name(onRequestOptions2, "onRequestOptions");
+async function onRequestGet(context) {
+  const { request, env } = context;
+  try {
+    const url = new URL(request.url);
+    const email = url.searchParams.get("email");
+    if (!email) {
+      return new Response(JSON.stringify({
+        error: "Email parameter required"
+      }), {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+    const { results } = await env.DB.prepare(
+      "SELECT * FROM tickets WHERE customer_email = ? ORDER BY created_at DESC"
+    ).bind(email).all();
+    const ticketsWithCounts = await Promise.all(results.map(async (ticket) => {
+      const { results: messages } = await env.DB.prepare(
+        "SELECT COUNT(*) as count FROM ticket_messages WHERE ticket_id = ?"
+      ).bind(ticket.ticket_id).all();
+      return {
+        ...ticket,
+        message_count: messages[0]?.count || 0
+      };
+    }));
+    return new Response(JSON.stringify({
+      success: true,
+      data: ticketsWithCounts,
+      count: ticketsWithCounts.length
+    }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching tickets:", error);
+    return new Response(JSON.stringify({
+      error: "Failed to fetch tickets",
+      details: error.message
+    }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  }
+}
+__name(onRequestGet, "onRequestGet");
+
+// api/tickets-v2/reply.js
+async function onRequestOptions3() {
+  return new Response(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    }
+  });
+}
+__name(onRequestOptions3, "onRequestOptions");
+async function onRequestPost2(context) {
+  const { request, env } = context;
+  try {
+    const body = await request.json();
+    const { ticketId, message, senderType = "customer", senderEmail } = body;
+    if (!ticketId || !message) {
+      return new Response(JSON.stringify({
+        error: "Missing required fields",
+        required: ["ticketId", "message"]
+      }), {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+    const { results: tickets } = await env.DB.prepare(
+      "SELECT * FROM tickets WHERE ticket_id = ?"
+    ).bind(ticketId).all();
+    if (tickets.length === 0) {
+      return new Response(JSON.stringify({
+        error: "Ticket not found"
+      }), {
+        status: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+    const timestamp = Math.floor(Date.now() / 1e3);
+    await env.DB.prepare(
+      "INSERT INTO ticket_messages (ticket_id, sender_type, sender_email, message, created_at) VALUES (?, ?, ?, ?, ?)"
+    ).bind(ticketId, senderType, senderEmail, message, timestamp).run();
+    await env.DB.prepare(
+      "UPDATE tickets SET updated_at = ? WHERE ticket_id = ?"
+    ).bind(timestamp, ticketId).run();
+    console.log("\u2705 Reply added to ticket:", ticketId);
+    return new Response(JSON.stringify({
+      success: true,
+      message: "Reply added successfully",
+      data: {
+        ticket_id: ticketId,
+        sender_type: senderType,
+        created_at: timestamp
+      }
+    }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  } catch (error) {
+    console.error("Error adding reply:", error);
+    return new Response(JSON.stringify({
+      error: "Failed to add reply",
+      details: error.message
+    }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  }
+}
+__name(onRequestPost2, "onRequestPost");
+
+// api/tickets/create.js
+async function onRequestOptions4() {
+  return new Response(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    }
+  });
+}
+__name(onRequestOptions4, "onRequestOptions");
+async function onRequestPost3(context) {
   const { request, env } = context;
   try {
     console.log("Received ticket creation request");
@@ -112,24 +345,8 @@ async function onRequestPost(context) {
         }
       });
     }
-    console.log("Ticket created successfully:", data);
-    if (data.status === "error" || data.error) {
-      return new Response(JSON.stringify({
-        error: data.message || "Failed to create ticket",
-        details: data
-      }), {
-        status: 400,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*"
-        }
-      });
-    }
-    return new Response(JSON.stringify({
-      success: true,
-      message: data.message || "Ticket created successfully",
-      data
-    }), {
+    console.log("Paylix response data:", data);
+    return new Response(JSON.stringify(data), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
@@ -150,10 +367,10 @@ async function onRequestPost(context) {
     });
   }
 }
-__name(onRequestPost, "onRequestPost");
+__name(onRequestPost3, "onRequestPost");
 
 // api/tickets/list.js
-async function onRequestOptions2() {
+async function onRequestOptions5() {
   return new Response(null, {
     headers: {
       "Access-Control-Allow-Origin": "*",
@@ -162,8 +379,8 @@ async function onRequestOptions2() {
     }
   });
 }
-__name(onRequestOptions2, "onRequestOptions");
-async function onRequestGet(context) {
+__name(onRequestOptions5, "onRequestOptions");
+async function onRequestGet2(context) {
   const { request } = context;
   try {
     const url = new URL(request.url);
@@ -225,10 +442,10 @@ async function onRequestGet(context) {
     });
   }
 }
-__name(onRequestGet, "onRequestGet");
+__name(onRequestGet2, "onRequestGet");
 
 // api/tickets/reply.js
-async function onRequestOptions3() {
+async function onRequestOptions6() {
   return new Response(null, {
     headers: {
       "Access-Control-Allow-Origin": "*",
@@ -237,8 +454,8 @@ async function onRequestOptions3() {
     }
   });
 }
-__name(onRequestOptions3, "onRequestOptions");
-async function onRequestPost2(context) {
+__name(onRequestOptions6, "onRequestOptions");
+async function onRequestPost4(context) {
   const { request } = context;
   try {
     const body = await request.json();
@@ -302,10 +519,10 @@ async function onRequestPost2(context) {
     });
   }
 }
-__name(onRequestPost2, "onRequestPost");
+__name(onRequestPost4, "onRequestPost");
 
-// api/tickets/[id].js
-async function onRequestOptions4() {
+// api/tickets-v2/[id].js
+async function onRequestOptions7() {
   return new Response(null, {
     headers: {
       "Access-Control-Allow-Origin": "*",
@@ -314,8 +531,81 @@ async function onRequestOptions4() {
     }
   });
 }
-__name(onRequestOptions4, "onRequestOptions");
-async function onRequestGet2(context) {
+__name(onRequestOptions7, "onRequestOptions");
+async function onRequestGet3(context) {
+  const { params, env } = context;
+  const ticketId = params.id;
+  try {
+    if (!ticketId) {
+      return new Response(JSON.stringify({
+        error: "Ticket ID required"
+      }), {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+    const { results: tickets } = await env.DB.prepare(
+      "SELECT * FROM tickets WHERE ticket_id = ?"
+    ).bind(ticketId).all();
+    if (tickets.length === 0) {
+      return new Response(JSON.stringify({
+        error: "Ticket not found"
+      }), {
+        status: 404,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+    const { results: messages } = await env.DB.prepare(
+      "SELECT * FROM ticket_messages WHERE ticket_id = ? ORDER BY created_at ASC"
+    ).bind(ticketId).all();
+    const ticket = tickets[0];
+    return new Response(JSON.stringify({
+      success: true,
+      data: {
+        ...ticket,
+        messages
+      }
+    }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching ticket:", error);
+    return new Response(JSON.stringify({
+      error: "Failed to fetch ticket",
+      details: error.message
+    }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  }
+}
+__name(onRequestGet3, "onRequestGet");
+
+// api/tickets/[id].js
+async function onRequestOptions8() {
+  return new Response(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    }
+  });
+}
+__name(onRequestOptions8, "onRequestOptions");
+async function onRequestGet4(context) {
   const { params } = context;
   const ticketId = params.id;
   try {
@@ -374,7 +664,7 @@ async function onRequestGet2(context) {
     });
   }
 }
-__name(onRequestGet2, "onRequestGet");
+__name(onRequestGet4, "onRequestGet");
 
 // api/auth.js
 var ADMIN_CREDENTIALS = {
@@ -1175,60 +1465,116 @@ __name(onRequest6, "onRequest");
 // ../.wrangler/tmp/pages-tEbDEm/functionsRoutes-0.46437018092888893.mjs
 var routes = [
   {
-    routePath: "/api/tickets/create",
-    mountPath: "/api/tickets",
+    routePath: "/api/tickets-v2/create",
+    mountPath: "/api/tickets-v2",
     method: "OPTIONS",
     middlewares: [],
     modules: [onRequestOptions]
   },
   {
-    routePath: "/api/tickets/create",
-    mountPath: "/api/tickets",
+    routePath: "/api/tickets-v2/create",
+    mountPath: "/api/tickets-v2",
     method: "POST",
     middlewares: [],
     modules: [onRequestPost]
   },
   {
-    routePath: "/api/tickets/list",
-    mountPath: "/api/tickets",
+    routePath: "/api/tickets-v2/list",
+    mountPath: "/api/tickets-v2",
     method: "GET",
     middlewares: [],
     modules: [onRequestGet]
   },
   {
-    routePath: "/api/tickets/list",
-    mountPath: "/api/tickets",
+    routePath: "/api/tickets-v2/list",
+    mountPath: "/api/tickets-v2",
     method: "OPTIONS",
     middlewares: [],
     modules: [onRequestOptions2]
   },
   {
-    routePath: "/api/tickets/reply",
-    mountPath: "/api/tickets",
+    routePath: "/api/tickets-v2/reply",
+    mountPath: "/api/tickets-v2",
     method: "OPTIONS",
     middlewares: [],
     modules: [onRequestOptions3]
   },
   {
-    routePath: "/api/tickets/reply",
-    mountPath: "/api/tickets",
+    routePath: "/api/tickets-v2/reply",
+    mountPath: "/api/tickets-v2",
     method: "POST",
     middlewares: [],
     modules: [onRequestPost2]
   },
   {
-    routePath: "/api/tickets/:id",
+    routePath: "/api/tickets/create",
+    mountPath: "/api/tickets",
+    method: "OPTIONS",
+    middlewares: [],
+    modules: [onRequestOptions4]
+  },
+  {
+    routePath: "/api/tickets/create",
+    mountPath: "/api/tickets",
+    method: "POST",
+    middlewares: [],
+    modules: [onRequestPost3]
+  },
+  {
+    routePath: "/api/tickets/list",
     mountPath: "/api/tickets",
     method: "GET",
     middlewares: [],
     modules: [onRequestGet2]
   },
   {
+    routePath: "/api/tickets/list",
+    mountPath: "/api/tickets",
+    method: "OPTIONS",
+    middlewares: [],
+    modules: [onRequestOptions5]
+  },
+  {
+    routePath: "/api/tickets/reply",
+    mountPath: "/api/tickets",
+    method: "OPTIONS",
+    middlewares: [],
+    modules: [onRequestOptions6]
+  },
+  {
+    routePath: "/api/tickets/reply",
+    mountPath: "/api/tickets",
+    method: "POST",
+    middlewares: [],
+    modules: [onRequestPost4]
+  },
+  {
+    routePath: "/api/tickets-v2/:id",
+    mountPath: "/api/tickets-v2",
+    method: "GET",
+    middlewares: [],
+    modules: [onRequestGet3]
+  },
+  {
+    routePath: "/api/tickets-v2/:id",
+    mountPath: "/api/tickets-v2",
+    method: "OPTIONS",
+    middlewares: [],
+    modules: [onRequestOptions7]
+  },
+  {
+    routePath: "/api/tickets/:id",
+    mountPath: "/api/tickets",
+    method: "GET",
+    middlewares: [],
+    modules: [onRequestGet4]
+  },
+  {
     routePath: "/api/tickets/:id",
     mountPath: "/api/tickets",
     method: "OPTIONS",
     middlewares: [],
-    modules: [onRequestOptions4]
+    modules: [onRequestOptions8]
   },
   {
     routePath: "/api/auth",
@@ -1761,7 +2107,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// ../.wrangler/tmp/bundle-OSjOKn/middleware-insertion-facade.js
+// ../.wrangler/tmp/bundle-kSkNBq/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -1793,7 +2139,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// ../.wrangler/tmp/bundle-OSjOKn/middleware-loader.entry.ts
+// ../.wrangler/tmp/bundle-kSkNBq/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

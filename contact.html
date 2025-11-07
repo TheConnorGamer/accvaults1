@@ -865,12 +865,16 @@
                 let ticketsHTML = '<div class="ticket-list">';
                 tickets.forEach(ticket => {
                     const statusBadge = ticketSystem.getStatusBadge(ticket.status);
+                    const ticketId = ticket.ticket_id || ticket.uniquid;
+                    const ticketTitle = ticket.subject || ticket.title;
+                    const messageCount = ticket.message_count || (ticket.messages ? ticket.messages.length : 0);
+                    
                     ticketsHTML += `
-                        <div class="ticket-item" onclick="openTicket('${ticket.uniquid}')">
+                        <div class="ticket-item" onclick="openTicket('${ticketId}')">
                             <div class="ticket-header">
                                 <div>
-                                    <div class="ticket-title">${ticket.title}</div>
-                                    <div class="ticket-id">#${ticket.uniquid}</div>
+                                    <div class="ticket-title">${ticketTitle}</div>
+                                    <div class="ticket-id">#${ticketId}</div>
                                 </div>
                                 <span class="ticket-status-badge" style="background: ${statusBadge.color}20; color: ${statusBadge.color};">
                                     <i class="fas fa-${statusBadge.icon}"></i>
@@ -879,7 +883,7 @@
                             </div>
                             <div class="ticket-meta">
                                 <span><i class="fas fa-clock"></i> ${ticketSystem.formatDate(ticket.created_at)}</span>
-                                <span><i class="fas fa-comments"></i> ${ticket.messages ? ticket.messages.length : 0} messages</span>
+                                <span><i class="fas fa-comments"></i> ${messageCount} messages</span>
                             </div>
                         </div>
                     `;
@@ -910,18 +914,24 @@
                 const ticket = await ticketSystem.getTicket(uniquid);
                 
                 // Update modal header
-                document.getElementById('modalTicketTitle').textContent = ticket.title;
-                document.getElementById('modalTicketId').textContent = `#${ticket.uniquid}`;
+                const ticketTitle = ticket.subject || ticket.title;
+                const ticketId = ticket.ticket_id || ticket.uniquid;
+                document.getElementById('modalTicketTitle').textContent = ticketTitle;
+                document.getElementById('modalTicketId').textContent = `#${ticketId}`;
                 
                 // Display messages
                 let messagesHTML = '';
                 if (ticket.messages && ticket.messages.length > 0) {
                     ticket.messages.forEach(msg => {
-                        const messageClass = msg.role === 'CUSTOMER' ? 'customer' : 'shop';
+                        // Handle both sender_type (custom) and role (Paylix) fields
+                        const senderType = msg.sender_type || msg.role;
+                        const isCustomer = senderType === 'customer' || senderType === 'CUSTOMER';
+                        const messageClass = isCustomer ? 'customer' : 'shop';
+                        
                         messagesHTML += `
                             <div class="ticket-message ${messageClass}">
                                 <div class="message-header">
-                                    <span class="message-role">${msg.role === 'CUSTOMER' ? 'You' : 'Support Team'}</span>
+                                    <span class="message-role">${isCustomer ? 'You' : 'Support Team'}</span>
                                     <span class="message-time">${ticketSystem.formatDate(msg.created_at)}</span>
                                 </div>
                                 <div class="message-content">${msg.message}</div>

@@ -1,7 +1,7 @@
-// Paylix Ticket System Integration (via Backend API)
+// Custom Ticket System (Database-backed)
 class PaylixTicketSystem {
     constructor() {
-        this.baseUrl = '/api/tickets'; // Use backend API endpoints
+        this.baseUrl = '/api/tickets-v2'; // Use custom ticket system
     }
 
     // Create a new ticket
@@ -14,7 +14,7 @@ class PaylixTicketSystem {
                 },
                 body: JSON.stringify({
                     email: email,
-                    title: title,
+                    subject: title,
                     message: message
                 })
             });
@@ -40,15 +40,10 @@ class PaylixTicketSystem {
                 throw new Error(data.error);
             }
             
-            // Paylix returns status: "ok" for success
-            if (data.status === 'ok') {
+            // Check for success field
+            if (data.success) {
                 console.log('✅ Ticket created successfully');
                 return data;
-            }
-            
-            // Check for explicit errors
-            if (data.status === 'error') {
-                throw new Error(data.message || 'Failed to create ticket');
             }
             
             // If HTTP status is not ok, throw error
@@ -81,13 +76,9 @@ class PaylixTicketSystem {
             const data = await response.json();
             console.log('Tickets response:', data);
             
-            // Handle different response structures
-            if (data.data && Array.isArray(data.data.queries)) {
-                return data.data.queries;
-            } else if (Array.isArray(data.data)) {
+            // Custom ticket system returns data array directly
+            if (data.success && Array.isArray(data.data)) {
                 return data.data;
-            } else if (data.queries && Array.isArray(data.queries)) {
-                return data.queries;
             }
             
             // No tickets found
@@ -112,7 +103,7 @@ class PaylixTicketSystem {
             }
 
             const data = await response.json();
-            return data.data?.query || data;
+            return data.success ? data.data : data;
         } catch (error) {
             console.error('Error fetching ticket:', error);
             throw error;
@@ -150,13 +141,18 @@ class PaylixTicketSystem {
     // Format ticket status for display
     getStatusBadge(status) {
         const statusConfig = {
+            'open': { color: '#f59e0b', text: 'Open', icon: 'clock' },
+            'pending': { color: '#f59e0b', text: 'Pending', icon: 'clock' },
+            'replied': { color: '#8359cf', text: 'Replied', icon: 'reply' },
+            'closed': { color: '#6b7280', text: 'Closed', icon: 'check-circle' },
+            // Legacy Paylix statuses
             'PENDING': { color: '#f59e0b', text: 'Pending', icon: 'clock' },
             'SHOP_REPLY': { color: '#8359cf', text: 'Shop Replied', icon: 'reply' },
             'CUSTOMER_REPLY': { color: '#3b82f6', text: 'Customer Replied', icon: 'comment' },
             'CLOSED': { color: '#6b7280', text: 'Closed', icon: 'check-circle' }
         };
 
-        return statusConfig[status] || statusConfig['PENDING'];
+        return statusConfig[status] || statusConfig['open'];
     }
 
     // Format date

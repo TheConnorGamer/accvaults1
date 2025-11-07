@@ -1,9 +1,17 @@
+import { onRequestOptions as __api_tickets_v2_create_js_onRequestOptions } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets-v2\\create.js"
+import { onRequestPost as __api_tickets_v2_create_js_onRequestPost } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets-v2\\create.js"
+import { onRequestGet as __api_tickets_v2_list_js_onRequestGet } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets-v2\\list.js"
+import { onRequestOptions as __api_tickets_v2_list_js_onRequestOptions } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets-v2\\list.js"
+import { onRequestOptions as __api_tickets_v2_reply_js_onRequestOptions } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets-v2\\reply.js"
+import { onRequestPost as __api_tickets_v2_reply_js_onRequestPost } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets-v2\\reply.js"
 import { onRequestOptions as __api_tickets_create_js_onRequestOptions } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\create.js"
 import { onRequestPost as __api_tickets_create_js_onRequestPost } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\create.js"
 import { onRequestGet as __api_tickets_list_js_onRequestGet } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\list.js"
 import { onRequestOptions as __api_tickets_list_js_onRequestOptions } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\list.js"
 import { onRequestOptions as __api_tickets_reply_js_onRequestOptions } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\reply.js"
 import { onRequestPost as __api_tickets_reply_js_onRequestPost } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\reply.js"
+import { onRequestGet as __api_tickets_v2__id__js_onRequestGet } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets-v2\\[id].js"
+import { onRequestOptions as __api_tickets_v2__id__js_onRequestOptions } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets-v2\\[id].js"
 import { onRequestGet as __api_tickets__id__js_onRequestGet } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\[id].js"
 import { onRequestOptions as __api_tickets__id__js_onRequestOptions } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\tickets\\[id].js"
 import { onRequest as __api_auth_js_onRequest } from "C:\\Users\\conna\\CascadeProjects\\newwebsite123\\functions\\api\\auth.js"
@@ -15,6 +23,48 @@ import { onRequest as __api_save_customer_js_onRequest } from "C:\\Users\\conna\
 
 export const routes = [
     {
+      routePath: "/api/tickets-v2/create",
+      mountPath: "/api/tickets-v2",
+      method: "OPTIONS",
+      middlewares: [],
+      modules: [__api_tickets_v2_create_js_onRequestOptions],
+    },
+  {
+      routePath: "/api/tickets-v2/create",
+      mountPath: "/api/tickets-v2",
+      method: "POST",
+      middlewares: [],
+      modules: [__api_tickets_v2_create_js_onRequestPost],
+    },
+  {
+      routePath: "/api/tickets-v2/list",
+      mountPath: "/api/tickets-v2",
+      method: "GET",
+      middlewares: [],
+      modules: [__api_tickets_v2_list_js_onRequestGet],
+    },
+  {
+      routePath: "/api/tickets-v2/list",
+      mountPath: "/api/tickets-v2",
+      method: "OPTIONS",
+      middlewares: [],
+      modules: [__api_tickets_v2_list_js_onRequestOptions],
+    },
+  {
+      routePath: "/api/tickets-v2/reply",
+      mountPath: "/api/tickets-v2",
+      method: "OPTIONS",
+      middlewares: [],
+      modules: [__api_tickets_v2_reply_js_onRequestOptions],
+    },
+  {
+      routePath: "/api/tickets-v2/reply",
+      mountPath: "/api/tickets-v2",
+      method: "POST",
+      middlewares: [],
+      modules: [__api_tickets_v2_reply_js_onRequestPost],
+    },
+  {
       routePath: "/api/tickets/create",
       mountPath: "/api/tickets",
       method: "OPTIONS",
@@ -55,6 +105,20 @@ export const routes = [
       method: "POST",
       middlewares: [],
       modules: [__api_tickets_reply_js_onRequestPost],
+    },
+  {
+      routePath: "/api/tickets-v2/:id",
+      mountPath: "/api/tickets-v2",
+      method: "GET",
+      middlewares: [],
+      modules: [__api_tickets_v2__id__js_onRequestGet],
+    },
+  {
+      routePath: "/api/tickets-v2/:id",
+      mountPath: "/api/tickets-v2",
+      method: "OPTIONS",
+      middlewares: [],
+      modules: [__api_tickets_v2__id__js_onRequestOptions],
     },
   {
       routePath: "/api/tickets/:id",
