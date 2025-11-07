@@ -707,12 +707,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const cardsInSection = section.querySelectorAll('.compact-group-card');
                 
                 cardsInSection.forEach(card => {
-                    const title = card.querySelector('.compact-card-title')?.textContent.toLowerCase() || '';
-                    const description = card.querySelector('.compact-card-description')?.textContent.toLowerCase() || '';
+                    // Get the h4 title and all text content from the card
+                    const titleElement = card.querySelector('h4');
+                    const title = titleElement ? titleElement.textContent.toLowerCase() : '';
+                    const allText = card.textContent.toLowerCase();
                     
-                    console.log('Checking card - Title:', title, 'Description:', description);
+                    console.log('Checking card - Title:', title, 'All text:', allText);
                     
-                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    if (title.includes(searchTerm) || allText.includes(searchTerm)) {
                         card.style.display = 'block';
                         hasVisibleCards = true;
                         totalVisibleCards++;
