@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// ../.wrangler/tmp/bundle-Mdfxwe/checked-fetch.js
+// ../.wrangler/tmp/bundle-OSjOKn/checked-fetch.js
 var urls = /* @__PURE__ */ new Set();
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -112,8 +112,24 @@ async function onRequestPost(context) {
         }
       });
     }
-    console.log("Ticket created successfully");
-    return new Response(JSON.stringify(data), {
+    console.log("Ticket created successfully:", data);
+    if (data.status === "error" || data.error) {
+      return new Response(JSON.stringify({
+        error: data.message || "Failed to create ticket",
+        details: data
+      }), {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+    return new Response(JSON.stringify({
+      success: true,
+      message: data.message || "Ticket created successfully",
+      data
+    }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
@@ -1745,7 +1761,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// ../.wrangler/tmp/bundle-Mdfxwe/middleware-insertion-facade.js
+// ../.wrangler/tmp/bundle-OSjOKn/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -1777,7 +1793,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// ../.wrangler/tmp/bundle-Mdfxwe/middleware-loader.entry.ts
+// ../.wrangler/tmp/bundle-OSjOKn/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

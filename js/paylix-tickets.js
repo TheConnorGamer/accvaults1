@@ -41,7 +41,13 @@ class PaylixTicketSystem {
                 console.error('Failed to parse success response:', responseText);
                 throw new Error('Failed to parse server response');
             }
-            return data;
+            
+            // Check if the response indicates success
+            if (data.success || data.status === 'ok') {
+                return data;
+            }
+            
+            throw new Error(data.error || data.message || 'Unknown error occurred');
         } catch (error) {
             console.error('Error creating ticket:', error);
             throw error;
@@ -62,7 +68,19 @@ class PaylixTicketSystem {
             }
 
             const data = await response.json();
-            return data.data?.queries || [];
+            console.log('Tickets response:', data);
+            
+            // Handle different response structures
+            if (data.data && Array.isArray(data.data.queries)) {
+                return data.data.queries;
+            } else if (Array.isArray(data.data)) {
+                return data.data;
+            } else if (data.queries && Array.isArray(data.queries)) {
+                return data.queries;
+            }
+            
+            // No tickets found
+            return [];
         } catch (error) {
             console.error('Error fetching tickets:', error);
             throw error;

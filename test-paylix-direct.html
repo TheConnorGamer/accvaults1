@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Paylix API Direct</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        button {
+            background: #8359cf;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        pre {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .error { color: #ef4444; }
+        .success { color: #10b981; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Direct Paylix API Test</h1>
+    
+    <button onclick="testCreateTicket()">Test Create Ticket</button>
+    <button onclick="testListTickets()">Test List Tickets</button>
+    
+    <pre id="result">Click a button to test...</pre>
+
+    <script>
+        const API_KEY = 'EzxWYoBzSAECBsJojXHrAOJQbBD4SEHdPJNS7b6mu418C96uVb2RQiP8ALzj5CzA';
+
+        async function testCreateTicket() {
+            const result = document.getElementById('result');
+            result.innerHTML = '⏳ Testing create ticket...\n\n';
+            
+            try {
+                // Test with api.paylix.gg
+                result.innerHTML += '<strong>Testing: https://api.paylix.gg/v1/queries</strong>\n';
+                const response = await fetch('https://api.paylix.gg/v1/queries', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        customer_email: 'test@example.com',
+                        title: 'Test Ticket',
+                        message: 'This is a test'
+                    })
+                });
+
+                result.innerHTML += `Status: ${response.status} ${response.statusText}\n`;
+                result.innerHTML += `Headers: ${JSON.stringify([...response.headers.entries()], null, 2)}\n\n`;
+                
+                const text = await response.text();
+                result.innerHTML += `<strong>Raw Response:</strong>\n${text}\n\n`;
+                
+                if (response.ok) {
+                    result.innerHTML += '<span class="success">✅ SUCCESS</span>\n';
+                    try {
+                        const data = JSON.parse(text);
+                        result.innerHTML += `<strong>Parsed JSON:</strong>\n${JSON.stringify(data, null, 2)}`;
+                    } catch (e) {
+                        result.innerHTML += '<span class="error">❌ Failed to parse as JSON</span>';
+                    }
+                } else {
+                    result.innerHTML += '<span class="error">❌ FAILED</span>';
+                }
+            } catch (error) {
+                result.innerHTML += `<span class="error">❌ Error: ${error.message}</span>\n`;
+                result.innerHTML += `Stack: ${error.stack}`;
+            }
+        }
+
+        async function testListTickets() {
+            const result = document.getElementById('result');
+            result.innerHTML = '⏳ Testing list tickets...\n\n';
+            
+            try {
+                result.innerHTML += '<strong>Testing: https://api.paylix.gg/v1/queries?customer_email=connazium@gmail.com</strong>\n';
+                const response = await fetch('https://api.paylix.gg/v1/queries?customer_email=connazium@gmail.com', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${API_KEY}`
+                    }
+                });
+
+                result.innerHTML += `Status: ${response.status} ${response.statusText}\n\n`;
+                
+                const text = await response.text();
+                result.innerHTML += `<strong>Raw Response:</strong>\n${text}\n\n`;
+                
+                if (response.ok) {
+                    result.innerHTML += '<span class="success">✅ SUCCESS</span>\n';
+                    try {
+                        const data = JSON.parse(text);
+                        result.innerHTML += `<strong>Parsed JSON:</strong>\n${JSON.stringify(data, null, 2)}`;
+                    } catch (e) {
+                        result.innerHTML += '<span class="error">❌ Failed to parse as JSON</span>';
+                    }
+                } else {
+                    result.innerHTML += '<span class="error">❌ FAILED</span>';
+                }
+            } catch (error) {
+                result.innerHTML += `<span class="error">❌ Error: ${error.message}</span>\n`;
+                result.innerHTML += `Stack: ${error.stack}`;
+            }
+        }
+    </script>
+</body>
+</html>

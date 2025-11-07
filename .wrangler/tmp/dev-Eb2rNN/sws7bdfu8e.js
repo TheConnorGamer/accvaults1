@@ -140,8 +140,24 @@ async function onRequestPost(context) {
         }
       });
     }
-    console.log("Ticket created successfully");
-    return new Response(JSON.stringify(data), {
+    console.log("Ticket created successfully:", data);
+    if (data.status === "error" || data.error) {
+      return new Response(JSON.stringify({
+        error: data.message || "Failed to create ticket",
+        details: data
+      }), {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+    return new Response(JSON.stringify({
+      success: true,
+      message: data.message || "Ticket created successfully",
+      data
+    }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
