@@ -1,29 +1,29 @@
-// Paylix Ticket System Integration
+// Paylix Ticket System Integration (using backend proxy)
 class PaylixTicketSystem {
     constructor(apiKey, merchantName) {
         this.apiKey = apiKey;
         this.merchantName = merchantName;
-        this.baseUrl = 'https://paylixecommerce.com/api';
+        this.baseUrl = '/api/tickets'; // Use our Cloudflare Functions
     }
 
     // Create a new ticket
     async createTicket(email, title, message) {
         try {
-            const response = await fetch(`${this.baseUrl}/queries`, {
+            const response = await fetch(`${this.baseUrl}/create`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.apiKey}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    customer_email: email,
+                    email: email,
                     title: title,
                     message: message
                 })
             });
 
             if (!response.ok) {
-                throw new Error('Failed to create ticket');
+                const error = await response.json();
+                throw new Error(error.error || 'Failed to create ticket');
             }
 
             return await response.json();
@@ -36,18 +36,17 @@ class PaylixTicketSystem {
     // Get all tickets for a user
     async getTickets(email) {
         try {
-            const response = await fetch(`${this.baseUrl}/queries?customer_email=${email}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${this.apiKey}`
-                }
+            const response = await fetch(`${this.baseUrl}/list?email=${encodeURIComponent(email)}`, {
+                method: 'GET'
             });
 
             if (!response.ok) {
-                throw new Error('Failed to fetch tickets');
+                const error = await response.json();
+                throw new Error(error.error || 'Failed to fetch tickets');
             }
 
-            return await response.json();
+            const data = await response.json();
+            return data.data?.queries || [];
         } catch (error) {
             console.error('Error fetching tickets:', error);
             throw error;
@@ -57,15 +56,13 @@ class PaylixTicketSystem {
     // Get a specific ticket by uniquid
     async getTicket(uniquid) {
         try {
-            const response = await fetch(`${this.baseUrl}/queries/${uniquid}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${this.apiKey}`
-                }
+            const response = await fetch(`${this.baseUrl}/${uniquid}`, {
+                method: 'GET'
             });
 
             if (!response.ok) {
-                throw new Error('Failed to fetch ticket');
+                const error = await response.json();
+                throw new Error(error.error || 'Failed to fetch ticket');
             }
 
             return await response.json();
@@ -78,19 +75,20 @@ class PaylixTicketSystem {
     // Reply to a ticket
     async replyToTicket(uniquid, reply) {
         try {
-            const response = await fetch(`${this.baseUrl}/queries/reply/${uniquid}`, {
+            const response = await fetch(`${this.baseUrl}/reply`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.apiKey}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    ticketId: uniquid,
                     reply: reply
                 })
             });
 
             if (!response.ok) {
-                throw new Error('Failed to reply to ticket');
+                const error = await response.json();
+                throw new Error(error.error || 'Failed to reply to ticket');
             }
 
             return await response.json();
