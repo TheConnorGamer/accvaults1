@@ -688,12 +688,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Search through compact cards (product groups)
             const compactCards = document.querySelectorAll('.compact-card');
             const categoryContainers = document.querySelectorAll('.category-container');
+            let totalVisibleCards = 0;
             
             if (searchTerm === '') {
                 // Show all if search is empty
                 compactCards.forEach(card => card.style.display = 'block');
                 categoryContainers.forEach(container => container.style.display = 'block');
-                return;
+                return compactCards.length;
             }
             
             // Hide all categories first
@@ -708,6 +709,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (title.includes(searchTerm) || description.includes(searchTerm)) {
                         card.style.display = 'block';
                         hasVisibleCards = true;
+                        totalVisibleCards++;
                     } else {
                         card.style.display = 'none';
                     }
@@ -716,6 +718,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Show/hide category based on if it has visible cards
                 container.style.display = hasVisibleCards ? 'block' : 'none';
             });
+            
+            return totalVisibleCards;
         };
         
         const scrollToResults = () => {
@@ -736,8 +740,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 const searchTerm = searchInput.value.toLowerCase().trim();
-                filterProducts(searchTerm);
-                if (searchTerm !== '') {
+                const visibleCount = filterProducts(searchTerm);
+                
+                // Only scroll if there are results
+                if (searchTerm !== '' && visibleCount > 0) {
                     scrollToResults();
                 }
                 searchInput.blur(); // Remove focus from input
