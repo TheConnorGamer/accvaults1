@@ -690,6 +690,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const categorySections = document.querySelectorAll('.category-section');
             let totalVisibleCards = 0;
             
+            console.log('Search term:', searchTerm);
+            console.log('Found compact cards:', compactCards.length);
+            console.log('Found category sections:', categorySections.length);
+            
             if (searchTerm === '') {
                 // Show all if search is empty
                 compactCards.forEach(card => card.style.display = 'block');
@@ -706,10 +710,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const title = card.querySelector('.compact-card-title')?.textContent.toLowerCase() || '';
                     const description = card.querySelector('.compact-card-description')?.textContent.toLowerCase() || '';
                     
+                    console.log('Checking card - Title:', title, 'Description:', description);
+                    
                     if (title.includes(searchTerm) || description.includes(searchTerm)) {
                         card.style.display = 'block';
                         hasVisibleCards = true;
                         totalVisibleCards++;
+                        console.log('✓ Match found!');
                     } else {
                         card.style.display = 'none';
                     }
@@ -719,6 +726,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 section.style.display = hasVisibleCards ? 'block' : 'none';
             });
             
+            console.log('Total visible cards:', totalVisibleCards);
             return totalVisibleCards;
         };
         
@@ -729,13 +737,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         };
         
-        // Search as you type (filter only, no scroll)
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase().trim();
-            filterProducts(searchTerm);
-        });
+        // REMOVED: Search as you type - now ONLY searches on Enter
         
-        // Search on Enter key (filter + scroll)
+        // Search ONLY on Enter key
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
