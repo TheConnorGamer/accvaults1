@@ -64,6 +64,41 @@ export async function onRequestPost(context) {
         
         console.log('✅ Ticket created:', ticketId);
         
+        // Send email notification to customer
+        try {
+            const emailApiKey = env.RESEND_API_KEY;
+            if (emailApiKey) {
+                await fetch('https://api.resend.com/emails', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${emailApiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        from: 'AccVaults Support <support@accvaults.com>',
+                        to: [email],
+                        subject: `Ticket Created: ${subject}`,
+                        html: `
+                            <h2>Your support ticket has been created</h2>
+                            <p><strong>Ticket ID:</strong> ${ticketId}</p>
+                            <p><strong>Subject:</strong> ${subject}</p>
+                            <p><strong>Message:</strong></p>
+                            <p>${message}</p>
+                            <br>
+                            <p>We'll respond to your ticket as soon as possible. You can view and reply to your ticket at:</p>
+                            <p><a href="https://shop.accvaults.com/tickets.html">https://shop.accvaults.com/tickets.html</a></p>
+                            <br>
+                            <p>Thank you,<br>AccVaults Support Team</p>
+                        `
+                    })
+                });
+                console.log('✅ Email sent to customer');
+            }
+        } catch (emailError) {
+            console.error('Failed to send email:', emailError);
+            // Don't fail the ticket creation if email fails
+        }
+        
         return new Response(JSON.stringify({
             success: true,
             message: 'Ticket created successfully',

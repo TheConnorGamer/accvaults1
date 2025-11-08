@@ -61,6 +61,46 @@ export async function onRequestPost(context) {
         
         console.log('✅ Reply added to ticket:', ticketId);
         
+        // Send email notification if admin replied
+        if (senderType === 'support') {
+            try {
+                const emailApiKey = env.RESEND_API_KEY;
+                const customerEmail = tickets[0].customer_email;
+                const ticketSubject = tickets[0].subject;
+                
+                if (emailApiKey && customerEmail) {
+                    await fetch('https://api.resend.com/emails', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${emailApiKey}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            from: 'AccVaults Support <support@accvaults.com>',
+                            to: [customerEmail],
+                            subject: `New Reply to Your Ticket: ${ticketSubject}`,
+                            html: `
+                                <h2>You have a new reply to your support ticket</h2>
+                                <p><strong>Ticket ID:</strong> ${ticketId}</p>
+                                <p><strong>Subject:</strong> ${ticketSubject}</p>
+                                <p><strong>Reply from Support:</strong></p>
+                                <p>${message}</p>
+                                <br>
+                                <p>You can view and reply to your ticket at:</p>
+                                <p><a href="https://shop.accvaults.com/tickets.html">https://shop.accvaults.com/tickets.html</a></p>
+                                <br>
+                                <p>Thank you,<br>AccVaults Support Team</p>
+                            `
+                        })
+                    });
+                    console.log('✅ Email sent to customer');
+                }
+            } catch (emailError) {
+                console.error('Failed to send email:', emailError);
+                // Don't fail the reply if email fails
+            }
+        }
+        
         return new Response(JSON.stringify({
             success: true,
             message: 'Reply added successfully',

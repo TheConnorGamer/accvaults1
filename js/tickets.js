@@ -20,46 +20,55 @@ function switchTab(tab) {
 async function createTicket(event) {
     event.preventDefault();
     
-    const btn = document.getElementById('createBtn');
-    const alert = document.getElementById('createAlert');
     const email = document.getElementById('email').value;
-    const title = document.getElementById('title').value;
+    const subject = document.getElementById('title').value;
     const message = document.getElementById('message').value;
-
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
-    alert.innerHTML = '';
-
+    const createBtn = document.getElementById('createBtn');
+    const alertDiv = document.getElementById('createAlert');
+    
+    // Disable button and show loading
+    createBtn.disabled = true;
+    createBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating...';
+    
     try {
-        const response = await fetch('/api/tickets/create', {
+        const response = await fetch('/api/tickets-v2/create', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, title, message })
+            body: JSON.stringify({
+                email: email,
+                subject: subject,
+                message: message
+            })
         });
-
+        
         const data = await response.json();
-
-        if (response.ok && data.status === 'ok') {
-            alert.innerHTML = `
+        
+        if (data.success) {
+            alertDiv.innerHTML = `
                 <div class="alert alert-success">
                     <i class="fas fa-check-circle"></i>
-                    <span>Ticket created successfully! Check your email for updates.</span>
+                    Ticket created successfully! Ticket ID: ${data.data.ticket_id}
                 </div>
             `;
             document.getElementById('createTicketForm').reset();
         } else {
-            throw new Error(data.error || 'Failed to create ticket');
+            alertDiv.innerHTML = `
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    ${data.error || 'Failed to create ticket'}
+                </div>
+            `;
         }
     } catch (error) {
-        alert.innerHTML = `
+        alertDiv.innerHTML = `
             <div class="alert alert-error">
                 <i class="fas fa-exclamation-circle"></i>
-                <span>${error.message}</span>
+                Error: ${error.message}
             </div>
         `;
     } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Create Ticket';
+        createBtn.disabled = false;
+        createBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Create Ticket';
     }
 }
 
@@ -81,10 +90,10 @@ async function loadTickets() {
     container.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i><p>Loading tickets...</p></div>';
 
     try {
-        const response = await fetch(`/api/tickets/list?email=${encodeURIComponent(email)}`);
+        const response = await fetch(`/api/tickets-v2/list?email=${encodeURIComponent(email)}`);
         const data = await response.json();
 
-        if (response.ok && data.status === 'ok' && data.data && data.data.length > 0) {
+        if (data.success && data.data && data.data.length > 0) {
             displayTickets(data.data);
         } else {
             container.innerHTML = `
@@ -111,11 +120,11 @@ function displayTickets(tickets) {
     container.innerHTML = `
         <div class="tickets-list">
             ${tickets.map(ticket => `
-                <div class="ticket-card" onclick="openTicket('${ticket.uniqid}')">
+                <div class="ticket-card" onclick="openTicket('${ticket.ticket_id}')">
                     <div class="ticket-card-header">
                         <div>
-                            <div class="ticket-title">${ticket.title}</div>
-                            <div class="ticket-id">#${ticket.uniqid}</div>
+                            <div class="ticket-title">${ticket.subject}</div>
+                            <div class="ticket-id">#${ticket.ticket_id}</div>
                         </div>
                         <span class="ticket-status status-${ticket.status}">${ticket.status}</span>
                     </div>
@@ -136,15 +145,15 @@ async function openTicket(ticketId) {
     modal.classList.add('show');
 
     try {
-        const response = await fetch(`/api/tickets/${ticketId}`);
+        const response = await fetch(`/api/tickets-v2/${ticketId}`);
         const data = await response.json();
 
-        if (response.ok && data.status === 'ok' && data.data) {
+        if (data.success && data.data) {
             const ticket = data.data;
             currentTicketStatus = ticket.status;
 
-            document.getElementById('modalTicketTitle').textContent = ticket.title;
-            document.getElementById('modalTicketId').textContent = `#${ticket.uniqid}`;
+            document.getElementById('modalTicketTitle').textContent = ticket.subject;
+            document.getElementById('modalTicketId').textContent = `#${ticket.ticket_id}`;
             document.getElementById('modalTicketEmail').textContent = ticket.customer_email;
             document.getElementById('modalTicketDate').textContent = formatDate(ticket.created_at);
             document.getElementById('modalTicketStatus').innerHTML = `<span class="ticket-status status-${ticket.status}">${ticket.status}</span>`;
@@ -195,18 +204,20 @@ async function sendReply() {
     }
 
     try {
-        const response = await fetch('/api/tickets/reply', {
+        const response = await fetch('/api/tickets-v2/reply', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 ticketId: currentTicketId,
-                reply: message
+                message: message,
+                senderType: 'customer',
+                senderEmail: document.getElementById('modalTicketEmail').textContent
             })
         });
 
         const data = await response.json();
 
-        if (response.ok && data.status === 'ok') {
+        if (data.success) {
             alert.innerHTML = `
                 <div class="alert alert-success">
                     <i class="fas fa-check-circle"></i>
@@ -239,7 +250,7 @@ async function closeTicket() {
     const alert = document.getElementById('modalAlert');
 
     try {
-        const response = await fetch('/api/tickets/close', {
+        const response = await fetch('/api/tickets-v2/close', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ ticketId: currentTicketId })
@@ -247,7 +258,7 @@ async function closeTicket() {
 
         const data = await response.json();
 
-        if (response.ok && data.status === 'ok') {
+        if (data.success) {
             alert.innerHTML = `
                 <div class="alert alert-success">
                     <i class="fas fa-check-circle"></i>
@@ -275,7 +286,7 @@ async function reopenTicket() {
     const alert = document.getElementById('modalAlert');
 
     try {
-        const response = await fetch('/api/tickets/reopen', {
+        const response = await fetch('/api/tickets-v2/reopen', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ ticketId: currentTicketId })
@@ -283,7 +294,7 @@ async function reopenTicket() {
 
         const data = await response.json();
 
-        if (response.ok && data.status === 'ok') {
+        if (data.success) {
             alert.innerHTML = `
                 <div class="alert alert-success">
                     <i class="fas fa-check-circle"></i>
