@@ -98,12 +98,12 @@ export async function onRequestPost(context) {
         .info-row:last-child { border-bottom: none; }
         .info-label { color: #d4d4d4; font-size: 14px; font-weight: 500; }
         .info-value { color: #ffffff; font-weight: 600; font-size: 15px; }
-        .message-box { background: rgba(20, 20, 20, 0.8); border-left: 4px solid #8359cf; padding: 20px; margin: 24px 0; border-radius: 8px; }
-        .message-box p { margin: 0; color: #e0e0e0; line-height: 1.8; }
+        .message-box { background: rgba(131, 89, 207, 0.15); border: 1px solid rgba(131, 89, 207, 0.3); border-left: 4px solid #8359cf; padding: 20px; margin: 24px 0; border-radius: 8px; }
+        .message-box p { margin: 0; color: #ffffff; line-height: 1.8; font-size: 15px; }
         .cta-button { display: inline-block; background: linear-gradient(135deg, #8359cf 0%, #6b47b8 100%); color: #ffffff; padding: 16px 40px; text-decoration: none; border-radius: 10px; font-weight: 600; margin: 24px 0; box-shadow: 0 4px 16px rgba(131, 89, 207, 0.4); transition: all 0.3s; }
         .cta-button:hover { box-shadow: 0 6px 20px rgba(131, 89, 207, 0.6); transform: translateY(-2px); }
-        .footer { background: rgba(20, 20, 20, 0.5); padding: 30px; text-align: center; border-top: 1px solid rgba(131, 89, 207, 0.2); }
-        .footer p { margin: 8px 0; color: #b4b4b4; font-size: 14px; }
+        .footer { background: #0f0f0f; padding: 30px; text-align: center; border-top: 1px solid rgba(131, 89, 207, 0.2); }
+        .footer p { margin: 8px 0; color: #d4d4d4; font-size: 14px; }
         .footer a { color: #8359cf; text-decoration: none; font-weight: 600; }
         .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(131, 89, 207, 0.5), transparent); margin: 30px 0; }
     </style>

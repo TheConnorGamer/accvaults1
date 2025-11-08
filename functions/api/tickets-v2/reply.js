@@ -100,16 +100,17 @@ export async function onRequestPost(context) {
         .info-row:last-child { border-bottom: none; }
         .info-label { color: #d4d4d4; font-size: 14px; font-weight: 500; }
         .info-value { color: #ffffff; font-weight: 600; font-size: 15px; }
-        .reply-box { background: linear-gradient(135deg, rgba(131, 89, 207, 0.2) 0%, rgba(107, 71, 184, 0.1) 100%); border: 1px solid rgba(131, 89, 207, 0.4); border-radius: 12px; padding: 24px; margin: 24px 0; }
+        .reply-box { background: rgba(131, 89, 207, 0.15); border: 1px solid rgba(131, 89, 207, 0.3); border-radius: 12px; padding: 24px; margin: 24px 0; }
         .reply-box .badge { display: inline-block; background: #8359cf; color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
-        .reply-box p { margin: 12px 0 0 0; color: #e0e0e0; line-height: 1.8; }
+        .reply-box p { margin: 12px 0 0 0; color: #ffffff; line-height: 1.8; font-size: 15px; }
         .cta-button { display: inline-block; background: linear-gradient(135deg, #8359cf 0%, #6b47b8 100%); color: #ffffff; padding: 16px 40px; text-decoration: none; border-radius: 10px; font-weight: 600; margin: 24px 0; box-shadow: 0 4px 16px rgba(131, 89, 207, 0.4); }
-        .footer { background: rgba(20, 20, 20, 0.5); padding: 30px; text-align: center; border-top: 1px solid rgba(131, 89, 207, 0.2); }
+        .footer { background: #0f0f0f; padding: 30px; text-align: center; border-top: 1px solid rgba(131, 89, 207, 0.2); }
         .footer .signature { margin: 20px 0; }
         .footer .signature-name { color: #ffffff; font-weight: 700; font-size: 16px; margin-bottom: 4px; }
         .footer .signature-title { color: #8359cf; font-size: 14px; margin-bottom: 8px; }
-        .footer .signature-company { color: #b4b4b4; font-size: 14px; }
+        .footer .signature-company { color: #d4d4d4; font-size: 14px; }
         .footer a { color: #8359cf; text-decoration: none; font-weight: 600; }
+        .footer p { color: #d4d4d4; }
         .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(131, 89, 207, 0.5), transparent); margin: 30px 0; }
     </style>
 </head>
