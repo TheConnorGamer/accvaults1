@@ -45,42 +45,47 @@
             const result = document.getElementById('result');
             result.innerHTML = '⏳ Testing create ticket...\n\n';
             
-            try {
-                // Test with api.paylix.gg
-                result.innerHTML += '<strong>Testing: https://api.paylix.gg/v1/queries</strong>\n';
-                const response = await fetch('https://api.paylix.gg/v1/queries', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        customer_email: 'test@example.com',
-                        title: 'Test Ticket',
-                        message: 'This is a test'
-                    })
-                });
+            // Test both URLs
+            const urls = [
+                'https://dev.paylix.gg/v1/queries',
+                'https://api.paylix.gg/v1/queries'
+            ];
+            
+            for (const url of urls) {
+                try {
+                    result.innerHTML += `<strong>Testing: ${url}</strong>\n`;
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${API_KEY}`
+                        },
+                        body: JSON.stringify({
+                            customer_email: 'test@example.com',
+                            subject: 'Test Ticket',
+                            message: 'This is a test'
+                        })
+                    });
 
-                result.innerHTML += `Status: ${response.status} ${response.statusText}\n`;
-                result.innerHTML += `Headers: ${JSON.stringify([...response.headers.entries()], null, 2)}\n\n`;
-                
-                const text = await response.text();
-                result.innerHTML += `<strong>Raw Response:</strong>\n${text}\n\n`;
-                
-                if (response.ok) {
-                    result.innerHTML += '<span class="success">✅ SUCCESS</span>\n';
-                    try {
-                        const data = JSON.parse(text);
-                        result.innerHTML += `<strong>Parsed JSON:</strong>\n${JSON.stringify(data, null, 2)}`;
-                    } catch (e) {
-                        result.innerHTML += '<span class="error">❌ Failed to parse as JSON</span>';
+                    result.innerHTML += `Status: ${response.status} ${response.statusText}\n`;
+                    
+                    const text = await response.text();
+                    result.innerHTML += `<strong>Raw Response:</strong>\n${text.substring(0, 500)}\n\n`;
+                    
+                    if (response.ok) {
+                        result.innerHTML += '<span class="success">✅ SUCCESS</span>\n';
+                        try {
+                            const data = JSON.parse(text);
+                            result.innerHTML += `<strong>Parsed JSON:</strong>\n${JSON.stringify(data, null, 2)}\n\n`;
+                        } catch (e) {
+                            result.innerHTML += `<span class="error">❌ Failed to parse as JSON: ${e.message}</span>\n\n`;
+                        }
+                    } else {
+                        result.innerHTML += '<span class="error">❌ FAILED</span>\n\n';
                     }
-                } else {
-                    result.innerHTML += '<span class="error">❌ FAILED</span>';
+                } catch (error) {
+                    result.innerHTML += `<span class="error">❌ Error: ${error.message}</span>\n\n`;
                 }
-            } catch (error) {
-                result.innerHTML += `<span class="error">❌ Error: ${error.message}</span>\n`;
-                result.innerHTML += `Stack: ${error.stack}`;
             }
         }
 
