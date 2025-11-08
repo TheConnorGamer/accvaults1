@@ -468,4 +468,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    
+    // Add Enter key to send reply (Shift+Enter for new line)
+    const replyTextarea = document.getElementById('replyMessage');
+    if (replyTextarea) {
+        replyTextarea.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendReply();
+            }
+        });
+    }
 });

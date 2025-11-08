@@ -455,7 +455,7 @@
                 
                 <div class="reply-form">
                     <h3>Reply to Customer</h3>
-                    <textarea id="replyMessage" placeholder="Type your reply here..."></textarea>
+                    <textarea id="replyMessage" placeholder="Type your reply here... (Press Enter to send, Shift+Enter for new line)"></textarea>
                     <div class="reply-actions">
                         <button class="btn btn-primary" onclick="sendReply()">
                             <i class="fas fa-paper-plane"></i> Send Reply
@@ -663,10 +663,6 @@
                 return;
             }
             
-            if (!confirm('Are you sure you want to close this ticket? A transcript will be sent to the admin email.')) {
-                return;
-            }
-            
             try {
                 const response = await fetch('/api/tickets-v2/close', {
                     method: 'POST',
@@ -714,6 +710,14 @@
         document.getElementById('ticketModal').addEventListener('click', (e) => {
             if (e.target.id === 'ticketModal') {
                 closeModal();
+            }
+        });
+        
+        // Add Enter key to send reply (Shift+Enter for new line)
+        document.getElementById('replyMessage').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendReply();
             }
         });
         
