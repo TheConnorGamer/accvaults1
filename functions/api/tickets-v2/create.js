@@ -85,7 +85,7 @@ export async function onRequestPost(context) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #ffffff; background: #0b0b0b; margin: 0; padding: 20px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; line-height: 1.8; color: #ffffff; background: #0b0b0b; margin: 0; padding: 20px; }
         .email-container { max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(131, 89, 207, 0.3); border: 1px solid rgba(131, 89, 207, 0.2); }
         .header { background: linear-gradient(135deg, #8359cf 0%, #6b47b8 100%); padding: 40px 30px; text-align: center; position: relative; }
         .header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #8359cf, #6b47b8, #8359cf); }
@@ -96,8 +96,8 @@ export async function onRequestPost(context) {
         .ticket-card h2 { margin: 0 0 16px 0; font-size: 18px; color: #8359cf; font-weight: 600; }
         .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .info-row:last-child { border-bottom: none; }
-        .info-label { color: #b4b4b4; font-size: 14px; }
-        .info-value { color: #ffffff; font-weight: 600; font-size: 14px; }
+        .info-label { color: #d4d4d4; font-size: 14px; font-weight: 500; }
+        .info-value { color: #ffffff; font-weight: 600; font-size: 15px; }
         .message-box { background: rgba(20, 20, 20, 0.8); border-left: 4px solid #8359cf; padding: 20px; margin: 24px 0; border-radius: 8px; }
         .message-box p { margin: 0; color: #e0e0e0; line-height: 1.8; }
         .cta-button { display: inline-block; background: linear-gradient(135deg, #8359cf 0%, #6b47b8 100%); color: #ffffff; padding: 16px 40px; text-decoration: none; border-radius: 10px; font-weight: 600; margin: 24px 0; box-shadow: 0 4px 16px rgba(131, 89, 207, 0.4); transition: all 0.3s; }
@@ -115,8 +115,8 @@ export async function onRequestPost(context) {
             <h1>Ticket Created Successfully</h1>
         </div>
         <div class="content">
-            <p style="font-size: 16px; color: #e0e0e0; margin-bottom: 24px;">Hello,</p>
-            <p style="color: #b4b4b4; margin-bottom: 24px;">Your support ticket has been created and our team will respond as soon as possible.</p>
+            <p style="font-size: 17px; color: #f0f0f0; margin-bottom: 24px; font-weight: 500;">Hello,</p>
+            <p style="color: #d4d4d4; margin-bottom: 24px; font-size: 15px; line-height: 1.8;">Your support ticket has been created and our team will respond as soon as possible.</p>
             
             <div class="ticket-card">
                 <h2>📋 Ticket Details</h2>
@@ -141,7 +141,7 @@ export async function onRequestPost(context) {
             
             <div class="divider"></div>
             
-            <p style="color: #b4b4b4; text-align: center; margin: 24px 0;">View and manage your ticket anytime:</p>
+            <p style="color: #d4d4d4; text-align: center; margin: 24px 0; font-size: 15px;">View and manage your ticket anytime:</p>
             <center>
                 <a href="https://shop.accvaults.com/tickets" class="cta-button">View My Tickets</a>
             </center>
