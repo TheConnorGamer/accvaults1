@@ -44,13 +44,23 @@ async function createTicket(event) {
         const data = await response.json();
         
         if (data.success) {
+            const ticketId = data.data.ticket_id;
+            const customerEmail = data.data.customer_email;
+            
             alertDiv.innerHTML = `
                 <div class="alert alert-success">
                     <i class="fas fa-check-circle"></i>
-                    Ticket created successfully! Ticket ID: ${data.data.ticket_id}
+                    Ticket created successfully! Ticket ID: ${ticketId}
                 </div>
             `;
             document.getElementById('createTicketForm').reset();
+            
+            // Auto-switch to My Tickets tab and show the ticket
+            setTimeout(() => {
+                switchTab('view');
+                document.getElementById('viewEmail').value = customerEmail;
+                loadTickets();
+            }, 1500);
         } else {
             alertDiv.innerHTML = `
                 <div class="alert alert-error">
