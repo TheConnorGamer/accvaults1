@@ -121,22 +121,22 @@ export async function onRequestPost(context) {
             <div class="ticket-card">
                 <h2>📋 Ticket Details</h2>
                 <div class="info-row">
-                    <span class="info-label">Ticket ID</span>
-                    <span class="info-value">#${ticketId}</span>
+                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Ticket ID</span>
+                    <span class="info-value" style="color: #ffffff; font-size: 15px; font-weight: 600;">#${ticketId}</span>
                 </div>
                 <div class="info-row">
-                    <span class="info-label">Subject</span>
-                    <span class="info-value">${subject}</span>
+                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Subject</span>
+                    <span class="info-value" style="color: #ffffff; font-size: 15px; font-weight: 600;">${subject}</span>
                 </div>
                 <div class="info-row">
-                    <span class="info-label">Status</span>
-                    <span class="info-value" style="color: #10b981;">Open</span>
+                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Status</span>
+                    <span class="info-value" style="color: #10b981; font-size: 15px; font-weight: 600;">Open</span>
                 </div>
             </div>
             
             <div class="message-box">
-                <p><strong style="color: #8359cf;">Your Message:</strong></p>
-                <p style="margin-top: 12px;">${message}</p>
+                <p><strong style="color: #a78bfa; font-size: 14px;">Your Message:</strong></p>
+                <p style="margin-top: 12px; color: #ffffff; font-size: 15px; line-height: 1.8;">${message}</p>
             </div>
             
             <div class="divider"></div>

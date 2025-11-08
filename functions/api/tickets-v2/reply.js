@@ -127,18 +127,18 @@ export async function onRequestPost(context) {
             <div class="ticket-card">
                 <h2>📋 Ticket Information</h2>
                 <div class="info-row">
-                    <span class="info-label">Ticket ID</span>
-                    <span class="info-value">#${ticketId}</span>
+                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Ticket ID</span>
+                    <span class="info-value" style="color: #ffffff; font-size: 15px; font-weight: 600;">#${ticketId}</span>
                 </div>
                 <div class="info-row">
-                    <span class="info-label">Subject</span>
-                    <span class="info-value">${ticketSubject}</span>
+                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Subject</span>
+                    <span class="info-value" style="color: #ffffff; font-size: 15px; font-weight: 600;">${ticketSubject}</span>
                 </div>
             </div>
             
             <div class="reply-box">
                 <div class="badge">🛡️ SUPPORT TEAM</div>
-                <p>${message}</p>
+                <p style="color: #ffffff; font-size: 15px; line-height: 1.8; margin-top: 12px;">${message}</p>
             </div>
             
             <div class="divider"></div>

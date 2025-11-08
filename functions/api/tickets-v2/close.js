@@ -249,27 +249,27 @@ export async function onRequestPost(context) {
             <div class="ticket-card">
                 <h2>📋 Ticket Summary</h2>
                 <div class="info-row">
-                    <span class="info-label">Ticket ID</span>
-                    <span class="info-value">#${ticketId}</span>
+                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Ticket ID</span>
+                    <span class="info-value" style="color: #ffffff; font-size: 15px; font-weight: 600;">#${ticketId}</span>
                 </div>
                 <div class="info-row">
-                    <span class="info-label">Subject</span>
-                    <span class="info-value">${ticket.subject}</span>
+                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Subject</span>
+                    <span class="info-value" style="color: #ffffff; font-size: 15px; font-weight: 600;">${ticket.subject}</span>
                 </div>
                 <div class="info-row">
-                    <span class="info-label">Status</span>
-                    <span class="info-value status-closed">Closed</span>
+                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Status</span>
+                    <span class="info-value" style="color: #dc2626; font-size: 15px; font-weight: 600;">Closed</span>
                 </div>
                 <div class="info-row">
-                    <span class="info-label">Closed Date</span>
-                    <span class="info-value">${new Date(timestamp * 1000).toLocaleString()}</span>
+                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Closed Date</span>
+                    <span class="info-value" style="color: #ffffff; font-size: 15px; font-weight: 600;">${new Date(timestamp * 1000).toLocaleString()}</span>
                 </div>
             </div>
             
             <div class="attachment-box">
                 <div class="attachment-icon">📎</div>
-                <p>Full Conversation Transcript Attached</p>
-                <p class="subtitle" style="font-size: 13px;">Open the attached HTML file to view the complete conversation history</p>
+                <p style="color: #10b981; font-weight: 600; font-size: 15px;">Full Conversation Transcript Attached</p>
+                <p style="color: #d4d4d4; font-size: 13px; font-weight: normal;">Open the attached HTML file to view the complete conversation history</p>
             </div>
             
             <div class="divider"></div>
@@ -285,7 +285,7 @@ export async function onRequestPost(context) {
                 <div class="signature-title">Customer Support</div>
                 <div class="signature-company">AccVaults - Premium Digital Services</div>
             </div>
-            <p style="color: #b4b4b4; font-size: 13px; margin: 16px 0;">We're here to help 24/7</p>
+            <p style="color: #d4d4d4; font-size: 13px; margin: 16px 0;">We're here to help 24/7</p>
             <p><a href="https://shop.accvaults.com">shop.accvaults.com</a></p>
         </div>
     </div>
