@@ -144,7 +144,7 @@ export async function onRequestPost(context) {
                     </div>
                     <div class="info-item">
                         <div class="info-label">Customer</div>
-                        <div class="info-value" style="word-break: break-all;">${ticket.customer_email}</div>
+                        <div class="info-value" style="word-break: break-all; user-select: all;">${ticket.customer_email.replace('@', ' @ ').replace('.', ' . ')}</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Created</div>
