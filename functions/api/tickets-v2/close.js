@@ -91,8 +91,47 @@ export async function onRequestPost(context) {
                 })
             });
         } catch (emailError) {
-            console.error('Failed to send transcript email:', emailError);
-            // Don't fail the request if email fails
+            console.error('Failed to send admin transcript email:', emailError);
+        }
+        
+        // Send closure notification email to customer with transcript
+        try {
+            const customerEmailBody = `Hello,
+
+Your support ticket has been closed.
+
+Ticket Details:
+- Ticket ID: #${ticketId}
+- Subject: ${ticket.subject}
+- Status: Closed
+- Closed Date: ${new Date(timestamp * 1000).toLocaleString()}
+
+Below is the complete transcript of your conversation:
+
+${transcript}
+
+If you need further assistance, please create a new ticket at https://shop.accvaults.com/tickets.html
+
+Thank you for contacting AccVaults Support!
+
+Best regards,
+AccVaults Support Team`;
+
+            await fetch('https://api.resend.com/emails', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    from: 'AccVaults Support <support@accvaults.com>',
+                    to: ticket.customer_email,
+                    subject: `Your Ticket Has Been Closed - #${ticketId}`,
+                    text: customerEmailBody
+                })
+            });
+        } catch (emailError) {
+            console.error('Failed to send customer closure email:', emailError);
         }
         
         console.log('✅ Ticket closed:', ticketId);

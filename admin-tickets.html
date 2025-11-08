@@ -718,7 +718,6 @@
                 const data = await response.json();
                 
                 if (data.success) {
-                    alert('Reply sent successfully!');
                     document.getElementById('replyMessage').value = '';
                     openTicket(currentTicketId); // Reload ticket
                     loadAllTickets(); // Refresh list
@@ -751,7 +750,6 @@
                 const data = await response.json();
                 
                 if (data.success) {
-                    alert('✅ Ticket closed successfully! Transcript sent to admin.');
                     closeModal();
                     loadAllTickets(); // Refresh the list
                 } else {
