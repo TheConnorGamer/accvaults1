@@ -84,7 +84,7 @@ export async function onRequestPost(context) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    from: 'AccVaults <onboarding@resend.dev>',
+                    from: 'AccVaults Support <support@tickets.accvaults.com>',
                     to: 'connazlunn@gmail.com', // Admin email
                     subject: `Ticket Closed: #${ticketId} - ${ticket.subject}`,
                     text: transcript
@@ -126,7 +126,7 @@ AccVaults Support Team`;
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    from: 'AccVaults <onboarding@resend.dev>',
+                    from: 'AccVaults Support <support@tickets.accvaults.com>',
                     to: ticket.customer_email,
                     subject: `Your Ticket Has Been Closed - #${ticketId}`,
                     text: customerEmailBody
