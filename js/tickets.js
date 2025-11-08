@@ -2,6 +2,7 @@
 
 let currentTicketId = null;
 let currentTicketStatus = null;
+let autoRefreshInterval = null;
 
 function switchTab(tab) {
     // Update tab buttons
@@ -129,22 +130,28 @@ function displayTickets(tickets) {
     const container = document.getElementById('ticketsList');
     container.innerHTML = `
         <div class="tickets-list">
-            ${tickets.map(ticket => `
-                <div class="ticket-card" onclick="openTicket('${ticket.ticket_id}')">
-                    <div class="ticket-card-header">
-                        <div>
-                            <div class="ticket-title">${ticket.subject}</div>
-                            <div class="ticket-id">#${ticket.ticket_id}</div>
+            ${tickets.map(ticket => {
+                const messageCount = ticket.message_count || ticket.messages?.length || 1;
+                const preview = ticket.message || ticket.subject || 'No preview available';
+                const previewText = preview.substring(0, 150) + (preview.length > 150 ? '...' : '');
+                
+                return `
+                    <div class="ticket-card" onclick="openTicket('${ticket.ticket_id}')">
+                        <div class="ticket-card-header">
+                            <div>
+                                <div class="ticket-title">${ticket.subject || 'Untitled'}</div>
+                                <div class="ticket-id">#${ticket.ticket_id}</div>
+                            </div>
+                            <span class="ticket-status status-${ticket.status}">${ticket.status}</span>
                         </div>
-                        <span class="ticket-status status-${ticket.status}">${ticket.status}</span>
+                        <div class="ticket-meta">
+                            <span><i class="fas fa-clock"></i> ${formatDate(ticket.created_at)}</span>
+                            <span><i class="fas fa-comments"></i> ${messageCount} message${messageCount !== 1 ? 's' : ''}</span>
+                        </div>
+                        <div class="ticket-preview">${previewText}</div>
                     </div>
-                    <div class="ticket-meta">
-                        <span><i class="fas fa-clock"></i> ${formatDate(ticket.created_at)}</span>
-                        <span><i class="fas fa-comments"></i> ${ticket.messages?.length || 1} messages</span>
-                    </div>
-                    <div class="ticket-preview">${ticket.message?.substring(0, 150)}${ticket.message?.length > 150 ? '...' : ''}</div>
-                </div>
-            `).join('')}
+                `;
+            }).join('')}
         </div>
     `;
 }
@@ -207,6 +214,9 @@ async function openTicket(ticketId) {
                 if (replyFormContainer) replyFormContainer.style.display = 'block';
                 if (closedFormContainer) closedFormContainer.style.display = 'none';
             }
+            
+            // Start auto-refresh for real-time updates (every 5 seconds)
+            startAutoRefresh();
         } else {
             alert('Failed to load ticket details: ' + (data.error || 'Unknown error'));
             closeModal();
@@ -215,6 +225,80 @@ async function openTicket(ticketId) {
         console.error('Error loading ticket:', error);
         alert('Failed to load ticket details: ' + error.message);
         closeModal();
+    }
+}
+
+async function refreshTicketMessages() {
+    if (!currentTicketId) return;
+    
+    try {
+        const response = await fetch(`/api/tickets-v2/${currentTicketId}`);
+        const data = await response.json();
+
+        if (data.success && data.data) {
+            const ticket = data.data;
+            const messagesContainer = document.getElementById('messagesContainer');
+            const statusEl = document.getElementById('modalTicketStatus');
+            
+            // Update status if changed
+            if (statusEl && ticket.status !== currentTicketStatus) {
+                currentTicketStatus = ticket.status;
+                statusEl.innerHTML = `<span class="ticket-status status-${ticket.status}">${ticket.status}</span>`;
+                
+                // Update form visibility
+                const replyFormContainer = document.getElementById('replyFormContainer');
+                const closedFormContainer = document.getElementById('closedFormContainer');
+                if (ticket.status === 'closed') {
+                    if (replyFormContainer) replyFormContainer.style.display = 'none';
+                    if (closedFormContainer) closedFormContainer.style.display = 'block';
+                } else {
+                    if (replyFormContainer) replyFormContainer.style.display = 'block';
+                    if (closedFormContainer) closedFormContainer.style.display = 'none';
+                }
+            }
+            
+            // Update messages
+            if (messagesContainer) {
+                const messages = ticket.messages || [{ message: ticket.message, created_at: ticket.created_at, sender_type: 'customer' }];
+                const currentScroll = messagesContainer.scrollTop;
+                const isScrolledToBottom = messagesContainer.scrollHeight - messagesContainer.scrollTop <= messagesContainer.clientHeight + 50;
+                
+                messagesContainer.innerHTML = messages.map(msg => `
+                    <div class="message ${msg.sender_type || 'customer'}">
+                        <div class="message-header">
+                            <span class="message-sender">
+                                ${msg.sender_type === 'support' ? '<i class="fas fa-headset"></i> Support Team' : '<i class="fas fa-user"></i> You'}
+                            </span>
+                            <span class="message-time">${formatDate(msg.created_at)}</span>
+                        </div>
+                        <div class="message-content">${msg.message}</div>
+                    </div>
+                `).join('');
+                
+                // Auto-scroll to bottom if user was already at bottom
+                if (isScrolledToBottom) {
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Error refreshing ticket:', error);
+    }
+}
+
+function startAutoRefresh() {
+    // Clear any existing interval
+    if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+    }
+    // Refresh every 5 seconds
+    autoRefreshInterval = setInterval(refreshTicketMessages, 5000);
+}
+
+function stopAutoRefresh() {
+    if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+        autoRefreshInterval = null;
     }
 }
 
@@ -254,10 +338,11 @@ async function sendReply() {
                 </div>
             `;
             document.getElementById('replyMessage').value = '';
+            // Immediately refresh messages
+            await refreshTicketMessages();
             setTimeout(() => {
-                openTicket(currentTicketId); // Reload ticket
                 alert.innerHTML = '';
-            }, 1500);
+            }, 3000);
         } else {
             throw new Error(data.error || 'Failed to send reply');
         }
@@ -348,6 +433,7 @@ async function reopenTicket() {
 }
 
 function closeModal() {
+    stopAutoRefresh(); // Stop auto-refresh when closing modal
     document.getElementById('ticketModal').classList.remove('show');
     document.getElementById('replyMessage').value = '';
     document.getElementById('modalAlert').innerHTML = '';
