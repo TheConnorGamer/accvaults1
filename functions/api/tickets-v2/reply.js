@@ -79,6 +79,23 @@ export async function onRequestPost(context) {
                             from: 'AccVaults Support <support@tickets.accvaults.com>',
                             to: [customerEmail],
                             subject: `New Reply to Your Ticket: ${ticketSubject}`,
+                            text: `Hello,
+
+You have received a new reply from our support team.
+
+Ticket ID: #${ticketId}
+Subject: ${ticketSubject}
+
+Reply from Support:
+${message}
+
+Continue the conversation at: https://shop.accvaults.com/tickets
+
+Thank you,
+AccVaults Support Team
+Customer Support
+AccVaults - Premium Digital Services
+shop.accvaults.com`,
                             html: `
 <!DOCTYPE html>
 <html>

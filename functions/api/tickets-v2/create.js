@@ -78,6 +78,22 @@ export async function onRequestPost(context) {
                         from: 'AccVaults Support <support@tickets.accvaults.com>',
                         to: [email],
                         subject: `Ticket Created: ${subject}`,
+                        text: `Hello,
+
+Your support ticket has been created and our team will respond as soon as possible.
+
+Ticket ID: #${ticketId}
+Subject: ${subject}
+Status: Open
+
+Your Message:
+${message}
+
+View and manage your ticket at: https://shop.accvaults.com/tickets
+
+Thank you,
+AccVaults Support Team
+shop.accvaults.com`,
                         html: `
 <!DOCTYPE html>
 <html>

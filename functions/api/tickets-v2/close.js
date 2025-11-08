@@ -304,6 +304,24 @@ export async function onRequestPost(context) {
                     from: 'AccVaults Support <support@tickets.accvaults.com>',
                     to: ticket.customer_email,
                     subject: `Your Ticket Has Been Closed - #${ticketId}`,
+                    text: `Hello,
+
+Your support ticket has been successfully resolved and closed.
+
+Ticket ID: #${ticketId}
+Subject: ${ticket.subject}
+Status: Closed
+Closed Date: ${new Date(timestamp * 1000).toLocaleString()}
+
+A full conversation transcript has been attached to this email as an HTML file.
+
+Need more help? Create a new ticket anytime at: https://shop.accvaults.com/tickets
+
+Thank you,
+AccVaults Support Team
+Customer Support
+AccVaults - Premium Digital Services
+shop.accvaults.com`,
                     html: customerEmailHTML,
                     attachments: [{
                         filename: `ticket-${ticketId}-transcript.html`,
