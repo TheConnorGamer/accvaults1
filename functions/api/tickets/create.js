@@ -58,7 +58,7 @@ export async function onRequestPost(context) {
             },
             body: JSON.stringify({
                 customer_email: email,
-                title: title,
+                subject: title,
                 message: message
             })
         });
@@ -86,12 +86,12 @@ export async function onRequestPost(context) {
         
         // Handle empty response
         if (!responseText || responseText.trim() === '') {
-            console.log('Empty response from Paylix, assuming success');
+            console.error('Empty response from Paylix');
             return new Response(JSON.stringify({ 
-                status: 'ok',
-                message: 'Ticket created successfully'
+                error: 'Empty response from Paylix API',
+                details: 'The ticket service returned no data'
             }), {
-                status: 200,
+                status: 500,
                 headers: { 
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
@@ -105,13 +105,11 @@ export async function onRequestPost(context) {
         } catch (e) {
             console.error('Failed to parse Paylix response:', e);
             console.error('Response text:', responseText);
-            // If we can't parse but got 200, treat as success
             return new Response(JSON.stringify({ 
-                status: 'ok',
-                message: 'Ticket created successfully',
-                raw_response: responseText.substring(0, 100)
+                error: 'Invalid JSON response from Paylix',
+                details: responseText.substring(0, 200)
             }), {
-                status: 200,
+                status: 500,
                 headers: { 
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
@@ -121,9 +119,24 @@ export async function onRequestPost(context) {
         
         console.log('Paylix response data:', data);
         
-        // Ensure we return a proper response
-        return new Response(JSON.stringify(data || { status: 'ok', message: 'Ticket created' }), {
-            status: 200,
+        // Check if the response indicates success
+        if (data.status === 'ok' || data.data || data.id || data.uniqid) {
+            return new Response(JSON.stringify(data), {
+                status: 200,
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
+        }
+        
+        // If we got here, something went wrong
+        console.error('Unexpected Paylix response:', data);
+        return new Response(JSON.stringify({ 
+            error: 'Unexpected response from Paylix',
+            details: data
+        }), {
+            status: 500,
             headers: { 
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
