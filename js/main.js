@@ -3739,3 +3739,18 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// ===== UNIVERSAL LOGIN STATE CHECK =====
+// This runs on EVERY page to ensure login state is maintained
+(function() {
+    // Run immediately if DOM is already loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateLoginButton);
+    } else {
+        // DOM is already loaded, run immediately
+        updateLoginButton();
+    }
+    
+    // Also run after a short delay to catch any late-loading elements
+    setTimeout(updateLoginButton, 100);
+})();
