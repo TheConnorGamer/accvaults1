@@ -117,7 +117,9 @@ Thank you for contacting AccVaults Support!
 Best regards,
 AccVaults Support Team`;
 
-            await fetch('https://api.resend.com/emails', {
+            console.log('📧 Sending closure email to customer:', ticket.customer_email);
+            
+            const emailResponse = await fetch('https://api.resend.com/emails', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${env.RESEND_API_KEY}`,
@@ -130,8 +132,17 @@ AccVaults Support Team`;
                     text: customerEmailBody
                 })
             });
+            
+            const emailResult = await emailResponse.json();
+            console.log('📧 Customer email result:', emailResult);
+            
+            if (!emailResponse.ok) {
+                console.error('❌ Failed to send customer email:', emailResult);
+            } else {
+                console.log('✅ Customer closure email sent successfully');
+            }
         } catch (emailError) {
-            console.error('Failed to send customer closure email:', emailError);
+            console.error('❌ Failed to send customer closure email:', emailError);
         }
         
         console.log('✅ Ticket closed:', ticketId);
