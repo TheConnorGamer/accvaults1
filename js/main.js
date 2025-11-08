@@ -1394,6 +1394,16 @@ function updateLoginButton() {
             adminNavLink.style.display = 'none';
         }
     }
+    
+    // Show/hide admin panel button on tickets page
+    const adminPanelButton = document.getElementById('adminPanelButton');
+    if (adminPanelButton) {
+        if (user && user.isStaff) {
+            adminPanelButton.style.display = 'inline-block';
+        } else {
+            adminPanelButton.style.display = 'none';
+        }
+    }
 }
 
 // User menu for logged in users
@@ -1423,6 +1433,10 @@ function openUserMenu() {
         
         <a href="products.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none; background: linear-gradient(135deg, #f59e0b, #d97706);">
             <i class="fas fa-shopping-bag"></i> Manage Products
+        </a>
+        
+        <a href="admin-tickets.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none; background: linear-gradient(135deg, #8359cf, #6b47b8);">
+            <i class="fas fa-shield-alt"></i> Admin Panel
         </a>
     ` : `
         <a href="customer-dashboard.html" class="auth-submit-btn" style="display: block; margin-bottom: 12px; text-decoration: none;">
