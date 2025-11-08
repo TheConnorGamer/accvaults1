@@ -101,27 +101,31 @@ shop.accvaults.com`,
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; line-height: 1.8; color: #ffffff; background: #0b0b0b; margin: 0; padding: 20px; }
-        .email-container { max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(131, 89, 207, 0.3); border: 1px solid rgba(131, 89, 207, 0.2); }
-        .header { background: linear-gradient(135deg, #8359cf 0%, #6b47b8 100%); padding: 40px 30px; text-align: center; position: relative; }
-        .header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #8359cf, #6b47b8, #8359cf); }
-        .header h1 { margin: 0; font-size: 28px; font-weight: 700; color: #ffffff; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; line-height: 1.8; color: #1a1a1a; background: #f5f5f5; margin: 0; padding: 20px; }
+        .email-container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border: 1px solid #e5e5e5; }
+        .header { background: linear-gradient(135deg, #8359cf 0%, #6b47b8 100%); padding: 40px 30px; text-align: center; }
+        .header h1 { margin: 0; font-size: 28px; font-weight: 700; color: #ffffff !important; }
         .header .icon { font-size: 48px; margin-bottom: 10px; }
-        .content { padding: 40px 30px; }
-        .ticket-card { background: rgba(131, 89, 207, 0.1); border: 1px solid rgba(131, 89, 207, 0.3); border-radius: 12px; padding: 24px; margin: 24px 0; }
-        .ticket-card h2 { margin: 0 0 16px 0; font-size: 18px; color: #8359cf; font-weight: 600; }
-        .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .content { padding: 40px 30px; background: #ffffff; }
+        .ticket-card { background: #f8f9fa; border: 1px solid #e5e5e5; border-radius: 12px; padding: 24px; margin: 24px 0; }
+        .ticket-card h2 { margin: 0 0 16px 0; font-size: 18px; color: #8359cf !important; font-weight: 600; }
+        .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #e5e5e5; }
         .info-row:last-child { border-bottom: none; }
-        .info-label { color: #d4d4d4; font-size: 14px; font-weight: 500; }
-        .info-value { color: #ffffff; font-weight: 600; font-size: 15px; }
-        .message-box { background: rgba(131, 89, 207, 0.15); border: 1px solid rgba(131, 89, 207, 0.3); border-left: 4px solid #8359cf; padding: 20px; margin: 24px 0; border-radius: 8px; }
-        .message-box p { margin: 0; color: #ffffff; line-height: 1.8; font-size: 15px; }
-        .cta-button { display: inline-block; background: linear-gradient(135deg, #8359cf 0%, #6b47b8 100%); color: #ffffff; padding: 16px 40px; text-decoration: none; border-radius: 10px; font-weight: 600; margin: 24px 0; box-shadow: 0 4px 16px rgba(131, 89, 207, 0.4); transition: all 0.3s; }
-        .cta-button:hover { box-shadow: 0 6px 20px rgba(131, 89, 207, 0.6); transform: translateY(-2px); }
-        .footer { background: #0f0f0f; padding: 30px; text-align: center; border-top: 1px solid rgba(131, 89, 207, 0.2); }
-        .footer p { margin: 8px 0; color: #d4d4d4; font-size: 14px; }
-        .footer a { color: #8359cf; text-decoration: none; font-weight: 600; }
-        .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(131, 89, 207, 0.5), transparent); margin: 30px 0; }
+        .message-box { background: #f8f9fa; border: 1px solid #e5e5e5; border-left: 4px solid #8359cf; padding: 20px; margin: 24px 0; border-radius: 8px; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #8359cf 0%, #6b47b8 100%); color: #ffffff !important; padding: 16px 40px; text-decoration: none; border-radius: 10px; font-weight: 600; margin: 24px 0; }
+        .footer { background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e5e5e5; }
+        .footer a { color: #8359cf !important; text-decoration: none; font-weight: 600; }
+        .divider { height: 1px; background: #e5e5e5; margin: 30px 0; }
+        @media (prefers-color-scheme: dark) {
+            body { background: #0b0b0b !important; color: #ffffff !important; }
+            .email-container { background: #1a1a1a !important; border-color: rgba(131, 89, 207, 0.3) !important; }
+            .content { background: #1a1a1a !important; }
+            .ticket-card { background: rgba(131, 89, 207, 0.1) !important; border-color: rgba(131, 89, 207, 0.3) !important; }
+            .message-box { background: rgba(131, 89, 207, 0.15) !important; border-color: rgba(131, 89, 207, 0.3) !important; }
+            .footer { background: #0f0f0f !important; border-color: rgba(131, 89, 207, 0.2) !important; }
+            .info-row { border-color: rgba(255,255,255,0.1) !important; }
+            .divider { background: rgba(131, 89, 207, 0.5) !important; }
+        }
     </style>
 </head>
 <body>
@@ -131,40 +135,40 @@ shop.accvaults.com`,
             <h1>Ticket Created Successfully</h1>
         </div>
         <div class="content">
-            <p style="font-size: 17px; color: #f0f0f0; margin-bottom: 24px; font-weight: 500;">Hello,</p>
-            <p style="color: #d4d4d4; margin-bottom: 24px; font-size: 15px; line-height: 1.8;">Your support ticket has been created and our team will respond as soon as possible.</p>
+            <p style="font-size: 17px; margin-bottom: 24px; font-weight: 500;">Hello,</p>
+            <p style="margin-bottom: 24px; font-size: 15px; line-height: 1.8;">Your support ticket has been created and our team will respond as soon as possible.</p>
             
             <div class="ticket-card">
                 <h2>📋 Ticket Details</h2>
                 <div class="info-row">
-                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Ticket ID</span>
-                    <span class="info-value" style="color: #ffffff; font-size: 15px; font-weight: 600;">#${ticketId}</span>
+                    <span style="font-size: 14px; color: #666;">Ticket ID</span>
+                    <span style="font-size: 15px; font-weight: 600; color: #1a1a1a;">#${ticketId}</span>
                 </div>
                 <div class="info-row">
-                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Subject</span>
-                    <span class="info-value" style="color: #ffffff; font-size: 15px; font-weight: 600;">${subject}</span>
+                    <span style="font-size: 14px; color: #666;">Subject</span>
+                    <span style="font-size: 15px; font-weight: 600; color: #1a1a1a;">${subject}</span>
                 </div>
                 <div class="info-row">
-                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Status</span>
-                    <span class="info-value" style="color: #10b981; font-size: 15px; font-weight: 600;">Open</span>
+                    <span style="font-size: 14px; color: #666;">Status</span>
+                    <span style="font-size: 15px; font-weight: 600; color: #10b981;">Open</span>
                 </div>
             </div>
             
             <div class="message-box">
-                <p><strong style="color: #a78bfa; font-size: 14px;">Your Message:</strong></p>
-                <p style="margin-top: 12px; color: #ffffff; font-size: 15px; line-height: 1.8;">${message}</p>
+                <p><strong style="color: #8359cf; font-size: 14px;">Your Message:</strong></p>
+                <p style="margin-top: 12px; font-size: 15px; line-height: 1.8; color: #1a1a1a;">${message}</p>
             </div>
             
             <div class="divider"></div>
             
-            <p style="color: #d4d4d4; text-align: center; margin: 24px 0; font-size: 15px;">View and manage your ticket anytime:</p>
+            <p style="text-align: center; margin: 24px 0; font-size: 15px;">View and manage your ticket anytime:</p>
             <center>
                 <a href="https://shop.accvaults.com/tickets" class="cta-button">View My Tickets</a>
             </center>
         </div>
         <div class="footer">
-            <p><strong style="color: #ffffff;">AccVaults Support Team</strong></p>
-            <p>We're here to help 24/7</p>
+            <p><strong>AccVaults Support Team</strong></p>
+            <p style="color: #666;">We're here to help 24/7</p>
             <p><a href="https://shop.accvaults.com">shop.accvaults.com</a></p>
         </div>
     </div>
