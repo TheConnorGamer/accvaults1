@@ -86,30 +86,30 @@ export async function onRequestPost(context) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket Transcript - #${ticketId}</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #1a1a1a; background: #000000; margin: 0; padding: 40px 20px; }
-        .transcript-container { max-width: 800px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border: 1px solid #e5e5e5; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #ffffff; background: #000000; margin: 0; padding: 40px 20px; }
+        .transcript-container { max-width: 800px; margin: 0 auto; background: #1a1a1a; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.3); border: 1px solid #333333; }
         .header { background: linear-gradient(135deg, #8359cf 0%, #6b47b8 100%); padding: 40px; text-align: center; }
         .header img { width: 80px; height: 80px; margin-bottom: 20px; }
         .header h1 { margin: 0; font-size: 32px; font-weight: 700; color: #ffffff; }
         .header p { margin: 8px 0 0 0; color: rgba(255,255,255,0.9); font-size: 16px; }
         .content { padding: 40px; }
-        .ticket-info { background: #f8f9fa; border: 1px solid #e5e5e5; border-radius: 12px; padding: 30px; margin-bottom: 30px; }
+        .ticket-info { background: #0f0f0f; border: 1px solid #333333; border-radius: 12px; padding: 30px; margin-bottom: 30px; }
         .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         .info-label { color: #8359cf; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
-        .info-value { color: #1a1a1a; font-size: 16px; font-weight: 600; }
-        .info-value a { color: #1a1a1a !important; text-decoration: none !important; pointer-events: none; }
+        .info-value { color: #ffffff; font-size: 16px; font-weight: 600; }
+        .info-value a { color: #ffffff !important; text-decoration: none !important; pointer-events: none; }
         .status-closed { color: #dc2626; }
         .conversation { margin-top: 40px; }
         .conversation h2 { color: #8359cf; font-size: 24px; margin-bottom: 24px; }
-        .message { background: #f8f9fa; border-radius: 12px; padding: 24px; margin-bottom: 20px; border-left: 4px solid #8359cf; }
-        .message.support { border-left-color: #10b981; background: #f0fdf4; }
-        .message-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #e5e5e5; }
+        .message { background: #0f0f0f; border-radius: 12px; padding: 24px; margin-bottom: 20px; border-left: 4px solid #8359cf; }
+        .message.support { border-left-color: #10b981; background: #0a1f1a; }
+        .message-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #333333; }
         .message-sender { font-weight: 700; color: #8359cf; font-size: 14px; }
         .message.support .message-sender { color: #10b981; }
-        .message-time { color: #666; font-size: 13px; }
-        .message-content { color: #1a1a1a; line-height: 1.8; font-size: 15px; }
-        .footer { background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e5e5e5; }
-        .footer p { margin: 8px 0; color: #666; font-size: 14px; }
+        .message-time { color: #999; font-size: 13px; }
+        .message-content { color: #ffffff; line-height: 1.8; font-size: 15px; }
+        .footer { background: #0f0f0f; padding: 30px; text-align: center; border-top: 1px solid #333333; }
+        .footer p { margin: 8px 0; color: #999; font-size: 14px; }
         @media (max-width: 600px) {
             body { padding: 20px 10px; }
             .header { padding: 30px 20px; }
