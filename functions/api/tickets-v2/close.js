@@ -123,7 +123,7 @@ export async function onRequestPost(context) {
 <body>
     <div class="transcript-container">
         <div class="header">
-            <img src="https://shop.accvaults.com/images/logo.png" alt="AccVaults" />
+            <div style="width: 80px; height: 80px; margin: 0 auto 20px; background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: 900; color: white; font-family: Arial, sans-serif;">AV</div>
             <h1>Ticket Transcript</h1>
             <p>Complete conversation history</p>
         </div>
