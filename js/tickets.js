@@ -195,15 +195,20 @@ async function openTicket(ticketId) {
                 
                 messagesContainer.innerHTML = messages.map(msg => `
                     <div class="message ${msg.sender_type || 'customer'}">
-                        <div class="message-header">
-                            <span class="message-sender">
-                                ${msg.sender_type === 'support' ? '<i class="fas fa-headset"></i> Support Team' : '<i class="fas fa-user"></i> You'}
-                            </span>
-                            <span class="message-time">${formatDate(msg.created_at)}</span>
+                        <div class="message-bubble">
+                            <div class="message-header">
+                                <span class="message-sender">
+                                    ${msg.sender_type === 'support' ? '<i class="fas fa-headset"></i> Support Team' : '<i class="fas fa-user"></i> You'}
+                                </span>
+                                <span class="message-time">${formatDate(msg.created_at)}</span>
+                            </div>
+                            <div class="message-content">${msg.message}</div>
                         </div>
-                        <div class="message-content">${msg.message}</div>
                     </div>
                 `).join('');
+                
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
 
             // Show/hide reply form based on status
@@ -265,13 +270,15 @@ async function refreshTicketMessages() {
                 
                 messagesContainer.innerHTML = messages.map(msg => `
                     <div class="message ${msg.sender_type || 'customer'}">
-                        <div class="message-header">
-                            <span class="message-sender">
-                                ${msg.sender_type === 'support' ? '<i class="fas fa-headset"></i> Support Team' : '<i class="fas fa-user"></i> You'}
-                            </span>
-                            <span class="message-time">${formatDate(msg.created_at)}</span>
+                        <div class="message-bubble">
+                            <div class="message-header">
+                                <span class="message-sender">
+                                    ${msg.sender_type === 'support' ? '<i class="fas fa-headset"></i> Support Team' : '<i class="fas fa-user"></i> You'}
+                                </span>
+                                <span class="message-time">${formatDate(msg.created_at)}</span>
+                            </div>
+                            <div class="message-content">${msg.message}</div>
                         </div>
-                        <div class="message-content">${msg.message}</div>
                     </div>
                 `).join('');
                 
