@@ -109,6 +109,24 @@ export async function onRequestPost(context) {
         .message-content { color: #1a1a1a; line-height: 1.8; font-size: 15px; }
         .footer { background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e5e5e5; }
         .footer p { margin: 8px 0; color: #666; font-size: 14px; }
+        @media (max-width: 600px) {
+            body { padding: 20px 10px; }
+            .header { padding: 30px 20px; }
+            .content { padding: 30px 20px; }
+            .ticket-info { padding: 20px; }
+            .info-grid { grid-template-columns: 1fr; gap: 16px; }
+            .message { padding: 16px; }
+        }
+        @media (prefers-color-scheme: dark) {
+            body { background: #0b0b0b !important; color: #ffffff !important; }
+            .transcript-container { background: #1a1a1a !important; border-color: rgba(131, 89, 207, 0.3) !important; }
+            .content { background: #1a1a1a !important; }
+            .ticket-info { background: rgba(131, 89, 207, 0.1) !important; border-color: rgba(131, 89, 207, 0.3) !important; }
+            .message { background: rgba(131, 89, 207, 0.1) !important; border-color: rgba(131, 89, 207, 0.3) !important; }
+            .message.support { background: rgba(16, 185, 129, 0.1) !important; border-color: rgba(16, 185, 129, 0.3) !important; }
+            .footer { background: #0f0f0f !important; border-color: rgba(131, 89, 207, 0.2) !important; }
+            .message-header { border-color: rgba(255,255,255,0.1) !important; }
+        }
     </style>
 </head>
 <body>
@@ -216,6 +234,16 @@ export async function onRequestPost(context) {
         .footer { background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e5e5e5; }
         .footer a { color: #8359cf !important; text-decoration: none; font-weight: 600; }
         .divider { height: 1px; background: #e5e5e5; margin: 30px 0; }
+        @media (prefers-color-scheme: dark) {
+            body { background: #0b0b0b !important; color: #ffffff !important; }
+            .email-container { background: #1a1a1a !important; border-color: rgba(131, 89, 207, 0.3) !important; }
+            .content { background: #1a1a1a !important; }
+            .ticket-card { background: rgba(131, 89, 207, 0.1) !important; border-color: rgba(131, 89, 207, 0.3) !important; }
+            .download-box { background: rgba(16, 185, 129, 0.1) !important; border-color: rgba(16, 185, 129, 0.3) !important; }
+            .footer { background: #0f0f0f !important; border-color: rgba(131, 89, 207, 0.2) !important; }
+            .info-row { border-color: rgba(255,255,255,0.1) !important; }
+            .divider { background: rgba(131, 89, 207, 0.5) !important; }
+        }
     </style>
 </head>
 <body>

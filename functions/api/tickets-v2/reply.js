@@ -120,6 +120,16 @@ shop.accvaults.com`,
         .footer .signature-title { color: #8359cf !important; }
         .footer a { color: #8359cf !important; text-decoration: none; font-weight: 600; }
         .divider { height: 1px; background: #e5e5e5; margin: 30px 0; }
+        @media (prefers-color-scheme: dark) {
+            body { background: #0b0b0b !important; color: #ffffff !important; }
+            .email-container { background: #1a1a1a !important; border-color: rgba(131, 89, 207, 0.3) !important; }
+            .content { background: #1a1a1a !important; }
+            .ticket-card { background: rgba(131, 89, 207, 0.1) !important; border-color: rgba(131, 89, 207, 0.3) !important; }
+            .reply-box { background: rgba(131, 89, 207, 0.15) !important; border-color: rgba(131, 89, 207, 0.3) !important; }
+            .footer { background: #0f0f0f !important; border-color: rgba(131, 89, 207, 0.2) !important; }
+            .info-row { border-color: rgba(255,255,255,0.1) !important; }
+            .divider { background: rgba(131, 89, 207, 0.5) !important; }
+        }
     </style>
 </head>
 <body>
