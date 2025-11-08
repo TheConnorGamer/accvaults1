@@ -75,7 +75,7 @@ export async function onRequestPost(context) {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        from: 'AccVaults Support <support@accvaults.com>',
+                        from: 'AccVaults Support <support@tickets.accvaults.com>',
                         to: [email],
                         subject: `Ticket Created: ${subject}`,
                         html: `
