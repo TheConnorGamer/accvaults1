@@ -388,8 +388,14 @@
                     <a href="products.html" class="nav-link">Products</a>
                     <a href="reviews.html" class="nav-link">Reviews</a>
                     <a href="status.html" class="nav-link">Status</a>
-                    <a href="tickets.html" class="nav-link">Support</a>
-                    <a href="admin-tickets.html" class="nav-link active">Admin</a>
+                    <a href="downloads.html" class="nav-link downloads-btn">Downloads</a>
+                    <a href="admin-tickets.html" class="nav-link active" id="adminNavLink" style="display: none;">Admin</a>
+                    <button class="nav-link mobile-only-link" onclick="openCurrencyModal()" style="border: none; background: none; cursor: pointer; text-align: left; width: 100%;">
+                        <i class="fas fa-pound-sign"></i> Change Currency
+                    </button>
+                    <button class="nav-link mobile-only-link" onclick="openLoginModal()" style="border: none; background: none; cursor: pointer; text-align: left; width: 100%;">
+                        <i class="fas fa-sign-in-alt"></i> Login / Register
+                    </button>
                 </div>
 
                 <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
@@ -400,6 +406,12 @@
                     <a href="https://discord.gg/accvaults" target="_blank" class="nav-action discord-btn">
                         <i class="fab fa-discord"></i> Discord
                     </a>
+                    <button class="nav-action currency-btn" onclick="openCurrencyModal()" title="Change Currency">
+                        <i class="fas fa-pound-sign"></i>
+                    </button>
+                    <button class="nav-action login-btn" onclick="openLoginModal()" title="Login / Register">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -499,7 +511,7 @@
         </div>
     </footer>
     
-    <script src="js/main.js?v=8"></script>
+    <script src="js/main.js?v=9"></script>
     <script>
         let allTickets = [];
         let currentTicketId = null;
@@ -665,6 +677,25 @@
                 closeModal();
             }
         });
+        
+        // Check if user is admin and show admin link
+        function checkAdminAccess() {
+            const user = JSON.parse(localStorage.getItem('accvaults_user') || 'null');
+            const adminNavLink = document.getElementById('adminNavLink');
+            
+            if (user && user.isStaff) {
+                // User is admin, show the admin link
+                if (adminNavLink) {
+                    adminNavLink.style.display = 'block';
+                }
+            } else {
+                // Not an admin, redirect to home page
+                window.location.href = '/index.html';
+            }
+        }
+        
+        // Check admin access on page load
+        checkAdminAccess();
         
         // Load tickets on page load
         loadAllTickets();

@@ -1384,6 +1384,16 @@ function updateLoginButton() {
             btn.onclick = () => openLoginModal();
         }
     });
+    
+    // Show/hide admin link based on user role
+    const adminNavLink = document.getElementById('adminNavLink');
+    if (adminNavLink) {
+        if (user && user.isStaff) {
+            adminNavLink.style.display = 'block';
+        } else {
+            adminNavLink.style.display = 'none';
+        }
+    }
 }
 
 // User menu for logged in users
