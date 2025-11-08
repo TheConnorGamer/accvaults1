@@ -160,21 +160,13 @@ export async function onRequestPost(context) {
             <div class="conversation">
                 <h2>💬 Conversation History</h2>
                 
-                <div class="message">
-                    <div class="message-header">
-                        <span class="message-sender">👤 Customer</span>
-                        <span class="message-time">${new Date(ticket.created_at * 1000).toLocaleString()}</span>
-                    </div>
-                    <div class="message-content">${ticket.message}</div>
-                </div>
-                
                 ${messages.map(msg => `
                     <div class="message ${msg.sender_type === 'support' ? 'support' : ''}">
                         <div class="message-header">
                             <span class="message-sender">${msg.sender_type === 'support' ? '🛡️ Support Team' : '👤 Customer'}</span>
                             <span class="message-time">${new Date(msg.created_at * 1000).toLocaleString()}</span>
                         </div>
-                        <div class="message-content">${msg.message}</div>
+                        <div class="message-content">${msg.message || 'No message content'}</div>
                     </div>
                 `).join('')}
             </div>
