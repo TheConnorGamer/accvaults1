@@ -97,6 +97,7 @@ export async function onRequestPost(context) {
         .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         .info-label { color: #8359cf; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
         .info-value { color: #1a1a1a; font-size: 16px; font-weight: 600; }
+        .info-value a { color: #1a1a1a !important; text-decoration: none !important; pointer-events: none; }
         .status-closed { color: #dc2626; }
         .conversation { margin-top: 40px; }
         .conversation h2 { color: #8359cf; font-size: 24px; margin-bottom: 24px; }
@@ -116,16 +117,6 @@ export async function onRequestPost(context) {
             .ticket-info { padding: 20px; }
             .info-grid { grid-template-columns: 1fr; gap: 16px; }
             .message { padding: 16px; }
-        }
-        @media (prefers-color-scheme: dark) {
-            body { background: #0b0b0b !important; color: #ffffff !important; }
-            .transcript-container { background: #1a1a1a !important; border-color: rgba(131, 89, 207, 0.3) !important; }
-            .content { background: #1a1a1a !important; }
-            .ticket-info { background: rgba(131, 89, 207, 0.1) !important; border-color: rgba(131, 89, 207, 0.3) !important; }
-            .message { background: rgba(131, 89, 207, 0.1) !important; border-color: rgba(131, 89, 207, 0.3) !important; }
-            .message.support { background: rgba(16, 185, 129, 0.1) !important; border-color: rgba(16, 185, 129, 0.3) !important; }
-            .footer { background: #0f0f0f !important; border-color: rgba(131, 89, 207, 0.2) !important; }
-            .message-header { border-color: rgba(255,255,255,0.1) !important; }
         }
     </style>
 </head>

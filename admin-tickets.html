@@ -653,6 +653,58 @@
             `).join('');
         }
         
+        let autoRefreshInterval = null;
+        
+        async function refreshTicketMessages() {
+            if (!currentTicketId) return;
+            
+            try {
+                const response = await fetch(`/api/tickets-v2/${currentTicketId}`);
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    const ticket = data.data;
+                    const messagesContainer = document.getElementById('messagesContainer');
+                    const currentScroll = messagesContainer.scrollTop;
+                    const isAtBottom = messagesContainer.scrollHeight - messagesContainer.scrollTop <= messagesContainer.clientHeight + 50;
+                    
+                    messagesContainer.innerHTML = ticket.messages.map(msg => `
+                        <div class="message ${msg.sender_type || 'customer'}">
+                            <div class="message-bubble">
+                                <div class="message-header">
+                                    <span class="message-sender">
+                                        ${msg.sender_type === 'support' ? '<i class="fas fa-headset"></i> Support Team' : '<i class="fas fa-user"></i> Customer'}
+                                    </span>
+                                    <span class="message-time">${formatDate(msg.created_at)}</span>
+                                </div>
+                                <div class="message-content">${msg.message}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                    
+                    if (isAtBottom) {
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    }
+                }
+            } catch (error) {
+                console.error('Error refreshing messages:', error);
+            }
+        }
+        
+        function startAutoRefresh() {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+            }
+            autoRefreshInterval = setInterval(refreshTicketMessages, 3000);
+        }
+        
+        function stopAutoRefresh() {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+                autoRefreshInterval = null;
+            }
+        }
+        
         async function openTicket(ticketId) {
             currentTicketId = ticketId;
             const modal = document.getElementById('ticketModal');
@@ -688,6 +740,9 @@
                     
                     // Scroll to bottom
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    
+                    // Start auto-refresh
+                    startAutoRefresh();
                 }
             } catch (error) {
                 console.error('Error loading ticket:', error);
@@ -765,6 +820,7 @@
             document.getElementById('ticketModal').classList.remove('show');
             document.getElementById('replyMessage').value = '';
             currentTicketId = null;
+            stopAutoRefresh();
         }
         
         function formatDate(timestamp) {
