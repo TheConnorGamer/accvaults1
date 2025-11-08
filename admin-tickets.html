@@ -699,6 +699,11 @@
         
         // Load tickets on page load
         loadAllTickets();
+        
+        // Auto-refresh ticket list every 5 seconds
+        setInterval(() => {
+            loadAllTickets();
+        }, 5000);
     </script>
 </body>
 </html>
