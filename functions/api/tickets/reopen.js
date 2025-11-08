@@ -41,7 +41,7 @@ export async function onRequestPost(context) {
         }
         
         // Call Paylix API
-        const paylixResponse = await fetch(`https://api.paylix.gg/v1/queries/reopen/${ticketId}`, {
+        const paylixResponse = await fetch(`https://dev.paylix.gg/v1/queries/reopen/${ticketId}`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${apiKey}`

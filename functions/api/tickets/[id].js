@@ -39,7 +39,7 @@ export async function onRequestGet(context) {
         }
         
         // Call Paylix API
-        const paylixResponse = await fetch(`https://api.paylix.gg/v1/queries/${ticketId}`, {
+        const paylixResponse = await fetch(`https://dev.paylix.gg/v1/queries/${ticketId}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${apiKey}`

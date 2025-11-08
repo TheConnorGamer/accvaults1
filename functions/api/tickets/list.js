@@ -41,7 +41,7 @@ export async function onRequestGet(context) {
         }
         
         // Call Paylix API
-        const paylixResponse = await fetch(`https://api.paylix.gg/v1/queries?customer_email=${encodeURIComponent(email)}`, {
+        const paylixResponse = await fetch(`https://dev.paylix.gg/v1/queries?customer_email=${encodeURIComponent(email)}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${apiKey}`
