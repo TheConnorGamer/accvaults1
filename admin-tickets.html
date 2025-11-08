@@ -460,6 +460,9 @@
                         <button class="btn btn-primary" onclick="sendReply()">
                             <i class="fas fa-paper-plane"></i> Send Reply
                         </button>
+                        <button class="btn" onclick="closeTicket()" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white;">
+                            <i class="fas fa-times-circle"></i> Close Ticket
+                        </button>
                         <button class="btn btn-secondary" onclick="closeModal()">
                             Cancel
                         </button>
@@ -651,6 +654,42 @@
             } catch (error) {
                 console.error('Error sending reply:', error);
                 alert('Failed to send reply');
+            }
+        }
+        
+        async function closeTicket() {
+            if (!currentTicketId) {
+                alert('No ticket selected');
+                return;
+            }
+            
+            if (!confirm('Are you sure you want to close this ticket? A transcript will be sent to the admin email.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/tickets-v2/close', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        ticketId: currentTicketId
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('✅ Ticket closed successfully! Transcript sent to admin.');
+                    closeModal();
+                    loadAllTickets(); // Refresh the list
+                } else {
+                    alert('Failed to close ticket: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error closing ticket:', error);
+                alert('Failed to close ticket');
             }
         }
         

@@ -47,11 +47,53 @@ export async function onRequestPost(context) {
         }
         
         const timestamp = Math.floor(Date.now() / 1000);
+        const ticket = tickets[0];
+        
+        // Get all messages for the transcript
+        const { results: messages } = await env.DB.prepare(
+            'SELECT * FROM ticket_messages WHERE ticket_id = ? ORDER BY created_at ASC'
+        ).bind(ticketId).all();
         
         // Update ticket status to closed
         await env.DB.prepare(
             'UPDATE tickets SET status = ?, updated_at = ? WHERE ticket_id = ?'
         ).bind('closed', timestamp, ticketId).run();
+        
+        // Generate transcript
+        let transcript = `Ticket #${ticketId} - ${ticket.subject}\n`;
+        transcript += `Customer: ${ticket.customer_email}\n`;
+        transcript += `Created: ${new Date(ticket.created_at * 1000).toLocaleString()}\n`;
+        transcript += `Closed: ${new Date(timestamp * 1000).toLocaleString()}\n\n`;
+        transcript += `=== CONVERSATION ===\n\n`;
+        
+        // Add initial message
+        transcript += `[${new Date(ticket.created_at * 1000).toLocaleString()}] Customer:\n${ticket.message}\n\n`;
+        
+        // Add all replies
+        for (const msg of messages) {
+            const sender = msg.sender_type === 'support' ? 'Support Team' : 'Customer';
+            transcript += `[${new Date(msg.created_at * 1000).toLocaleString()}] ${sender}:\n${msg.message}\n\n`;
+        }
+        
+        // Send transcript email to admin
+        try {
+            await fetch('https://api.resend.com/emails', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    from: 'AccVaults Support <support@accvaults.com>',
+                    to: 'connazlunn@gmail.com', // Admin email
+                    subject: `Ticket Closed: #${ticketId} - ${ticket.subject}`,
+                    text: transcript
+                })
+            });
+        } catch (emailError) {
+            console.error('Failed to send transcript email:', emailError);
+            // Don't fail the request if email fails
+        }
         
         console.log('✅ Ticket closed:', ticketId);
         
