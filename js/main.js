@@ -1394,16 +1394,6 @@ function updateLoginButton() {
             adminNavLink.style.display = 'none';
         }
     }
-    
-    // Show/hide admin panel button on tickets page
-    const adminPanelButton = document.getElementById('adminPanelButton');
-    if (adminPanelButton) {
-        if (user && user.isStaff) {
-            adminPanelButton.style.display = 'inline-block';
-        } else {
-            adminPanelButton.style.display = 'none';
-        }
-    }
 }
 
 // User menu for logged in users
