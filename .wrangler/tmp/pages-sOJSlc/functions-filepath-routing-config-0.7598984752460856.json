@@ -1,0 +1,261 @@
+{
+  "routes": [
+    {
+      "routePath": "/api/tickets-v2/admin/all",
+      "mountPath": "/api/tickets-v2/admin",
+      "method": "GET",
+      "module": [
+        "api/tickets-v2/admin/all.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/tickets-v2/admin/all",
+      "mountPath": "/api/tickets-v2/admin",
+      "method": "OPTIONS",
+      "module": [
+        "api/tickets-v2/admin/all.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/tickets-v2/close",
+      "mountPath": "/api/tickets-v2",
+      "method": "OPTIONS",
+      "module": [
+        "api/tickets-v2/close.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/tickets-v2/close",
+      "mountPath": "/api/tickets-v2",
+      "method": "POST",
+      "module": [
+        "api/tickets-v2/close.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/tickets-v2/create",
+      "mountPath": "/api/tickets-v2",
+      "method": "OPTIONS",
+      "module": [
+        "api/tickets-v2/create.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/tickets-v2/create",
+      "mountPath": "/api/tickets-v2",
+      "method": "POST",
+      "module": [
+        "api/tickets-v2/create.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/tickets-v2/list",
+      "mountPath": "/api/tickets-v2",
+      "method": "GET",
+      "module": [
+        "api/tickets-v2/list.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/tickets-v2/list",
+      "mountPath": "/api/tickets-v2",
+      "method": "OPTIONS",
+      "module": [
+        "api/tickets-v2/list.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/tickets-v2/reopen",
+      "mountPath": "/api/tickets-v2",
+      "method": "OPTIONS",
+      "module": [
+        "api/tickets-v2/reopen.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/tickets-v2/reopen",
+      "mountPath": "/api/tickets-v2",
+      "method": "POST",
+      "module": [
+        "api/tickets-v2/reopen.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/tickets-v2/reply",
+      "mountPath": "/api/tickets-v2",
+      "method": "OPTIONS",
+      "module": [
+        "api/tickets-v2/reply.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/tickets-v2/reply",
+      "mountPath": "/api/tickets-v2",
+      "method": "POST",
+      "module": [
+        "api/tickets-v2/reply.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/tickets/close",
+      "mountPath": "/api/tickets",
+      "method": "OPTIONS",
+      "module": [
+        "api/tickets/close.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/tickets/close",
+      "mountPath": "/api/tickets",
+      "method": "POST",
+      "module": [
+        "api/tickets/close.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/tickets/create",
+      "mountPath": "/api/tickets",
+      "method": "OPTIONS",
+      "module": [
+        "api/tickets/create.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/tickets/create",
+      "mountPath": "/api/tickets",
+      "method": "POST",
+      "module": [
+        "api/tickets/create.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/tickets/list",
+      "mountPath": "/api/tickets",
+      "method": "GET",
+      "module": [
+        "api/tickets/list.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/tickets/list",
+      "mountPath": "/api/tickets",
+      "method": "OPTIONS",
+      "module": [
+        "api/tickets/list.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/tickets/reopen",
+      "mountPath": "/api/tickets",
+      "method": "OPTIONS",
+      "module": [
+        "api/tickets/reopen.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/tickets/reopen",
+      "mountPath": "/api/tickets",
+      "method": "POST",
+      "module": [
+        "api/tickets/reopen.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/tickets/reply",
+      "mountPath": "/api/tickets",
+      "method": "OPTIONS",
+      "module": [
+        "api/tickets/reply.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/tickets/reply",
+      "mountPath": "/api/tickets",
+      "method": "POST",
+      "module": [
+        "api/tickets/reply.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/tickets-v2/:id",
+      "mountPath": "/api/tickets-v2",
+      "method": "GET",
+      "module": [
+        "api/tickets-v2/[id].js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/tickets-v2/:id",
+      "mountPath": "/api/tickets-v2",
+      "method": "OPTIONS",
+      "module": [
+        "api/tickets-v2/[id].js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/tickets/:id",
+      "mountPath": "/api/tickets",
+      "method": "GET",
+      "module": [
+        "api/tickets/[id].js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/tickets/:id",
+      "mountPath": "/api/tickets",
+      "method": "OPTIONS",
+      "module": [
+        "api/tickets/[id].js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/api/auth",
+      "mountPath": "/api",
+      "method": "",
+      "module": [
+        "api/auth.js:onRequest"
+      ]
+    },
+    {
+      "routePath": "/api/create-checkout",
+      "mountPath": "/api",
+      "method": "",
+      "module": [
+        "api/create-checkout.js:onRequest"
+      ]
+    },
+    {
+      "routePath": "/api/paylix-api",
+      "mountPath": "/api",
+      "method": "",
+      "module": [
+        "api/paylix-api.js:onRequest"
+      ]
+    },
+    {
+      "routePath": "/api/paylix-stats",
+      "mountPath": "/api",
+      "method": "",
+      "module": [
+        "api/paylix-stats.js:onRequest"
+      ]
+    },
+    {
+      "routePath": "/api/paylix-webhook",
+      "mountPath": "/api",
+      "method": "",
+      "module": [
+        "api/paylix-webhook.js:onRequest"
+      ]
+    },
+    {
+      "routePath": "/api/save-customer",
+      "mountPath": "/api",
+      "method": "",
+      "module": [
+        "api/save-customer.js:onRequest"
+      ]
+    }
+  ],
+  "baseURL": "/"
+}
