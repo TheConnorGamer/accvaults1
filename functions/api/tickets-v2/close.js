@@ -199,7 +199,20 @@ export async function onRequestPost(context) {
 </body>
 </html>`;
             
-            // Create HTML email (notification only - transcript is attached)
+            // Store transcript in database
+            try {
+                await env.DB.prepare(
+                    'INSERT OR REPLACE INTO ticket_transcripts (ticket_id, transcript_html, created_at) VALUES (?, ?, ?)'
+                ).bind(ticketId, htmlTranscript, timestamp).run();
+                console.log('✅ Transcript stored in database');
+            } catch (dbError) {
+                console.error('❌ Failed to store transcript:', dbError);
+            }
+            
+            // Create download link
+            const transcriptUrl = `https://shop.accvaults.com/api/transcripts/${ticketId}`;
+            
+            // Create HTML email matching create.js design
             const customerEmailHTML = `
 <!DOCTYPE html>
 <html>
@@ -207,85 +220,70 @@ export async function onRequestPost(context) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; line-height: 1.8; color: #ffffff; background: #0b0b0b; margin: 0; padding: 20px; }
-        .email-container { max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(131, 89, 207, 0.3); border: 1px solid rgba(131, 89, 207, 0.2); }
-        .header { background: linear-gradient(135deg, #8359cf 0%, #6b47b8 100%); padding: 40px 30px; text-align: center; position: relative; }
-        .header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #8359cf, #6b47b8, #8359cf); }
-        .logo { width: 60px; height: 60px; margin: 0 auto 16px; }
-        .header h1 { margin: 0; font-size: 28px; font-weight: 700; color: #ffffff; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-        .content { padding: 40px 30px; }
-        .ticket-card { background: rgba(131, 89, 207, 0.1); border: 1px solid rgba(131, 89, 207, 0.3); border-radius: 12px; padding: 24px; margin: 24px 0; }
-        .ticket-card h2 { margin: 0 0 16px 0; font-size: 18px; color: #8359cf; font-weight: 600; }
-        .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; line-height: 1.8; color: #1a1a1a; background: #f5f5f5; margin: 0; padding: 20px; }
+        .email-container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border: 1px solid #e5e5e5; }
+        .header { background: linear-gradient(135deg, #8359cf 0%, #6b47b8 100%); padding: 40px 30px; text-align: center; }
+        .header .icon { font-size: 48px; margin-bottom: 10px; }
+        .header h1 { margin: 0; font-size: 28px; font-weight: 700; color: #ffffff !important; }
+        .content { padding: 40px 30px; background: #ffffff; }
+        .ticket-card { background: #f8f9fa; border: 1px solid #e5e5e5; border-radius: 12px; padding: 24px; margin: 24px 0; }
+        .ticket-card h2 { margin: 0 0 16px 0; font-size: 18px; color: #8359cf !important; font-weight: 600; }
+        .info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #e5e5e5; }
         .info-row:last-child { border-bottom: none; }
-        .info-label { color: #d4d4d4; font-size: 14px; font-weight: 500; }
-        .info-value { color: #ffffff; font-weight: 600; font-size: 15px; }
-        .status-closed { color: #dc2626; }
-        .attachment-box { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 20px; margin: 24px 0; text-align: center; }
-        .attachment-icon { font-size: 40px; margin-bottom: 12px; }
-        .attachment-box p { margin: 8px 0; color: #10b981; font-weight: 600; }
-        .attachment-box .subtitle { color: #d4d4d4; font-weight: normal; }
-        .cta-button { display: inline-block; background: linear-gradient(135deg, #8359cf 0%, #6b47b8 100%); color: #ffffff; padding: 16px 40px; text-decoration: none; border-radius: 10px; font-weight: 600; margin: 24px 0; box-shadow: 0 4px 16px rgba(131, 89, 207, 0.4); }
-        .footer { background: #0b0b0b; padding: 30px; text-align: center; border-top: 1px solid rgba(131, 89, 207, 0.2); }
-        .footer .signature { margin: 20px 0; }
-        .footer .signature-name { color: #ffffff; font-weight: 700; font-size: 16px; margin-bottom: 4px; }
-        .footer .signature-title { color: #8359cf; font-size: 14px; margin-bottom: 8px; }
-        .footer .signature-company { color: #d4d4d4; font-size: 14px; }
-        .footer a { color: #8359cf; text-decoration: none; font-weight: 600; }
-        .footer p { color: #d4d4d4; }
-        .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(131, 89, 207, 0.5), transparent); margin: 30px 0; }
+        .download-box { background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 24px; margin: 24px 0; text-align: center; }
+        .download-button { display: inline-block; background: #10b981; color: #ffffff !important; padding: 16px 40px; text-decoration: none; border-radius: 10px; font-weight: 600; margin: 16px 0; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #8359cf 0%, #6b47b8 100%); color: #ffffff !important; padding: 16px 40px; text-decoration: none; border-radius: 10px; font-weight: 600; margin: 24px 0; }
+        .footer { background: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #e5e5e5; }
+        .footer a { color: #8359cf !important; text-decoration: none; font-weight: 600; }
+        .divider { height: 1px; background: #e5e5e5; margin: 30px 0; }
     </style>
 </head>
 <body>
     <div class="email-container">
         <div class="header">
-            <img src="https://shop.accvaults.com/images/logo.png" alt="AccVaults" class="logo" />
-            <h1>✅ Ticket Closed</h1>
+            <div class="icon">✅</div>
+            <h1>Ticket Closed</h1>
         </div>
         <div class="content">
-            <p style="font-size: 17px; color: #f0f0f0; margin-bottom: 24px; font-weight: 500;">Hello,</p>
-            <p style="color: #d4d4d4; margin-bottom: 24px; font-size: 15px; line-height: 1.8;">Your support ticket has been successfully resolved and closed.</p>
+            <p style="font-size: 17px; margin-bottom: 24px; font-weight: 500;">Hello,</p>
+            <p style="margin-bottom: 24px; font-size: 15px; line-height: 1.8;">Your support ticket has been successfully resolved and closed.</p>
             
             <div class="ticket-card">
                 <h2>📋 Ticket Summary</h2>
                 <div class="info-row">
-                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Ticket ID</span>
-                    <span class="info-value" style="color: #ffffff; font-size: 15px; font-weight: 600;">#${ticketId}</span>
+                    <span style="font-size: 14px; color: #666;">Ticket ID</span>
+                    <span style="font-size: 15px; font-weight: 600; color: #1a1a1a;">#${ticketId}</span>
                 </div>
                 <div class="info-row">
-                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Subject</span>
-                    <span class="info-value" style="color: #ffffff; font-size: 15px; font-weight: 600;">${ticket.subject}</span>
+                    <span style="font-size: 14px; color: #666;">Subject</span>
+                    <span style="font-size: 15px; font-weight: 600; color: #1a1a1a;">${ticket.subject}</span>
                 </div>
                 <div class="info-row">
-                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Status</span>
-                    <span class="info-value" style="color: #dc2626; font-size: 15px; font-weight: 600;">Closed</span>
+                    <span style="font-size: 14px; color: #666;">Status</span>
+                    <span style="font-size: 15px; font-weight: 600; color: #dc2626;">Closed</span>
                 </div>
                 <div class="info-row">
-                    <span class="info-label" style="color: #d4d4d4; font-size: 14px;">Closed Date</span>
-                    <span class="info-value" style="color: #ffffff; font-size: 15px; font-weight: 600;">${new Date(timestamp * 1000).toLocaleString()}</span>
+                    <span style="font-size: 14px; color: #666;">Closed Date</span>
+                    <span style="font-size: 15px; font-weight: 600; color: #1a1a1a;">${new Date(timestamp * 1000).toLocaleString()}</span>
                 </div>
             </div>
             
-            <div class="attachment-box">
-                <div class="attachment-icon">📎</div>
-                <p style="color: #10b981; font-weight: 600; font-size: 15px;">Full Conversation Transcript Attached</p>
-                <p style="color: #d4d4d4; font-size: 13px; font-weight: normal;">Open the attached HTML file to view the complete conversation history</p>
+            <div class="download-box">
+                <p style="font-size: 18px; font-weight: 600; color: #10b981; margin: 0 0 8px 0;">📎 Conversation Transcript</p>
+                <p style="color: #666; font-size: 14px; margin: 0 0 16px 0;">Download the complete conversation history</p>
+                <a href="${transcriptUrl}" class="download-button">Download Transcript</a>
             </div>
             
             <div class="divider"></div>
             
-            <p style="color: #d4d4d4; text-align: center; margin: 24px 0; font-size: 15px;">Need more help? Create a new ticket anytime:</p>
+            <p style="text-align: center; margin: 24px 0; font-size: 15px;">Need more help? Create a new ticket anytime:</p>
             <center>
                 <a href="https://shop.accvaults.com/tickets" class="cta-button">Create New Ticket</a>
             </center>
         </div>
         <div class="footer">
-            <div class="signature">
-                <div class="signature-name">AccVaults Support Team</div>
-                <div class="signature-title">Customer Support</div>
-                <div class="signature-company">AccVaults - Premium Digital Services</div>
-            </div>
-            <p style="color: #d4d4d4; font-size: 13px; margin: 16px 0;">We're here to help 24/7</p>
+            <p><strong>AccVaults Support Team</strong></p>
+            <p style="color: #666;">We're here to help 24/7</p>
             <p><a href="https://shop.accvaults.com">shop.accvaults.com</a></p>
         </div>
     </div>
@@ -313,20 +311,14 @@ Subject: ${ticket.subject}
 Status: Closed
 Closed Date: ${new Date(timestamp * 1000).toLocaleString()}
 
-A full conversation transcript has been attached to this email as an HTML file.
+Download your conversation transcript: ${transcriptUrl}
 
 Need more help? Create a new ticket anytime at: https://shop.accvaults.com/tickets
 
 Thank you,
 AccVaults Support Team
-Customer Support
-AccVaults - Premium Digital Services
 shop.accvaults.com`,
-                    html: customerEmailHTML,
-                    attachments: [{
-                        filename: `ticket-${ticketId}-transcript.html`,
-                        content: Buffer.from(htmlTranscript).toString('base64')
-                    }]
+                    html: customerEmailHTML
                 })
             });
             
