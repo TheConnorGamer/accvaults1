@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Tickets - AccVaults</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            padding: 20px;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 100px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .tab {
+            padding: 15px 30px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+        
+        .tab:hover {
+            color: var(--text-primary);
+        }
+        
+        .tab.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .ticket-form {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 15px;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background: var(--accent-hover);
+        }
+        
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .alert-success {
+            background: #10b98120;
+            color: #10b981;
+            border: 1px solid #10b98140;
+        }
+        
+        .alert-error {
+            background: #ef444420;
+            color: #ef4444;
+            border: 1px solid #ef444440;
+        }
+        
+        .admin-header {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .admin-header h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+        
+        .admin-header p {
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .tickets-grid {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .ticket-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .ticket-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+        
+        .ticket-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .ticket-id {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .ticket-status {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-open {
+            background: #f59e0b20;
+            color: #f59e0b;
+        }
+        
+        .status-replied {
+            background: #8359cf20;
+            color: #8359cf;
+        }
+        
+        .status-closed {
+            background: #6b728020;
+            color: #6b7280;
+        }
+        
+        .ticket-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .ticket-preview {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: 20px;
+        }
+        
+        .modal-header {
+            padding: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .modal-header h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .messages-container {
+            margin-bottom: 30px;
+        }
+        
+        .message {
+            background: var(--secondary-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .message-sender {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        .message-time {
+            color: var(--text-secondary);
+        }
+        
+        .message-content {
+            line-height: 1.6;
+        }
+        
+        .reply-form {
+            background: var(--secondary-bg);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .reply-form textarea {
+            width: 100%;
+            min-height: 120px;
+            background: var(--primary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            color: var(--text-primary);
+            font-family: inherit;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        
+        .reply-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1><i class="fas fa-ticket-alt"></i> Support Tickets</h1>
+            <p>Create and manage your support tickets</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('create')">
+                <i class="fas fa-plus-circle"></i> Create Ticket
+            </button>
+            <button class="tab" onclick="switchTab('view')">
+                <i class="fas fa-list"></i> My Tickets
+            </button>
+        </div>
+        
+        <!-- Create Ticket Tab -->
+        <div id="createTab" class="tab-content active">
+            <div class="ticket-form">
+                <div id="createAlert"></div>
+                <form id="createTicketForm" onsubmit="createTicket(event)">
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                        <input type="email" id="email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="title"><i class="fas fa-heading"></i> Subject</label>
+                        <input type="text" id="title" required placeholder="Brief description of your issue">
+                    </div>
+                    <div class="form-group">
+                        <label for="message"><i class="fas fa-comment-alt"></i> Message</label>
+                        <textarea id="message" required placeholder="Please provide detailed information about your issue..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" id="createBtn">
+                        <i class="fas fa-paper-plane"></i> Create Ticket
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- View Tickets Tab -->
+        <div id="viewTab" class="tab-content">
+            <div class="ticket-form">
+                <div class="form-group">
+                    <label for="viewEmail"><i class="fas fa-envelope"></i> Enter your email to view tickets</label>
+                    <input type="email" id="viewEmail" placeholder="your@email.com">
+                </div>
+                <button onclick="loadTickets()" class="submit-btn">
+                    <i class="fas fa-search"></i> Load My Tickets
+                </button>
+            </div>
+            <div id="ticketsContainer" class="tickets-grid"></div>
+        </div>
+    </div>
+    
+    <!-- Ticket Detail Modal -->
+    <div id="ticketModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTicketTitle"></h2>
+                <p class="ticket-id" id="modalTicketId"></p>
+                <p class="ticket-meta">
+                    <span><i class="fas fa-envelope"></i> <span id="modalTicketEmail"></span></span>
+                    <span><i class="fas fa-clock"></i> <span id="modalTicketDate"></span></span>
+                </p>
+            </div>
+            <div class="modal-body">
+                <div class="messages-container" id="messagesContainer"></div>
+                
+                <div id="modalAlert"></div>
+                <div class="reply-form" id="replyFormContainer">
+                    <h3><i class="fas fa-reply"></i> Reply to Ticket</h3>
+                    <textarea id="replyMessage" placeholder="Type your reply here..."></textarea>
+                    <div class="reply-actions">
+                        <button class="btn btn-primary" onclick="sendReply()">
+                            <i class="fas fa-paper-plane"></i> Send Reply
+                        </button>
+                        <button class="btn btn-secondary" onclick="closeModal()">
+                            <i class="fas fa-arrow-left"></i> Back to List
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/tickets.js"></script>
+</body>
+</html>
