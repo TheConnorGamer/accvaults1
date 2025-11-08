@@ -152,6 +152,10 @@ function displayTickets(tickets) {
 async function openTicket(ticketId) {
     currentTicketId = ticketId;
     const modal = document.getElementById('ticketModal');
+    if (!modal) {
+        console.error('Modal element not found');
+        return;
+    }
     modal.classList.add('show');
 
     try {
@@ -162,40 +166,55 @@ async function openTicket(ticketId) {
             const ticket = data.data;
             currentTicketStatus = ticket.status;
 
-            document.getElementById('modalTicketTitle').textContent = ticket.subject;
-            document.getElementById('modalTicketId').textContent = `#${ticket.ticket_id}`;
-            document.getElementById('modalTicketEmail').textContent = ticket.customer_email;
-            document.getElementById('modalTicketDate').textContent = formatDate(ticket.created_at);
-            document.getElementById('modalTicketStatus').innerHTML = `<span class="ticket-status status-${ticket.status}">${ticket.status}</span>`;
+            // Safely update elements with null checks
+            const titleEl = document.getElementById('modalTicketTitle');
+            const idEl = document.getElementById('modalTicketId');
+            const emailEl = document.getElementById('modalTicketEmail');
+            const dateEl = document.getElementById('modalTicketDate');
+            const statusEl = document.getElementById('modalTicketStatus');
+            const messagesContainer = document.getElementById('messagesContainer');
+            const replyFormContainer = document.getElementById('replyFormContainer');
+            const closedFormContainer = document.getElementById('closedFormContainer');
+
+            if (titleEl) titleEl.textContent = ticket.subject;
+            if (idEl) idEl.textContent = `#${ticket.ticket_id}`;
+            if (emailEl) emailEl.textContent = ticket.customer_email;
+            if (dateEl) dateEl.textContent = formatDate(ticket.created_at);
+            if (statusEl) statusEl.innerHTML = `<span class="ticket-status status-${ticket.status}">${ticket.status}</span>`;
 
             // Display messages
-            const messagesContainer = document.getElementById('messagesContainer');
-            const messages = ticket.messages || [{ message: ticket.message, created_at: ticket.created_at, sender_type: 'customer' }];
-            
-            messagesContainer.innerHTML = messages.map(msg => `
-                <div class="message ${msg.sender_type || 'customer'}">
-                    <div class="message-header">
-                        <span class="message-sender">
-                            ${msg.sender_type === 'support' ? '<i class="fas fa-headset"></i> Support Team' : '<i class="fas fa-user"></i> You'}
-                        </span>
-                        <span class="message-time">${formatDate(msg.created_at)}</span>
+            if (messagesContainer) {
+                const messages = ticket.messages || [{ message: ticket.message, created_at: ticket.created_at, sender_type: 'customer' }];
+                
+                messagesContainer.innerHTML = messages.map(msg => `
+                    <div class="message ${msg.sender_type || 'customer'}">
+                        <div class="message-header">
+                            <span class="message-sender">
+                                ${msg.sender_type === 'support' ? '<i class="fas fa-headset"></i> Support Team' : '<i class="fas fa-user"></i> You'}
+                            </span>
+                            <span class="message-time">${formatDate(msg.created_at)}</span>
+                        </div>
+                        <div class="message-content">${msg.message}</div>
                     </div>
-                    <div class="message-content">${msg.message}</div>
-                </div>
-            `).join('');
+                `).join('');
+            }
 
             // Show/hide reply form based on status
             if (ticket.status === 'closed') {
-                document.getElementById('replyFormContainer').style.display = 'none';
-                document.getElementById('closedFormContainer').style.display = 'block';
+                if (replyFormContainer) replyFormContainer.style.display = 'none';
+                if (closedFormContainer) closedFormContainer.style.display = 'block';
             } else {
-                document.getElementById('replyFormContainer').style.display = 'block';
-                document.getElementById('closedFormContainer').style.display = 'none';
+                if (replyFormContainer) replyFormContainer.style.display = 'block';
+                if (closedFormContainer) closedFormContainer.style.display = 'none';
             }
+        } else {
+            alert('Failed to load ticket details: ' + (data.error || 'Unknown error'));
+            closeModal();
         }
     } catch (error) {
         console.error('Error loading ticket:', error);
-        alert('Failed to load ticket details');
+        alert('Failed to load ticket details: ' + error.message);
+        closeModal();
     }
 }
 

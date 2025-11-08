@@ -144,6 +144,7 @@
             font-size: 48px;
             margin-bottom: 10px;
             background: var(--gradient-1);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-align: center;
@@ -439,6 +440,7 @@
                 <p class="ticket-meta">
                     <span><i class="fas fa-envelope"></i> <span id="modalTicketEmail"></span></span>
                     <span><i class="fas fa-clock"></i> <span id="modalTicketDate"></span></span>
+                    <span id="modalTicketStatus"></span>
                 </p>
             </div>
             <div class="modal-body">
@@ -457,10 +459,23 @@
                         </button>
                     </div>
                 </div>
+                
+                <div class="reply-form" id="closedFormContainer" style="display: none;">
+                    <h3><i class="fas fa-lock"></i> This ticket is closed</h3>
+                    <p style="margin-bottom: 15px; color: var(--text-secondary);">This ticket has been closed. You can reopen it to continue the conversation.</p>
+                    <div class="reply-actions">
+                        <button class="btn btn-primary" onclick="reopenTicket()">
+                            <i class="fas fa-redo"></i> Reopen Ticket
+                        </button>
+                        <button class="btn btn-secondary" onclick="closeModal()">
+                            <i class="fas fa-arrow-left"></i> Back to List
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     
-    <script src="js/tickets.js?v=2"></script>
+    <script src="js/tickets.js?v=3"></script>
 </body>
 </html>
