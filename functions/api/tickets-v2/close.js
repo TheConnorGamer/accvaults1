@@ -86,7 +86,7 @@ export async function onRequestPost(context) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket Transcript - #${ticketId}</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #1a1a1a; background: #f5f5f5; margin: 0; padding: 40px 20px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #1a1a1a; background: #000000; margin: 0; padding: 40px 20px; }
         .transcript-container { max-width: 800px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border: 1px solid #e5e5e5; }
         .header { background: linear-gradient(135deg, #8359cf 0%, #6b47b8 100%); padding: 40px; text-align: center; }
         .header img { width: 80px; height: 80px; margin-bottom: 20px; }
