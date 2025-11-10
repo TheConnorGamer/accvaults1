@@ -1552,14 +1552,14 @@ function openProductSelector(groupId) {
                     
                     // HORIZONTAL LAYOUT for ALL devices (same as mobile)
                     return `
-                        <div class="modal-product-card" style="display: flex !important; flex-direction: row !important; align-items: center; padding: 24px 20px !important; gap: 20px; min-height: 150px !important; overflow: visible !important;">
+                        <div class="modal-product-card" style="display: flex !important; flex-direction: row !important; align-items: center; padding: 28px 20px 32px 20px !important; gap: 20px; min-height: 170px !important; overflow: visible !important;">
                             <div class="modal-product-logo" style="width: 90px; height: 90px; flex-shrink: 0; display: flex !important; align-items: center; justify-content: center;">
                                 ${logoContent}
                             </div>
-                            <div style="flex: 1; display: flex !important; flex-direction: column; gap: 8px; min-width: 0; overflow: visible !important; padding-bottom: 4px;">
-                                <span class="modal-product-price" style="font-size: 22px !important; font-weight: 700 !important; color: #a78bfa !important; display: block !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5); line-height: 1.2 !important;">£${product.price.toFixed(2)}</span>
-                                <h4 class="modal-product-title" style="font-size: 15px !important; font-weight: 600 !important; color: #ffffff !important; margin: 0 !important; line-height: 1.4 !important; display: block !important; visibility: visible !important; opacity: 1 !important; overflow: visible !important;">${product.name}</h4>
-                                <span class="modal-product-stock" style="font-size: 14px !important; color: #10b981 !important; font-weight: 800 !important; text-transform: uppercase; display: block !important; visibility: visible !important; opacity: 1 !important; white-space: nowrap; line-height: 1.2 !important; margin-top: 4px !important;">✓ IN STOCK</span>
+                            <div style="flex: 1; display: flex !important; flex-direction: column; gap: 10px; min-width: 0; overflow: visible !important; padding-bottom: 8px;">
+                                <span class="modal-product-price" style="font-size: 24px !important; font-weight: 700 !important; color: #a78bfa !important; display: block !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5); line-height: 1.2 !important;">£${product.price.toFixed(2)}</span>
+                                <h4 class="modal-product-title" style="font-size: 16px !important; font-weight: 600 !important; color: #ffffff !important; margin: 0 !important; line-height: 1.4 !important; display: block !important; visibility: visible !important; opacity: 1 !important; overflow: visible !important;">${product.name}</h4>
+                                <span class="modal-product-stock" style="font-size: 15px !important; color: #10b981 !important; font-weight: 900 !important; text-transform: uppercase; display: block !important; visibility: visible !important; opacity: 1 !important; white-space: nowrap; line-height: 1.3 !important; margin-top: 6px !important; padding-bottom: 2px !important;">✓ IN STOCK</span>
                             </div>
                             <button 
                                 class="modal-buy-btn" 
