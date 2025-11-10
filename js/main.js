@@ -1556,10 +1556,10 @@ function openProductSelector(groupId) {
                             <div class="modal-product-logo" style="width: 90px; height: 90px; flex-shrink: 0; display: flex !important; align-items: center; justify-content: center;">
                                 ${logoContent}
                             </div>
-                            <div style="flex: 1; display: flex !important; flex-direction: column; gap: 8px;">
+                            <div style="flex: 1; display: flex !important; flex-direction: column; gap: 8px; min-width: 0;">
                                 <span class="modal-product-price" style="font-size: 20px !important; font-weight: 700 !important; color: #a78bfa !important; display: block !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">£${product.price.toFixed(2)}</span>
                                 <h4 class="modal-product-title" style="font-size: 15px !important; font-weight: 600 !important; color: #ffffff !important; margin: 0 !important; line-height: 1.5 !important; display: block !important; visibility: visible !important; opacity: 1 !important;">${product.name}</h4>
-                                <span class="modal-product-stock" style="font-size: 11px !important; color: #10b981 !important; font-weight: 700 !important; text-transform: uppercase; display: inline-block !important;">✓ IN STOCK</span>
+                                <span class="modal-product-stock" style="font-size: 12px !important; color: #10b981 !important; font-weight: 700 !important; text-transform: uppercase; display: block !important; visibility: visible !important; opacity: 1 !important; white-space: nowrap;">✓ IN STOCK</span>
                             </div>
                             <button 
                                 class="modal-buy-btn" 
