@@ -1420,9 +1420,9 @@ function updateLoginButton() {
     const mobileAdminLink = document.getElementById('mobileAdminLink');
     if (mobileAdminLink) {
         if (user && user.isStaff) {
-            mobileAdminLink.style.display = 'flex';
+            mobileAdminLink.style.setProperty('display', 'flex', 'important');
         } else {
-            mobileAdminLink.style.display = 'none';
+            mobileAdminLink.style.setProperty('display', 'none', 'important');
         }
     }
 }

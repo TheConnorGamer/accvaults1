@@ -675,7 +675,11 @@ body:not(.modal-open) {
         gap: 10px;
     }
     
-    /* Admin link controlled by JavaScript based on user role */
+    /* Admin link controlled by JavaScript based on user role - hidden by default */
+    #mobileAdminLink {
+        display: none !important;
+    }
+    
     .nav-links.active #mobileAdminLink {
         align-items: center;
         gap: 10px;
