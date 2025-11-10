@@ -1385,6 +1385,27 @@ function updateLoginButton() {
         }
     });
     
+    // Update mobile menu login button
+    const mobileLoginBtns = document.querySelectorAll('.mobile-only-link');
+    mobileLoginBtns.forEach(btn => {
+        // Find the login/register button (has sign-in-alt icon)
+        if (btn.innerHTML.includes('fa-sign-in-alt')) {
+            if (user && user.loggedIn) {
+                btn.innerHTML = `<i class="fas fa-user-circle"></i> ${user.username || user.email}`;
+                btn.onclick = () => {
+                    toggleMobileMenu();
+                    openUserMenu();
+                };
+            } else {
+                btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login / Register';
+                btn.onclick = () => {
+                    toggleMobileMenu();
+                    openLoginModal();
+                };
+            }
+        }
+    });
+    
     // Show/hide admin link based on user role
     const adminNavLink = document.getElementById('adminNavLink');
     if (adminNavLink) {
@@ -1392,6 +1413,16 @@ function updateLoginButton() {
             adminNavLink.style.display = 'block';
         } else {
             adminNavLink.style.display = 'none';
+        }
+    }
+    
+    // Update mobile admin panel link
+    const mobileAdminLink = document.getElementById('mobileAdminLink');
+    if (mobileAdminLink) {
+        if (user && user.isStaff) {
+            mobileAdminLink.style.display = 'flex';
+        } else {
+            mobileAdminLink.style.display = 'none';
         }
     }
 }

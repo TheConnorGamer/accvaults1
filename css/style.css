@@ -913,10 +913,11 @@ body:not(.modal-open) {
     }
     
     .modal-product-stock {
-        font-size: 9px !important;
+        font-size: 11px !important;
         display: inline-block !important;
         visibility: visible !important;
         color: #10b981 !important;
+        font-weight: 700 !important;
     }
     
     .modal-buy-btn {
