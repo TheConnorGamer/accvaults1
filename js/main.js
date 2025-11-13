@@ -504,6 +504,11 @@ const reviews = [];
 function renderProductsByCategory() {
     const productsGrid = document.getElementById('productsGrid');
     
+    // Check if productsGrid exists on this page
+    if (!productsGrid) {
+        return; // Exit if element doesn't exist
+    }
+    
     // Group products by category
     const categorizedProducts = {};
     Object.keys(productCategories).forEach(cat => {
