@@ -125,34 +125,331 @@ async function loadPaylixCategories() {
 let productGroups = [
     {
         id: 1,
-        name: '1 Month - Server Boosts',
+        name: 'Server Boosts – 1 Month',
         description: 'Discord Server Boosts - 1 Month Duration',
-        category: '690ab6ad54eda', // Use Paylix category ID from dashboard
+        category: '690ab6ad54eda',
         icon: '💎',
         badge: 'Popular',
-        paylixGroupId: '69090def71dea', // Group ID for all server boosts
+        paylixGroupId: '69090def71dea',
         imageUrl: '/images/server-boost.png',
         products: [
             { name: '8 x Server Boosts 1 Month', price: 2.00, paylixId: '690909b56733b', imageUrl: '/images/server-boost.png' },
-            { name: '14 x Server Boosts 1 Month', price: 3.00, paylixId: '690909bb07601', imageUrl: '/images/server-boost.png' },
+            { name: '14 x Server Boosts 1 Month', price: 3.00, paylixId: '69090d76c21b6', imageUrl: '/images/server-boost.png' },
             { name: '20 x Server Boosts 1 Month', price: 4.50, paylixId: '69090d76c21b6', imageUrl: '/images/server-boost.png' }
         ]
+    },
+    {
+        id: 2,
+        name: 'Server Boosts – 3 Months',
+        description: 'Discord Server Boosts - 3 Months Duration',
+        category: '690ab6ad54eda',
+        icon: '💎',
+        badge: 'Best Value',
+        paylixGroupId: '691524b5894fcc',
+        imageUrl: '/images/server-boost.png',
+        products: [
+            { name: '8 x Server Boosts 3 Month', price: 7.99, paylixId: '69153db383970', imageUrl: '/images/server-boost.png' },
+            { name: '14 x Server Boosts 3 Month', price: 12.99, paylixId: '69153e1481dd0', imageUrl: '/images/server-boost.png' },
+            { name: '20 x Server Boosts 3 Month', price: 15.99, paylixId: '69153e7a73ff9', imageUrl: '/images/server-boost.png' }
+        ]
+    },
+    {
+        id: 3,
+        name: 'VPNs',
+        description: 'Premium VPN Services - Lifetime Access',
+        category: '690ab6ad54eda',
+        icon: '🔒',
+        badge: 'Secure',
+        paylixGroupId: '691524c7c3d676',
+        imageUrl: '/images/VPNGroup.png',
+        products: [
+            { name: 'NordVPN – NFA – Lifetime', price: 2.99, paylixId: '691524e67ff82', imageUrl: '/images/NordVPN.png' },
+            { name: 'IPVanish – NFA – Lifetime', price: 2.99, paylixId: '691525525b5a9', imageUrl: '/images/IPVanish.png' },
+            { name: 'ExpressVPN – NFA – Lifetime', price: 2.99, paylixId: '6915259997365', imageUrl: '/images/ExpressNFA.png' },
+            { name: 'ExpressVPN – FA – Lifetime', price: 4.99, paylixId: '691525dba23cf', imageUrl: '/images/ExpressFA.png' },
+            { name: 'PureVPN – NFA – Lifetime', price: 3.99, paylixId: '69152620605b9', imageUrl: '/images/PureVPN.png' }
+        ]
+    },
+    {
+        id: 4,
+        name: 'Discord Nitro',
+        description: 'Discord Nitro Subscriptions',
+        category: '690ab6ad54eda',
+        icon: '💬',
+        badge: 'Popular',
+        paylixGroupId: '6915299215d1',
+        imageUrl: '/images/Discord Decorations Button Design.png',
+        products: [
+            { name: 'Discord Nitro – 1 Month', price: 3.00, paylixId: '691528a73fe4', imageUrl: '/images/Discord Decorations Button Design.png' },
+            { name: 'Discord Nitro Basic 1 Month', price: 1.25, paylixId: '6915278d8dbc3', imageUrl: '/images/Discord Decorations Button Design.png' },
+            { name: 'Discord Nitro Basic – 12 Months', price: 9.50, paylixId: '691527c56d660', imageUrl: '/images/Discord Decorations Button Design.png' },
+            { name: 'Discord Nitro – 12 Months', price: 24.99, paylixId: '6915285282667', imageUrl: '/images/Discord Decorations Button Design.png' }
+        ]
+    },
+    {
+        id: 5,
+        name: 'Discord Decorations',
+        description: 'Discord Nitro Decorations - All Tiers',
+        category: '690ab6ad54eda',
+        icon: '🎨',
+        badge: 'New',
+        paylixGroupId: '69152c6e99cb3',
+        imageUrl: '/images/Discord Decorations Button Design.png',
+        products: [
+            { name: 'Discord Nitro Decoration – Tier 1', price: 1.10, paylixId: '69152a8879f27', imageUrl: '/images/Discord Decorations Button Design.png' },
+            { name: 'Discord Nitro Decoration – Tier 2', price: 2.00, paylixId: '69152b9ee87fe', imageUrl: '/images/Discord Decorations Button Design.png' },
+            { name: 'Discord Nitro Decoration – Tier 3', price: 3.00, paylixId: '69152bd298b19', imageUrl: '/images/Discord Decorations Button Design.png' },
+            { name: 'Discord Nitro Decoration – Tier 4', price: 4.50, paylixId: '69152c229b261', imageUrl: '/images/Discord Decorations Button Design.png' },
+            { name: 'Discord Nitro Decoration – Tier 5', price: 5.25, paylixId: '69152c59913cd', imageUrl: '/images/Discord Decorations Button Design.png' }
+        ]
+    },
+    {
+        id: 6,
+        name: 'Spotify Premium',
+        description: 'Spotify Premium Subscriptions',
+        category: '690ab6ad54eda',
+        icon: '🎵',
+        badge: 'Popular',
+        paylixGroupId: '69152e69ea609',
+        imageUrl: '/images/SpotifyPremium.png',
+        products: [
+            { name: 'Spotify Premium – 1 Month', price: 5.99, paylixId: '69152d24d978f', imageUrl: '/images/SpotifyPremium.png' },
+            { name: 'Spotify Premium – 3 Months', price: 7.99, paylixId: '69152d5738667', imageUrl: '/images/SpotifyPremium.png' },
+            { name: 'Spotify Premium – 6 Months', price: 12.99, paylixId: '69152d92d8271', imageUrl: '/images/SpotifyPremium.png' },
+            { name: 'Spotify Premium – 12 Months', price: 19.99, paylixId: '69152dcbeacb3', imageUrl: '/images/SpotifyPremium.png' },
+            { name: 'Spotify Premium – Lifetime FA', price: 4.99, paylixId: '69153873ba485', imageUrl: '/images/SpotifyPremium.png' }
+        ]
+    },
+    {
+        id: 7,
+        name: 'Youtube Premium',
+        description: 'YouTube Premium Subscriptions',
+        category: '690ab6ad54eda',
+        icon: '📺',
+        badge: 'Popular',
+        paylixGroupId: '69152f7614637',
+        imageUrl: '/images/YoutubePremium.png',
+        products: [
+            { name: 'YouTube Premium – 1 Month', price: 2.99, paylixId: '69152edda21aa', imageUrl: '/images/YoutubePremium.png' },
+            { name: 'YouTube Premium – 12 Months', price: 19.99, paylixId: '69152f1724a2c', imageUrl: '/images/YoutubePremium.png' },
+            { name: 'YouTube Premium – Lifetime FA', price: 3.99, paylixId: '69152f4b88513', imageUrl: '/images/YoutubePremium.png' }
+        ]
+    },
+    {
+        id: 8,
+        name: 'Crunchyroll MegaFan',
+        description: 'Crunchyroll MegaFan Subscriptions',
+        category: '690ab6ad54eda',
+        icon: '🍿',
+        badge: 'Anime',
+        paylixGroupId: '6915307f2baea',
+        imageUrl: '/images/Crunchyroll.png',
+        products: [
+            { name: 'Crunchyroll MegaFan – 1 Month', price: 4.99, paylixId: '69152fe3a088e', imageUrl: '/images/Crunchyroll.png' },
+            { name: 'Crunchyroll MegaFan – 12 Months', price: 11.99, paylixId: '6915302016efc', imageUrl: '/images/Crunchyroll.png' },
+            { name: 'Crunchyroll Lifetime [MegaFan] – NFA', price: 2.99, paylixId: '6915305403698', imageUrl: '/images/Crunchyroll.png' }
+        ]
+    },
+    {
+        id: 9,
+        name: 'CapCut Pro Lifetime',
+        description: 'CapCut Pro - Lifetime Access',
+        category: '690ab6ad54eda',
+        icon: '🎬',
+        badge: 'Creator',
+        paylixGroupId: '691530d107c94',
+        imageUrl: '/images/CapcutGroup.png',
+        products: [
+            { name: 'CapCut Pro – NFA – Lifetime', price: 2.50, paylixId: '691522a60f5ae', imageUrl: '/images/CapcutNFA.png' },
+            { name: 'Capcut Pro – FA – Lifetime', price: 4.99, paylixId: '691523d054813', imageUrl: '/images/CapcutFA.png' }
+        ]
+    },
+    {
+        id: 10,
+        name: 'ChatGPT Plus',
+        description: 'ChatGPT Plus Subscriptions',
+        category: '690ab6ad54eda',
+        icon: '🤖',
+        badge: 'AI',
+        paylixGroupId: '691532c4acd9',
+        imageUrl: '/images/ChatGPT.png',
+        products: [
+            { name: 'ChatGPT Plus – 1 Month', price: 10.99, paylixId: '6915311edcdcc', imageUrl: '/images/ChatGPT.png' },
+            { name: 'ChatGPT Plus – 1 Month (Team Member)', price: 7.99, paylixId: '691531b9d523a', imageUrl: '/images/ChatGPT.png' },
+            { name: 'ChatGPT Plus – 1 Month (Team Owner)', price: 10.99, paylixId: '691531b0befe8', imageUrl: '/images/ChatGPT.png' },
+            { name: 'ChatGPT Plus – 3 Months FA', price: 12.99, paylixId: '691531f167600', imageUrl: '/images/ChatGPT.png' }
+        ]
+    },
+    {
+        id: 11,
+        name: 'Fortnite Crew',
+        description: 'Fortnite Crew Subscriptions',
+        category: '690b79e20a222',
+        icon: '🎮',
+        badge: 'Gaming',
+        paylixGroupId: '69153ea383fb9',
+        imageUrl: '/images/FortniteCrew.png',
+        products: [
+            { name: 'Personal Upgrades – Fortnite Crew', price: 3.99, paylixId: '69153b3e1b912', imageUrl: '/images/FortniteCrew.png' },
+            { name: 'Pre-Loaded Xbox Accounts – Fortnite Crew', price: 4.99, paylixId: '69153bc82177a', imageUrl: '/images/FortniteCrew.png' }
+        ]
+    },
+    {
+        id: 12,
+        name: 'CS2 | All Externals Loader',
+        description: 'CS2 All Externals Loader',
+        category: '690b79e20a222',
+        icon: '🎯',
+        badge: 'Cheat',
+        paylixGroupId: '69152f7614637',
+        imageUrl: '/images/CS2 All Externals Loader Logo.png',
+        products: [
+            { name: 'CS2 | All Externals Loader', price: 3.99, paylixId: '691520ff1a4e6', imageUrl: '/images/CS2 All Externals Loader Logo.png' }
+        ]
+    },
+    {
+        id: 13,
+        name: 'BO6/WZ | Scorpion External',
+        description: 'Black Ops 6 / Warzone Scorpion External',
+        category: '690b79e20a222',
+        icon: '🦂',
+        badge: 'Cheat',
+        paylixGroupId: '69151aaa3b802',
+        imageUrl: '/images/Scorpion External Icon Design.png',
+        products: [
+            { name: 'BO6/WZ | Scorpion External', price: 5.99, paylixId: '69151aaa3b802', imageUrl: '/images/Scorpion External Icon Design.png' }
+        ]
+    },
+    {
+        id: 14,
+        name: 'BO6/WZ | Blitz External',
+        description: 'Black Ops 6 / Warzone Blitz External',
+        category: '690b79e20a222',
+        icon: '⚡',
+        badge: 'Cheat',
+        paylixGroupId: '69151b548fd40',
+        imageUrl: '/images/blitz external.png',
+        products: [
+            { name: 'BO6/WZ | Blitz External', price: 5.99, paylixId: '69151b548fd40', imageUrl: '/images/B06 - WZ Blitz Internal.png' }
+        ]
+    },
+    {
+        id: 15,
+        name: 'BO6/WZ | Blitz Internal',
+        description: 'Black Ops 6 / Warzone Blitz Internal',
+        category: '690b79e20a222',
+        icon: '⚡',
+        badge: 'Cheat',
+        paylixGroupId: '69151c2e612c0',
+        imageUrl: '/images/B06 - WZ Blitz Internal.png',
+        products: [
+            { name: 'BO6/WZ | Blitz Internal', price: 5.00, paylixId: '69151c2e612c0', imageUrl: '/images/B06 - WZ Blitz Internal.png' }
+        ]
+    },
+    {
+        id: 16,
+        name: 'Zenith V2 Internal',
+        description: 'Zenith V2 Internal Cheat',
+        category: '690b79e20a222',
+        icon: '🌟',
+        badge: 'Cheat',
+        paylixGroupId: '69151ca8e4b97',
+        imageUrl: '/images/B06 - MZ Zenith V2 internal.png',
+        products: [
+            { name: 'Zenith V2 Internal', price: 5.00, paylixId: '69151ca8e4b97', imageUrl: '/images/B06 - MZ Zenith V2 internal.png' }
+        ]
+    },
+    {
+        id: 17,
+        name: 'Modern Warfare 3 | Ultimate Chair',
+        description: 'Modern Warfare 3 Ultimate Chair',
+        category: '690b79e20a222',
+        icon: '🪑',
+        badge: 'Cheat',
+        paylixGroupId: '69151d912c0bd',
+        imageUrl: '/images/Modern Warfare Ultimate Chair.png',
+        products: [
+            { name: 'Modern Warfare 3 | Ultimate Chair', price: 5.00, paylixId: '69151d912c0bd', imageUrl: '/images/Modern Warfare Ultimate Chair.png' }
+        ]
+    },
+    {
+        id: 18,
+        name: 'Modern Warfare | Scorpz Chair',
+        description: 'Modern Warfare Scorpz Chair',
+        category: '690b79e20a222',
+        icon: '🦂',
+        badge: 'Cheat',
+        paylixGroupId: '69151e0c39bbf',
+        imageUrl: '/images/Scorpion Chair CS2 Icon Design.png',
+        products: [
+            { name: 'Modern Warfare | Scorpz Chair', price: 4.99, paylixId: '69151e0c39bbf', imageUrl: '/images/Scorpion Chair CS2 Icon Design.png' }
+        ]
+    },
+    {
+        id: 19,
+        name: 'Modern Warfare | Unlock All',
+        description: 'Modern Warfare Unlock All',
+        category: '690b79e20a222',
+        icon: '🔓',
+        badge: 'Unlock',
+        paylixGroupId: '69151e90848d6',
+        imageUrl: '/images/Modern Warfare Unlock All.png',
+        products: [
+            { name: 'Modern Warfare | Unlock All', price: 2.99, paylixId: '69151e90848d6', imageUrl: '/images/Modern Warfare Unlock All.png' }
+        ]
+    },
+    {
+        id: 20,
+        name: 'MW | All Software Loader',
+        description: 'Modern Warfare All Software Loader',
+        category: '690b79e20a222',
+        icon: '💿',
+        badge: 'Loader',
+        paylixGroupId: '69151f1ae8f11',
+        imageUrl: '/images/Modernwarfare all software loader.png',
+        products: [
+            { name: 'MW | All Software Loader', price: 6.99, paylixId: '69151f1ae8f11', imageUrl: '/images/Modernwarfare all software loader.png' }
+        ]
+    },
+    {
+        id: 21,
+        name: 'CS2 | Scorpion Chair External',
+        description: 'CS2 Scorpion Chair External',
+        category: '690b79e20a222',
+        icon: '🦂',
+        badge: 'Cheat',
+        paylixGroupId: '69151fda69b87',
+        imageUrl: '/images/Scorpion Chair CS2 Icon Design.png',
+        products: [
+            { name: 'CS2 | Scorpion Chair External', price: 1.50, paylixId: '69151fda69b87', imageUrl: '/images/Scorpion Chair CS2 Icon Design.png' }
+        ]
+    },
+    {
+        id: 22,
+        name: 'CS2 | ZeroMercy Chair External',
+        description: 'CS2 ZeroMercy Chair External',
+        category: '690b79e20a222',
+        icon: '💀',
+        badge: 'Cheat',
+        paylixGroupId: '6915206c5e0c8',
+        imageUrl: '/images/CS2 Logo with Counter-Terrorist Silhouette.png',
+        products: [
+            { name: 'CS2 | ZeroMercy Chair External', price: 1.50, paylixId: '6915206c5e0c8', imageUrl: '/images/CS2 Logo with Counter-Terrorist Silhouette.png' }
+        ]
+    },
+    {
+        id: 23,
+        name: 'Steam Accounts (Games)',
+        description: 'Steam Accounts with Games',
+        category: '690b79e20a222',
+        icon: '🎮',
+        badge: 'Gaming',
+        paylixGroupId: '691521c9e39e3',
+        imageUrl: '/images/SteamGamesLogo.png',
+        products: [
+            { name: 'Steam Accounts (Games)', price: 1.00, paylixId: '691521c9e39e3', imageUrl: '/images/SteamGamesLogo.png' }
+        ]
     }
-    // Add more product groups here when you create them in Paylix
-    // Example for PC SOFTWARE / CHEATS category (ID: 690b79e20a222):
-    // {
-    //     id: 2,
-    //     name: 'Your Product Group Name',
-    //     description: 'Your description',
-    //     category: '690b79e20a222',
-    //     icon: '🎮',
-    //     badge: 'New',
-    //     paylixGroupId: 'YOUR_GROUP_ID_FROM_PAYLIX',
-    //     imageUrl: '/images/your-image.png',
-    //     products: [
-    //         { name: 'Product Name', price: 10.00, paylixId: 'YOUR_PRODUCT_ID', imageUrl: '/images/your-image.png' }
-    //     ]
-    // }
 ];
 
 // ===== FETCH PRODUCT IMAGES FROM PAYLIX =====
