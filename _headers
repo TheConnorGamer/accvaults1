@@ -3,6 +3,9 @@
   Pragma: no-cache
   Expires: 0
 
+/*.js
+  Content-Type: application/javascript
+
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
