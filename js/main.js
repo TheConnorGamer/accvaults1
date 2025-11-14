@@ -284,7 +284,7 @@ let productGroups = [
         id: 11,
         name: 'Fortnite Crew',
         description: 'Fortnite Crew Subscriptions',
-        category: '690b79e20a222',
+        category: '690ab6ad54eda',
         icon: '🎮',
         badge: 'Gaming',
         paylixGroupId: '69153ea383fb9',
