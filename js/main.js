@@ -449,6 +449,32 @@ let productGroups = [
         products: [
             { name: 'Steam Accounts (Games)', price: 1.00, paylixId: '691521c9e39e3', imageUrl: '/images/SteamGamesLogo.png' }
         ]
+    },
+    {
+        id: 24,
+        name: 'BO7 | Zenith V3',
+        description: 'BO7 Zenith V3 Service',
+        category: '690b79e20a222',
+        icon: '🎯',
+        badge: 'SERVICE',
+        paylixGroupId: '69179b0b45248',
+        imageUrl: '/images/B07.png',
+        products: [
+            { name: 'BO7 | Zenith V3', price: 4.56, paylixId: '69179b0b45248', imageUrl: '/images/B07.png' }
+        ]
+    },
+    {
+        id: 25,
+        name: 'BO7 | Unlock All',
+        description: 'BO7 Unlock All Service',
+        category: '690b79e20a222',
+        icon: '🔓',
+        badge: 'SERVICE',
+        paylixGroupId: '69179b5cabc56',
+        imageUrl: '/images/B07.png',
+        products: [
+            { name: 'BO7 | Unlock All', price: 5.00, paylixId: '69179b5cabc56', imageUrl: '/images/B07.png' }
+        ]
     }
 ];
 
