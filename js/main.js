@@ -1881,7 +1881,7 @@ function openProductSelector(groupId) {
             <div class="selector-products-grid">
                 ${group.products.map((product, idx) => {
                     const logoContent = product.imageUrl 
-                        ? `<img src="${product.imageUrl}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 0;">`
+                        ? `<img src="${product.imageUrl}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;" onerror="this.style.display='none'">`
                         : `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 2L2 7V12C2 17.55 6.84 22.74 12 24C17.16 22.74 22 17.55 22 12V7L12 2Z" fill="url(#modal-gradient-${idx})"/>
                             <path d="M12 8L8 11L10 13L12 11L14 13L16 11L12 8Z" fill="white" opacity="0.9"/>
