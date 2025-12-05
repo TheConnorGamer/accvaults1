@@ -484,7 +484,7 @@ let productGroups = [
         icon: '📱',
         badge: 'Popular',
         paylixGroupId: '69333763d8f48',
-        imageUrl: '/images/AV Social Boost Logo Design.png',
+        imageUrl: '/images/AV%20Social%20Boost%20Logo%20Design.png',
         products: [
             { name: 'TikTok Followers', price: 1.50, paylixId: '69333bd46df11', imageUrl: '/images/TIKTOKLOGO.png' },
             { name: 'YouTube Subscribers', price: 4.55, paylixId: '69333b1a39847', imageUrl: '/images/YOUTUBELOGO.png' },
