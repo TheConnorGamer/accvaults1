@@ -486,9 +486,9 @@ let productGroups = [
         paylixGroupId: '69333763d8f48',
         imageUrl: 'images/AV Social Boost Logo Design.png',
         products: [
-            { name: 'TikTok Followers', price: 1.50, priceLabel: 'Starting at', paylixId: '69333bd46df11', imageUrl: 'images/TIKTOKLOGO.png', hasVariants: true },
-            { name: 'YouTube Subscribers', price: 4.55, priceLabel: 'Starting at', paylixId: '69333b1a39847', imageUrl: 'images/YOUTUBELOGO.png', hasVariants: true },
-            { name: 'Facebook Followers', price: 1.55, priceLabel: 'Starting at', paylixId: '69333a3896736', imageUrl: 'images/FACEBOOKLOGO.png', hasVariants: true }
+            { name: 'TikTok Followers', price: 1.50, maxPrice: 5.25, priceLabel: 'Starting at', paylixId: '69333bd46df11', imageUrl: 'images/TIKTOKLOGO.png', hasVariants: true },
+            { name: 'YouTube Subscribers', price: 4.55, maxPrice: 14.99, priceLabel: 'Starting at', paylixId: '69333b1a39847', imageUrl: 'images/YOUTUBELOGO.png', hasVariants: true },
+            { name: 'Facebook Followers', price: 1.55, maxPrice: 6.50, priceLabel: 'Starting at', paylixId: '69333a3896736', imageUrl: 'images/FACEBOOKLOGO.png', hasVariants: true }
         ]
     }
 ];
@@ -595,9 +595,15 @@ function renderProductsByCategory() {
 
 // ===== RENDER GROUP CARD =====
 function renderGroupCard(group, index) {
-    const prices = group.products.map(p => p.price);
-    const minPrice = Math.min(...prices);
-    const maxPrice = Math.max(...prices);
+    // Get all prices including maxPrice for products with variants
+    const allPrices = [];
+    group.products.forEach(p => {
+        allPrices.push(p.price);
+        if (p.maxPrice) allPrices.push(p.maxPrice);
+    });
+    
+    const minPrice = Math.min(...allPrices);
+    const maxPrice = Math.max(...allPrices);
     const priceDisplay = minPrice === maxPrice 
         ? `£${minPrice.toFixed(2)}`
         : `£${minPrice.toFixed(2)} - £${maxPrice.toFixed(2)}`;
@@ -640,10 +646,15 @@ function renderGroupCard(group, index) {
 
 // ===== RENDER SINGLE PRODUCT CARD =====
 function renderProductCard(group, index) {
-    // Calculate price range with currency conversion
-    const prices = group.products.map(p => p.price);
-    const minPriceGBP = Math.min(...prices);
-    const maxPriceGBP = Math.max(...prices);
+    // Get all prices including maxPrice for products with variants
+    const allPrices = [];
+    group.products.forEach(p => {
+        allPrices.push(p.price);
+        if (p.maxPrice) allPrices.push(p.maxPrice);
+    });
+    
+    const minPriceGBP = Math.min(...allPrices);
+    const maxPriceGBP = Math.max(...allPrices);
     
     // Display prices in GBP only
     const priceDisplay = minPriceGBP === maxPriceGBP 
