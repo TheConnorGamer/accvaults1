@@ -78,11 +78,6 @@ let productCategories = {
         icon: '🛒',
         description: 'PC software and gaming cheats'
     },
-    '69333763d8f48': {
-        name: 'Social Boosts',
-        icon: '📱',
-        description: 'Social media followers and subscribers'
-    }
     // Add more Paylix category IDs here with custom icons
     // Get category IDs from your Paylix dashboard
 };
@@ -485,51 +480,51 @@ let productGroups = [
         id: 26,
         name: 'TikTok-Followers',
         description: 'TikTok Followers - Multiple Packages Available',
-        category: '69333763d8f48',
+        category: '690ab6ad54eda',
         icon: '🎵',
         badge: 'Popular',
-        paylixGroupId: '69333bd46dff1',
+        paylixGroupId: '69333bd46df11',
         imageUrl: '/images/TIKTOKLOGO.png',
         products: [
-            { name: 'TikTok Followers - 100', price: 1.50, paylixId: '69333bd46dff1', imageUrl: '/images/TIKTOKLOGO.png' },
-            { name: 'TikTok Followers - 500', price: 3.50, paylixId: '69333bd46dff1', imageUrl: '/images/TIKTOKLOGO.png' },
-            { name: 'TikTok Followers - 1000', price: 6.00, paylixId: '69333bd46dff1', imageUrl: '/images/TIKTOKLOGO.png' },
-            { name: 'TikTok Followers - 2500', price: 12.00, paylixId: '69333bd46dff1', imageUrl: '/images/TIKTOKLOGO.png' },
-            { name: 'TikTok Followers - 5000', price: 22.00, paylixId: '69333bd46dff1', imageUrl: '/images/TIKTOKLOGO.png' }
+            { name: 'TikTok Followers - 100', price: 1.50, paylixId: '69333bd46df11', imageUrl: '/images/TIKTOKLOGO.png' },
+            { name: 'TikTok Followers - 500', price: 3.50, paylixId: '69333bd46df11', imageUrl: '/images/TIKTOKLOGO.png' },
+            { name: 'TikTok Followers - 1000', price: 6.00, paylixId: '69333bd46df11', imageUrl: '/images/TIKTOKLOGO.png' },
+            { name: 'TikTok Followers - 2500', price: 12.00, paylixId: '69333bd46df11', imageUrl: '/images/TIKTOKLOGO.png' },
+            { name: 'TikTok Followers - 5000', price: 22.00, paylixId: '69333bd46df11', imageUrl: '/images/TIKTOKLOGO.png' }
         ]
     },
     {
         id: 27,
         name: 'YouTube-Subscribers',
         description: 'YouTube Subscribers - Multiple Packages Available',
-        category: '69333763d8f48',
+        category: '690ab6ad54eda',
         icon: '📺',
         badge: 'Popular',
-        paylixGroupId: '69333bfa39847',
+        paylixGroupId: '69333b1a39847',
         imageUrl: '/images/YOUTUBELOGO.png',
         products: [
-            { name: 'YouTube Subscribers - 100', price: 4.55, paylixId: '69333bfa39847', imageUrl: '/images/YOUTUBELOGO.png' },
-            { name: 'YouTube Subscribers - 500', price: 8.50, paylixId: '69333bfa39847', imageUrl: '/images/YOUTUBELOGO.png' },
-            { name: 'YouTube Subscribers - 1000', price: 15.00, paylixId: '69333bfa39847', imageUrl: '/images/YOUTUBELOGO.png' },
-            { name: 'YouTube Subscribers - 2500', price: 32.00, paylixId: '69333bfa39847', imageUrl: '/images/YOUTUBELOGO.png' },
-            { name: 'YouTube Subscribers - 5000', price: 60.00, paylixId: '69333bfa39847', imageUrl: '/images/YOUTUBELOGO.png' }
+            { name: 'YouTube Subscribers - 100', price: 4.55, paylixId: '69333b1a39847', imageUrl: '/images/YOUTUBELOGO.png' },
+            { name: 'YouTube Subscribers - 500', price: 8.50, paylixId: '69333b1a39847', imageUrl: '/images/YOUTUBELOGO.png' },
+            { name: 'YouTube Subscribers - 1000', price: 15.00, paylixId: '69333b1a39847', imageUrl: '/images/YOUTUBELOGO.png' },
+            { name: 'YouTube Subscribers - 2500', price: 32.00, paylixId: '69333b1a39847', imageUrl: '/images/YOUTUBELOGO.png' },
+            { name: 'YouTube Subscribers - 5000', price: 60.00, paylixId: '69333b1a39847', imageUrl: '/images/YOUTUBELOGO.png' }
         ]
     },
     {
         id: 28,
         name: 'Facebook-Followers',
         description: 'Facebook Followers - Multiple Packages Available',
-        category: '69333763d8f48',
+        category: '690ab6ad54eda',
         icon: '👥',
         badge: 'Popular',
-        paylixGroupId: '69333a386736',
+        paylixGroupId: '69333a3896736',
         imageUrl: '/images/FACEBOOKLOGO.png',
         products: [
-            { name: 'Facebook Followers - 100', price: 1.55, paylixId: '69333a386736', imageUrl: '/images/FACEBOOKLOGO.png' },
-            { name: 'Facebook Followers - 500', price: 4.00, paylixId: '69333a386736', imageUrl: '/images/FACEBOOKLOGO.png' },
-            { name: 'Facebook Followers - 1000', price: 7.50, paylixId: '69333a386736', imageUrl: '/images/FACEBOOKLOGO.png' },
-            { name: 'Facebook Followers - 2500', price: 16.00, paylixId: '69333a386736', imageUrl: '/images/FACEBOOKLOGO.png' },
-            { name: 'Facebook Followers - 5000', price: 30.00, paylixId: '69333a386736', imageUrl: '/images/FACEBOOKLOGO.png' }
+            { name: 'Facebook Followers - 100', price: 1.55, paylixId: '69333a3896736', imageUrl: '/images/FACEBOOKLOGO.png' },
+            { name: 'Facebook Followers - 500', price: 4.00, paylixId: '69333a3896736', imageUrl: '/images/FACEBOOKLOGO.png' },
+            { name: 'Facebook Followers - 1000', price: 7.50, paylixId: '69333a3896736', imageUrl: '/images/FACEBOOKLOGO.png' },
+            { name: 'Facebook Followers - 2500', price: 16.00, paylixId: '69333a3896736', imageUrl: '/images/FACEBOOKLOGO.png' },
+            { name: 'Facebook Followers - 5000', price: 30.00, paylixId: '69333a3896736', imageUrl: '/images/FACEBOOKLOGO.png' }
         ]
     }
 ];
