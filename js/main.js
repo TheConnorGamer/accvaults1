@@ -1874,7 +1874,7 @@ function openProductSelector(groupId) {
                 <i class="fas fa-times"></i>
             </button>
             <div class="selector-header" style="background-image: ${backgroundImage}; background-size: cover; background-position: center; background-repeat: no-repeat;">
-                <div style="background: rgba(0, 0, 0, 0.6); padding: 40px; border-radius: 12px;">
+                <div style="background: rgba(0, 0, 0, 0.3); padding: 40px; border-radius: 12px;">
                     <h2 style="margin: 0;">${group.name}</h2>
                 </div>
             </div>
