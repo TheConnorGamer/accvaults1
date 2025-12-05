@@ -486,9 +486,9 @@ let productGroups = [
         paylixGroupId: '69333763d8f48',
         imageUrl: 'images/AV Social Boost Logo Design.png',
         products: [
-            { name: 'TikTok Followers', price: 1.50, paylixId: '69333bd46df11', imageUrl: 'images/TIKTOKLOGO.png' },
-            { name: 'YouTube Subscribers', price: 4.55, paylixId: '69333b1a39847', imageUrl: 'images/YOUTUBELOGO.png' },
-            { name: 'Facebook Followers', price: 1.55, paylixId: '69333a3896736', imageUrl: 'images/FACEBOOKLOGO.png' }
+            { name: 'TikTok Followers', price: 1.50, priceLabel: 'Starting at', paylixId: '69333bd46df11', imageUrl: 'images/TIKTOKLOGO.png', hasVariants: true },
+            { name: 'YouTube Subscribers', price: 4.55, priceLabel: 'Starting at', paylixId: '69333b1a39847', imageUrl: 'images/YOUTUBELOGO.png', hasVariants: true },
+            { name: 'Facebook Followers', price: 1.55, priceLabel: 'Starting at', paylixId: '69333a3896736', imageUrl: 'images/FACEBOOKLOGO.png', hasVariants: true }
         ]
     }
 ];
@@ -1908,7 +1908,7 @@ function openProductSelector(groupId) {
                                 ${logoContent}
                             </div>
                             <div style="flex: 1; display: flex !important; flex-direction: column; gap: 4px; min-width: 0; overflow: visible !important;">
-                                <span class="modal-product-price" style="font-size: 20px !important; font-weight: 700 !important; color: #a78bfa !important; display: block !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5); line-height: 1.2 !important;">£${product.price.toFixed(2)}</span>
+                                <span class="modal-product-price" style="font-size: 20px !important; font-weight: 700 !important; color: #a78bfa !important; display: block !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5); line-height: 1.2 !important;">${product.priceLabel ? product.priceLabel + ' ' : ''}£${product.price.toFixed(2)}</span>
                                 <h4 class="modal-product-title" style="font-size: 14px !important; font-weight: 600 !important; color: #ffffff !important; margin: 0 !important; line-height: 1.3 !important; display: block !important; visibility: visible !important; opacity: 1 !important; overflow: visible !important;">${product.name}</h4>
                                 <span class="modal-product-stock" style="font-size: 12px !important; color: #10b981 !important; font-weight: 700 !important; text-transform: uppercase; display: inline-block !important; visibility: visible !important; opacity: 1 !important; white-space: nowrap; line-height: 1.2 !important; margin-top: 2px !important;">✓ IN STOCK</span>
                             </div>
