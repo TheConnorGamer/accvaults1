@@ -1868,15 +1868,23 @@ function openProductSelector(groupId) {
     // Get background image
     const backgroundImage = group.imageUrl ? `url(${group.imageUrl})` : 'none';
     
+    // Create header content with logo image
+    const headerContent = group.imageUrl 
+        ? `<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; gap: 16px;">
+                <img src="${group.imageUrl}" alt="${group.name}" style="max-width: 200px; max-height: 120px; object-fit: contain; border-radius: 12px;">
+                <h2 style="margin: 0; text-align: center;">${group.name}</h2>
+            </div>`
+        : `<div style="background: rgba(0, 0, 0, 0.3); padding: 40px; border-radius: 12px;">
+                <h2 style="margin: 0;">${group.name}</h2>
+            </div>`;
+    
     modal.innerHTML = `
         <div class="product-selector-content">
             <button class="selector-close" onclick="closeProductSelector()">
                 <i class="fas fa-times"></i>
             </button>
-            <div class="selector-header" style="background-image: ${backgroundImage}; background-size: cover; background-position: center; background-repeat: no-repeat;">
-                <div style="background: rgba(0, 0, 0, 0.3); padding: 40px; border-radius: 12px;">
-                    <h2 style="margin: 0;">${group.name}</h2>
-                </div>
+            <div class="selector-header" style="background: linear-gradient(135deg, rgba(131, 89, 207, 0.2) 0%, rgba(92, 61, 153, 0.2) 100%);">
+                ${headerContent}
             </div>
             <div class="selector-products-grid">
                 ${group.products.map((product, idx) => {
