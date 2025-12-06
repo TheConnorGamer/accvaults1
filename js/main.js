@@ -231,7 +231,7 @@ let productGroups = [
         imageUrl: '/images/YoutubePremium.png',
         products: [
             { name: 'YouTube Premium – 1 Month', price: 2.99, paylixId: '69152edda21aa', imageUrl: '/images/YoutubePremium.png' },
-            { name: 'YouTube Premium – 12 Months', price: 19.99, paylixId: '69152f1724a2c', imageUrl: '/images/YoutubePremium.png' },
+            { name: 'YouTube Premium – 12 Months', price: 21.99, paylixId: '69152f1724a2c', imageUrl: '/images/YoutubePremium.png' },
             { name: 'YouTube Premium – Lifetime FA', price: 3.99, paylixId: '69152f4b88513', imageUrl: '/images/YoutubePremium.png' }
         ]
     },
