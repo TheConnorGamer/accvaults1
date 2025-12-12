@@ -111,4 +111,4 @@ newwebsite123/
 
 - **Paylix Documentation**: https://docs.paylix.gg
 - **Cloudflare Pages Docs**: https://developers.cloudflare.com/pages
-- **Discord**: https://discord.gg/accvaults
+- **Discord**: https://discord.gg/uWQAZAsmTW

@@ -35,7 +35,7 @@
 - Form validation and success/error messages
 
 ### 4. **Fixed Social Media Links**
-- ✅ Discord: `https://discord.gg/accvaults`
+- ✅ Discord: `https://discord.gg/uWQAZAsmTW`
 - ✅ YouTube: `https://www.youtube.com/@AccVaults`
 - ✅ Instagram: `https://www.instagram.com/accvaults`
 - Updated in both header and footer
